@@ -1,19 +1,20 @@
 import React from "react";
-import { 
-    View, 
-    Text, 
-    StyleSheet, 
-    SafeAreaView, 
-    TouchableOpacity, 
+import {
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    TouchableOpacity,
     ScrollView,
-    Alert 
+    Alert
 } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../route/AppNavigator";
+import { RootStackParamList } from "../../route/AppNavigator";
+import { patientRecordDetails as styles } from "../../styles/patientRecordStyle";
 
-type RecordDetailsRouteProp = RouteProp<RootStackParamList, "RecordDetails">;
-type RecordDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList, "RecordDetails">;
+type RecordDetailsRouteProp = RouteProp<RootStackParamList>;
+type RecordDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 type Props = {
     route: RecordDetailsRouteProp;
@@ -166,7 +167,7 @@ export default function RecordDetailsScreen({ route, navigation }: Props) {
         if (record.patientId) {
             return patients.find(patient => patient.patientId === record.patientId);
         }
-        return patients.find(patient => 
+        return patients.find(patient =>
             patient.records.some(r => r.id === record.id)
         );
     };
@@ -184,7 +185,17 @@ export default function RecordDetailsScreen({ route, navigation }: Props) {
         })) : [];
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+
+            <View style={styles.header}>
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={styles.backButton}>←</Text>
+
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Record Details</Text>
+            </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Header Section */}
                 <View style={styles.profile}>
@@ -207,15 +218,18 @@ export default function RecordDetailsScreen({ route, navigation }: Props) {
                     </Text>
                     {hospitalRecords.length > 0 ? (
                         hospitalRecords.map((recordItem) => (
-                            <TouchableOpacity 
-                                key={`${recordItem.patientId}-${recordItem.id}`} 
+                            <TouchableOpacity
+                                key={`${recordItem.patientId}-${recordItem.id}`}
                                 style={styles.detailsBox}
                                 onPress={() => handleViewFullDetails(recordItem)}
                             >
                                 <View style={styles.recordHeader}>
                                     <Text style={styles.date1}>{recordItem.date}</Text>
-                                    <Text style={styles.viewMore}>
-                                         Tap to view details →
+                                    <Text style={styles.Fullview}>
+                                        <Text style={styles.viewMore}>
+                                            Tap to view details
+                                        </Text>
+                                        <Text style={styles.arrow}>→</Text>
                                     </Text>
                                 </View>
                                 <Text style={styles.recordTitle}>{recordItem.title}</Text>
@@ -240,123 +254,7 @@ export default function RecordDetailsScreen({ route, navigation }: Props) {
                     )}
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: { 
-        flex: 1, 
-        backgroundColor: "#fff", 
-        padding: 20 
-    },
-    profile: {
-        padding: 20,
-        backgroundColor: "#F9F9F9",
-        borderRadius: 12,
-        marginBottom: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-    },
-    headerInfo: {
-        flex: 1,
-    },
-    title: { 
-        fontSize: 22, 
-        fontWeight: "700", 
-        marginBottom: 5,
-        color: "#333"
-    },
-    date: { 
-        fontSize: 14, 
-        color: "#666", 
-        marginBottom: 5 
-    },
-    desc: { 
-        fontSize: 16, 
-        color: "#555",
-        marginBottom: 10
-    },
-    patientInfo: {
-        fontSize: 14,
-        color: "#FF6B00",
-        fontWeight: "600",
-    },
-    notescomponent: {
-        flex: 1
-    },
-    sectionTitle: {
-        fontSize: 20,
-        fontWeight: "600",
-        color: "#333",
-        marginBottom: 15,
-    },
-    detailsBox: {
-        backgroundColor: "#F9F9F9",
-        padding: 18,
-        borderRadius: 12,
-        marginBottom: 15,
-        borderLeftWidth: 4,
-        borderLeftColor: "#FF6B00",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
-    },
-    recordHeader: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 8,
-    },
-    date1: { 
-        fontSize: 14, 
-        color: "#666", 
-        fontWeight: "500"
-    },
-    viewMore: {
-        fontSize: 12,
-        color: "#FF6B00",
-        fontWeight: "500",
-    },
-    recordTitle: {
-        fontSize: 18,
-        fontWeight: "600",
-        color: "#333",
-        marginBottom: 4,
-    },
-    recordDescription: {
-        fontSize: 16,
-        color: "#555",
-        marginBottom: 8,
-    },
-    diagnosis: {
-        fontSize: 15,
-        color: "#FF6B00",
-        fontWeight: "500",
-        marginBottom: 8,
-    },
-    medicationsCount: {
-        fontSize: 14,
-        color: "#4CAF50",
-        fontWeight: "500",
-        marginBottom: 8,
-    },
-    notes: { 
-        fontSize: 15,   
-        color: "#666", 
-        lineHeight: 20,
-        fontStyle: "italic"
-    },
-    noRecords: {
-        fontSize: 16,
-        color: "#888",
-        textAlign: "center",
-        marginTop: 20,
-        fontStyle: "italic",
-    },
-});
