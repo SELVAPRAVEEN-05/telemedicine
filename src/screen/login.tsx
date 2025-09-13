@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
   buttonGradient: {
     paddingVertical: 14,
     alignItems: "center",
+    backgroundColor: "black",
     borderRadius: 25,
   },
   buttonText: {
