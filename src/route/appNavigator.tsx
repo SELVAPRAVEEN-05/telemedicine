@@ -3,6 +3,7 @@ import Landing from "../screen/landing";
 import Login from "../screen/login";
 import Register from "../screen/register";
 import UserProfile from "../screen/UserProfile";
+import PatientDashboard from "../screen/patientDashboard";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
@@ -10,17 +11,19 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   UserProfile: undefined;
+  PatientDashboard: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="UserProfile">
+    <Stack.Navigator initialRouteName="PatientDashboard">
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
+       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
 }
