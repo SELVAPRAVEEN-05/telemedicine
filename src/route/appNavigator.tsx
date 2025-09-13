@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="PatientDashboard" screenOptions={{headerShown : false }}  >
+    <Stack.Navigator initialRouteName="Landing" screenOptions={{headerShown:false}}>
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
