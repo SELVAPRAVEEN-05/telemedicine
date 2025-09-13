@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+// import Back from "../assets/icons/back.svg";
 import Icon from "react-native-vector-icons/Feather";
 
 export default function UserProfile() {
@@ -20,7 +21,8 @@ export default function UserProfile() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#333" />
+          {/* <Back width={24} height={24} /> */}
+          <Image source={require("../assets/icons/left-arrow.png")} style={{width:22}} />
         </TouchableOpacity>
         <Text style={styles.title}>Profile</Text>
       </View>
