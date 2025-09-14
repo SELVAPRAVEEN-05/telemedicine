@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RootStackParamList } from '../../route/AppNavigator';
+import { RootStackParamList } from '../../route/appNavigator';
 import { PatientRegsterstyles as styles } from '../../styles/pacientRegister';
 
 type RegisterProps = NativeStackNavigationProp<RootStackParamList, 'Register'>;

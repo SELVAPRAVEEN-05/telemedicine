@@ -134,3 +134,4 @@ export const patientDashboardStyles = StyleSheet.create({
     lineHeight: 16,
   },
 });
+

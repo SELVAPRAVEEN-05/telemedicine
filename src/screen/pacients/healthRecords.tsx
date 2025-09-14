@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../route/AppNavigator";
+import { RootStackParamList } from "../../route/appNavigator";
 import { HealthRecordStyles as styles } from "../../styles/healthRecordcss";
 
 type RecordsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
