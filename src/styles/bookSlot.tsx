@@ -35,7 +35,7 @@ export const bookSLotstyles = StyleSheet.create({
   },
   ratingText: { color: '#fff', fontSize: 14, fontWeight: 'bold', marginLeft: 2 },
   specialityContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  specialityText: { fontSize: 14, color: '#FF6B35', marginLeft: 8, fontWeight: '500' },
+  specialityText: { fontSize: 14, color: '#4285F4', marginLeft: 8, fontWeight: '500' },
   nameContainer: { marginBottom: 12 },
   doctorName: { fontSize: 20, fontWeight: 'bold', color: '#333', marginBottom: 4 },
   statusContainer: { flexDirection: 'row', alignItems: 'center' },

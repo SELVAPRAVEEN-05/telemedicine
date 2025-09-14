@@ -222,32 +222,42 @@ const ConsultDoctor: React.FC = () => {
               }
             }}
           >
-            <Image
-              source={require("../../assets/icons/left-arrow.png")}
-              style={{ width: 30, height: 30, marginBottom: 15, marginRight: 10, resizeMode: "contain" }}
-            />
+           <Icon name="arrow-left" size={26} style={{marginBottom:15,marginRight:10}} color="#000000"/>
           </TouchableOpacity>
 
           <Text style={styles.header}>Find Your Expert</Text>
         </View>
 
         {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <Icon
-            name="search"
-            size={20}
-            color="#FF6B35"
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search experts, specialities..."
-            placeholderTextColor="#999"
-          />
-          <TouchableOpacity style={styles.filterButton}>
-            <Icon name="filter" size={18} color="#fff" />
-          </TouchableOpacity>
-        </View>
+       <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
+  {/* Search Box */}
+  <View style={[styles.searchContainer, { flex: 1, marginRight: 10 }]}>
+    <Icon
+      name="search"
+      size={20}
+      color="#FF6B35"
+      style={styles.searchIcon}
+    />
+    <TextInput
+      style={styles.searchInput}
+      placeholder="Search experts, specialities..."
+      placeholderTextColor="#999"
+    />
+  </View>
+
+  {/* Filter Icon */}
+  <TouchableOpacity
+    style={{
+      padding: 10,
+      backgroundColor: "#F8F9FA",
+      borderRadius: 8,
+    }}
+  >
+    <Icon name="filter" size={22} color="#666" />
+  </TouchableOpacity>
+</View>
+
+        
       </View>
 
       {/* Doctor List */}

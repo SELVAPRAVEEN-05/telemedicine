@@ -120,19 +120,10 @@ const DoctorBookingScreen: React.FC = () => {
             }
           }}
         >
-          <Image
-            source={require("../../assets/icons/left-arrow.png")}
-            style={{
-              width: 30,
-              height: 30,
-              marginBottom: 0,
-              marginRight: 10,
-              marginLeft:10,
-              resizeMode: "contain",
-            }}
-          />
+        <Icon name="arrow-left" size={26} style={{marginLeft:15,marginTop:5,marginRight:10}} color="#000000"/>  
         </TouchableOpacity>
-        <Text style={{ fontSize: 24, fontWeight: "bold" }}>Book Appointment</Text>
+        
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Book Appointment</Text>
       </View> 
         <View style={styles.profileCard}>
           <LinearGradient
@@ -157,7 +148,7 @@ const DoctorBookingScreen: React.FC = () => {
 
           <View style={{ padding: 20 }}>
             <View style={styles.specialityContainer}>
-              <Icon name="briefcase" size={16} color="#FF6B35" />
+              <Icon name="briefcase" size={16} color="#4285F4" />
               <Text style={styles.specialityText}>Specialized in {doctor.speciality}</Text>
             </View>
 
