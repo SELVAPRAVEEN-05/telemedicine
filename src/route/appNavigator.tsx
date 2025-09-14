@@ -10,6 +10,8 @@ import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
+import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
+import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils'
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -22,6 +24,8 @@ export type RootStackParamList = {
   HealthRecords: undefined;
   AiChecker: undefined;
   UpcommingEvents: undefined;
+  PatientRecordDetails: {record : any} ;
+  FullRecordDetailsScreen : { recordData: any };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,6 +43,8 @@ export default function AppNavigator() {
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
+      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
+      <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
     </Stack.Navigator>
   );
 }
