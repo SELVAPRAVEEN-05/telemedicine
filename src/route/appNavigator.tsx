@@ -11,6 +11,7 @@ import Register from '../screen/pacients/register';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
+import DoctorDashboard from '../screen/doctor/doctorDashboard';
 import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils'
 
 export type RootStackParamList = {
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   HealthRecords: undefined;
   AiChecker: undefined;
   UpcommingEvents: undefined;
+  DoctorDashboard: undefined;
   PatientRecordDetails: {record : any} ;
   FullRecordDetailsScreen : { recordData: any };
 };
@@ -32,7 +34,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Landing" screenOptions={{headerShown:false}}>
+    <Stack.Navigator initialRouteName="DoctorDashboard" screenOptions={{headerShown:false}}>
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -45,6 +47,7 @@ export default function AppNavigator() {
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
       <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
       <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
+      <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
     </Stack.Navigator>
   );
 }
