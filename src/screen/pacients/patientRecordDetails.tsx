@@ -155,7 +155,7 @@ const patients = [
 ];
 
 export default function RecordDetailsScreen({ route, navigation }: Props) {
-    const { record } = route.params;
+    const { record } = route.params as {record: any};
 
     const handleViewFullDetails = (recordItem: any) => {
         // Navigate to full details page
