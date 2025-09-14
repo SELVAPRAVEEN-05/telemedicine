@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../route/AppNavigator";
+import { RootStackParamList } from "../../route/appNavigator";
 import { patientFullDetailsStyle as styles } from "../../styles/patientFullDetailsStyle";
 
 
