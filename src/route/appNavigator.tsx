@@ -1,28 +1,36 @@
 // AppNavigator.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ImageSourcePropType } from 'react-native';
 import React from 'react';
+import AvailabilityScreen from '../screen/doctor/Availavility';
+import DoctorDashboard from '../screen/doctor/doctorDashboard';
+import doctorLayout from '../screen/doctor/doctorLayout';
 import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
 import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
 import PatientDashboard from '../screen/pacients/patientDashboard';
+import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
+import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
 import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
+import PharmacyDetailsScreen from '../screen/pacients/SearchMedicine';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
-import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
-import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
-import PharmacyDetailsScreen from '../screen/pacients/SearchMedicine';
-import AvailabilityScreen from '../screen/doctor/Availavility';
-import DoctorDashboard from '../screen/doctor/doctorDashboard';
+import BookSlot from '../screen/pacients/bookSlot';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
 import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
 
+interface Doctor {
+  id: string;
+ 
+}
 export type RootStackParamList = {
   Landing: undefined;
   Login: undefined;
   Register: undefined;
+  UserProfile: undefined;
   PatientDashboard: undefined;
   PatientProfile: undefined;
   ConsultDoctor: undefined;
@@ -31,11 +39,14 @@ export type RootStackParamList = {
   AiChecker: undefined;
   PharmacyDashboard: undefined;
   UpcommingEvents: undefined;
+    bookSlot: { doctors: Doctor };
+ 
+  doctorLayout: undefined;
+  DoctorDashboard: undefined;
   PatientRecordDetails: { record: any };
   FullRecordDetailsScreen: { recordData: any };
   PharmacyDetails: { pharmacy: any };
   AvailabilityScreen: undefined;
-  DoctorDashboard: undefined;
   EditMedicineScreen: { medicine: any; onSave: (medicine: any) => void };
 };
 
@@ -44,7 +55,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="PharmacyDashboard"
+      initialRouteName="doctorLayout"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Landing" component={Landing} />
@@ -57,7 +68,11 @@ export default function AppNavigator() {
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
+      <Stack.Screen name="bookSlot" component={BookSlot} /> 
+      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
       <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
+      <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
+      <Stack.Screen name="doctorLayout" component={doctorLayout} />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
       <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
