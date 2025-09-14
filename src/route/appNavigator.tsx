@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import AvailabilityScreen from '../screen/doctor/Availavility';
 import DoctorDashboard from '../screen/doctor/doctorDashboard';
+import doctorLayout from '../screen/doctor/doctorLayout';
 import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
@@ -11,9 +13,10 @@ import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
 import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
 import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
+import PharmacyDetailsScreen from '../screen/pacients/SearchMedicine';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
-import doctorLayout from '../screen/doctor/doctorLayout';
+import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -25,11 +28,14 @@ export type RootStackParamList = {
   ViewMedicines: undefined;
   HealthRecords: undefined;
   AiChecker: undefined;
+  PharmacyDashboard: undefined;
   UpcommingEvents: undefined;
   doctorLayout: undefined;
   DoctorDashboard: undefined;
   PatientRecordDetails: { record: any };
   FullRecordDetailsScreen: { recordData: any };
+  PharmacyDetails: { pharmacy: any }; // Fixed: Changed from SearchMedicine to PharmacyDetails
+  AvailabilityScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -60,6 +66,19 @@ export default function AppNavigator() {
       />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
       <Stack.Screen name="doctorLayout" component={doctorLayout} />
+      <Stack.Screen
+        name="FullRecordDetailsScreen"
+        component={FullRecordDetailsScreen}
+      />
+      <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
+      <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
+      <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
+      <Stack.Screen
+        name="PatientRecordDetails"
+        component={PatientRecordDetails}
+      />
+
+      <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
     </Stack.Navigator>
   );
 }
