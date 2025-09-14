@@ -11,7 +11,6 @@ import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
-// import Appointment from '../screen/pacients/appointment';
 import BookSlot from '../screen/pacients/bookSlot';
 
 interface Doctor {
@@ -30,7 +29,6 @@ export type RootStackParamList = {
   HealthRecords: undefined;
   AiChecker: undefined;
   UpcommingEvents: undefined;
-    Appointment: { doctors: Doctor };
     bookSlot: { doctors: Doctor };
 };
 
@@ -49,7 +47,6 @@ export default function AppNavigator() {
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
-      {/* <Stack.Screen name="Appointment" component={Appointment} /> */}
       <Stack.Screen name="bookSlot" component={BookSlot} /> 
     </Stack.Navigator>
   );
