@@ -49,7 +49,7 @@ export default function Landing() {
         {/* Buttons */}
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => navigation.navigate('PharmacyDashboard')}
+          onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.primaryText}>Get Started</Text>
         </TouchableOpacity>
