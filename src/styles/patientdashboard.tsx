@@ -64,7 +64,7 @@ export const patientDashboardStyles = StyleSheet.create({
     borderColor: '#E2E8F0',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 25,
+    borderRadius: 15,
     backgroundColor: '#ffffff',
     shadowColor: '#64748B',
     shadowOffset: { width: 0, height: 2 },
