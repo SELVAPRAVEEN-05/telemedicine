@@ -19,6 +19,7 @@ import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import BookSlot from '../screen/pacients/bookSlot';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
+import Videocall from '../screen/trial/VideoCall';
 
 interface Doctor {
   id: string;
@@ -45,6 +46,7 @@ export type RootStackParamList = {
   FullRecordDetailsScreen: { recordData: any };
   PharmacyDetails: { pharmacy: any }; // Fixed: Changed from SearchMedicine to PharmacyDetails
   AvailabilityScreen: undefined;
+  Videocall: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,7 +54,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="doctorLayout"
+      initialRouteName="Landing"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Landing" component={Landing} />
@@ -70,12 +72,9 @@ export default function AppNavigator() {
       <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
       <Stack.Screen name="doctorLayout" component={doctorLayout} />
-      <Stack.Screen
-        name="FullRecordDetailsScreen"
-        component={FullRecordDetailsScreen}
-      />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
       <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
+      <Stack.Screen name="Videocall" component={Videocall} />
     
 
       <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
