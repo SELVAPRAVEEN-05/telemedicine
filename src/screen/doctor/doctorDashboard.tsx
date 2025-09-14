@@ -15,7 +15,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-// ✅ Define types for Appointment and Patient
 interface Appointment {
   id: number;
   name: string;
@@ -34,7 +33,8 @@ interface Patient {
 }
 
 export default function DoctorDashboard() {
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<Appointment | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [slideAnim] = useState(new Animated.Value(screenHeight));
 
@@ -45,7 +45,8 @@ export default function DoctorDashboard() {
       time: '10:00 AM',
       age: 32,
       gender: 'Female',
-      reason: 'Follow-up consultation for diabetes management and blood sugar monitoring',
+      reason:
+        'Follow-up consultation for diabetes management and blood sugar monitoring',
     },
     {
       id: 2,
@@ -106,7 +107,7 @@ export default function DoctorDashboard() {
   };
 
   const AppointmentCard = ({ appointment }: { appointment: Appointment }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.appointmentCard}
       onPress={() => openModal(appointment)}
     >
@@ -158,17 +159,20 @@ export default function DoctorDashboard() {
       <TouchableWithoutFeedback onPress={closeModal}>
         <View style={styles.modalOverlay}>
           <TouchableWithoutFeedback onPress={() => {}}>
-            <Animated.View 
+            <Animated.View
               style={[
                 styles.modalContent,
                 {
-                  transform: [{ translateY: slideAnim }]
-                }
+                  transform: [{ translateY: slideAnim }],
+                },
               ]}
             >
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>Appointment Details</Text>
-                <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <TouchableOpacity
+                  onPress={closeModal}
+                  style={styles.closeButton}
+                >
                   <MaterialIcons name="close" size={24} color="#666" />
                 </TouchableOpacity>
               </View>
@@ -191,13 +195,16 @@ export default function DoctorDashboard() {
                         📅 {selectedAppointment.time}
                       </Text>
                       <Text style={styles.modalDetailText}>
-                        👤 Age: {selectedAppointment.age}, {selectedAppointment.gender}
+                        👤 Age: {selectedAppointment.age},{' '}
+                        {selectedAppointment.gender}
                       </Text>
                     </View>
                   </View>
 
                   <View style={styles.reasonSection}>
-                    <Text style={styles.reasonTitle}>Reason for Appointment</Text>
+                    <Text style={styles.reasonTitle}>
+                      Reason for Appointment
+                    </Text>
                     <View style={styles.reasonBox}>
                       <Text style={styles.reasonText}>
                         {selectedAppointment.reason}
@@ -206,13 +213,13 @@ export default function DoctorDashboard() {
                   </View>
 
                   <View style={styles.actionButtons}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                       style={styles.rejectButton}
                       onPress={handleReject}
                     >
                       <Text style={styles.rejectButtonText}>Reject</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                       style={styles.approveButton}
                       onPress={handleApprove}
                     >

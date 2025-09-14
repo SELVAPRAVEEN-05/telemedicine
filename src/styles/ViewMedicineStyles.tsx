@@ -1,0 +1,155 @@
+import { StyleSheet } from "react-native";
+
+export const ViewMedicineStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f9f9f9",
+  },
+  content: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e9ecef",
+  },
+  subHeader: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 20,
+    marginHorizontal: 16,
+  },
+  backButton: {
+    fontSize:30,
+    marginRight: 15,
+    marginBottom:10
+  },
+  backButtonText: {
+    color: "#FF6B00",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#333",
+  },
+  searchFilterRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 16,
+    marginBottom: 16,
+    gap: 10,
+  },
+  searchBar: {
+    flex: 2,
+    height: 45,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    fontSize: 16,
+  },
+  filterBox: {
+    minWidth: 120,
+    height: 45,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  filterPicker: {
+    height: 50,
+    width: "100%",
+    color: "#333",
+    backgroundColor: "transparent",
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 6,
+    marginHorizontal: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  statusRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+    justifyContent: "space-between",
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 8,
+  },
+  statusText: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  tapHint: {
+    fontSize: 12,
+    color: "#FF6B00",
+    fontWeight: "500",
+    marginLeft: "auto",
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  textContainer: {
+    flex: 1,
+    marginRight: 15,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 4,
+  },
+  open: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 4,
+  },
+  address: {
+    fontSize: 13,
+    color: "#888",
+    lineHeight: 18,
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    backgroundColor: "#eee",
+  },
+  noResultsContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 50,
+    marginHorizontal: 16,
+  },
+  noResultsText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#666",
+    marginBottom: 8,
+  },
+  noResultsSubText: {
+    fontSize: 14,
+    color: "#999",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+});
