@@ -9,7 +9,7 @@ import { FeatureCard } from "../../components/featureCard";
 import { patientDashboardStyles as styles } from "../../styles/patientdashboard";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../route/AppNavigator";
+import { RootStackParamList } from "../../route/appNavigator";
 
 type DashboardNav = NativeStackNavigationProp<RootStackParamList>;
 

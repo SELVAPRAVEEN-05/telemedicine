@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { RootStackParamList } from '../../route/AppNavigator';
+import { RootStackParamList } from '../../route/appNavigator';
 import { Landingstyles as styles } from '../../styles/landingStyles';
 
 type LandingScreenProp = NativeStackNavigationProp<RootStackParamList>;
