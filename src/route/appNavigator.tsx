@@ -1,18 +1,19 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import DoctorDashboard from '../screen/doctor/doctorDashboard';
 import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
 import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
 import PatientDashboard from '../screen/pacients/patientDashboard';
+import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
+import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
 import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
-import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
-import DoctorDashboard from '../screen/doctor/doctorDashboard';
-import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils'
+import doctorLayout from '../screen/doctor/doctorLayout';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -25,16 +26,20 @@ export type RootStackParamList = {
   HealthRecords: undefined;
   AiChecker: undefined;
   UpcommingEvents: undefined;
+  doctorLayout: undefined;
   DoctorDashboard: undefined;
-  PatientRecordDetails: {record : any} ;
-  FullRecordDetailsScreen : { recordData: any };
+  PatientRecordDetails: { record: any };
+  FullRecordDetailsScreen: { recordData: any };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="DoctorDashboard" screenOptions={{headerShown:false}}>
+    <Stack.Navigator
+      initialRouteName="doctorLayout"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -45,9 +50,16 @@ export default function AppNavigator() {
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
-      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
-      <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
+      <Stack.Screen
+        name="PatientRecordDetails"
+        component={PatientRecordDetails}
+      />
+      <Stack.Screen
+        name="FullRecordDetailsScreen"
+        component={FullRecordDetailsScreen}
+      />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
+      <Stack.Screen name="doctorLayout" component={doctorLayout} />
     </Stack.Navigator>
   );
 }
