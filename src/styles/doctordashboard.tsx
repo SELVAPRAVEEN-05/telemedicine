@@ -1,0 +1,280 @@
+import { StyleSheet } from 'react-native';
+
+export const docterDashboardstyles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f8f9fb' },
+  scrollView: { flex: 1 },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+  profileAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 25,
+    backgroundColor: '#F97316',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileAvatarText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  welcomeSection: {
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+  },
+  welcomeText: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  doctorName: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+  },
+
+  section: {
+    paddingHorizontal: 16,
+    marginBottom: 24,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    marginBottom: 12,
+    fontWeight: '600',
+    color: '#333',
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: '#F97316',
+    fontWeight: '500',
+  },
+
+  // Appointment card
+  appointmentCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 10,
+    elevation: 1,
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#e9eefc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  avatarText: { fontWeight: '700', color: '#333' },
+  appointmentInfo: { flex: 1 },
+  patientName: { fontWeight: '700' },
+  appointmentTime: { color: '#666' },
+  patientDetails: { color: '#666', fontSize: 12, marginTop: 4 },
+  cardRight: { marginLeft: 8 },
+
+  statusBadgeApproved: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e6f5ea',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 16,
+  },
+  statusBadgeRejected: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fdecea',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 16,
+  },
+  statusBadgeText: { marginLeft: 6, fontSize: 12 },
+
+  // Queue card
+  queueCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+  queueInfo: { flex: 1 },
+  waitTime: { color: '#666', fontSize: 13 },
+  startCallButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#4CAF50',
+    borderRadius: 20,
+  },
+  startCallText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+
+  // Modal (appointment)
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    padding: 16,
+    minHeight: 260,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  modalTitle: { fontSize: 16, fontWeight: '700' },
+
+  modalPatientSection: { alignItems: 'center', marginTop: 8 },
+  largeAvatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: '#eef7ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  largeAvatarText: { fontSize: 24, fontWeight: '700' },
+  modalPatientName: { fontSize: 18, fontWeight: '700' },
+  modalPatientDetails: { marginTop: 6 },
+  modalDetailText: { marginLeft: 8 },
+
+  iconRow: { flexDirection: 'row', alignItems: 'center', marginTop: 6 },
+
+  reasonSection: { marginTop: 12 },
+  reasonTitle: { fontWeight: '700', marginBottom: 6 },
+  reasonBox: { backgroundColor: '#fafafa', padding: 10, borderRadius: 8 },
+  reasonText: { color: '#333' },
+  rejectReasonText: { marginTop: 8, color: '#a33', fontSize: 13 },
+
+  actionButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 14,
+  },
+  rejectButton: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e35d5d',
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginRight: 8,
+    alignItems: 'center',
+  },
+  rejectButtonText: { color: '#e35d5d', fontWeight: '700' },
+  approveButton: {
+    flex: 1,
+    backgroundColor: 'orange',
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginLeft: 8,
+    alignItems: 'center',
+  },
+  approvedButton: {
+    backgroundColor: 'green',
+  },
+  approveButtonText: { color: '#fff', fontWeight: '700' },
+
+  // Reject modal styles (sibling modal)
+  rejectOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+  },
+  rejectModal: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 14,
+  },
+  rejectTitle: { fontWeight: '700', marginBottom: 8 },
+  rejectInput: {
+    minHeight: 80,
+    textAlignVertical: 'top',
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 12,
+    backgroundColor: '#fff',
+  },
+  rejectActions: { flexDirection: 'row', justifyContent: 'flex-end' },
+  rejectCancel: { paddingVertical: 8, paddingHorizontal: 12, marginRight: 8 },
+  rejectCancelText: { color: '#333' },
+  rejectConfirm: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    backgroundColor: '#4CAF50',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rejectConfirmText: { color: '#fff', fontWeight: '700' },
+
+  // Utility
+  buttonDisabled: { opacity: 0.5 },
+
+  scontainer: {
+    marginHorizontal: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  scard: {
+    display: 'flex',
+    borderRadius: 10,
+    width: '30%',
+    paddingVertical: 16,
+    marginHorizontal: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#c2b0b0ff',
+  },
+  svalue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ff5722',
+    marginBottom: 6,
+  },
+  slabel: {
+    fontSize: 14,
+    color: '#777',
+    textAlign: 'center',
+  },
+});
