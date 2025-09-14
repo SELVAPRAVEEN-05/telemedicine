@@ -40,7 +40,7 @@ export const Availavilitystyle = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 8,
   },
-  selectedDay: { backgroundColor: "#FF7A00", borderRadius: 20 },
+  selectedDay: { backgroundColor: "#FF7A00", borderRadius:50 },
   dayText: { fontSize: 16, color: "#333", fontWeight: "500" },
   selectedDayText: { color: "#FFFFFF", fontWeight: "600" },
   timeSlotsSection: { paddingLeft: 25 ,paddingRight:25},
