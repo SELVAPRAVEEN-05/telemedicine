@@ -70,10 +70,6 @@ export default function AppNavigator() {
       <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
       <Stack.Screen name="doctorLayout" component={doctorLayout} />
-      <Stack.Screen
-        name="FullRecordDetailsScreen"
-        component={FullRecordDetailsScreen}
-      />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
       <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
     
