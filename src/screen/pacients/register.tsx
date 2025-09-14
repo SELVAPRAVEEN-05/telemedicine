@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../route/appNavigator";
+import { RootStackParamList } from "../../route/appNavigator";
 
 
 type RegisterProps = NativeStackNavigationProp<RootStackParamList, "Register">;

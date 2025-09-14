@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import Back from "../assets/icons/back.svg";
 import Icon from "react-native-vector-icons/Feather";
 
 export default function UserProfile() {
@@ -10,32 +9,70 @@ export default function UserProfile() {
   // Sample user data - you can replace this with actual user data from props or state
   const userData = {
     profileImage: "https://via.placeholder.com/120x120/4A90E2/FFFFFF?text=User",
-    username: "john_doe",
+    username: "Sohn_doe",
+    mobileNo: "+1 234 567 890",
     dateOfBirth: "1990-05-15",
     age: 34,
     location: "New York, USA"
+  };
+
+  const firstLetter = userData.username.charAt(0).toUpperCase();
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Account",
+      "Are you sure you want to delete your account? This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            // Handle account deletion logic here
+            console.log("Account deleted");
+            // Navigate to login or splash screen
+            // navigation.navigate('Login');
+          }
+        }
+      ]
+    );
   };
 
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          {/* <Back width={24} height={24} /> */}
-          <Image source={require("../assets/icons/left-arrow.png")} style={{width:22}} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Profile</Text>
-      </View>
+  <View style={styles.headerContent}>
+    {/* Left section: Back arrow + Title */}
+    <View style={styles.leftSection}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Image
+          source={require("../../assets/icons/left-arrow.png")}
+          style={{ width: 22, height: 22, resizeMode: "contain" }}
+        />
+      </TouchableOpacity>
+      <Text style={styles.title}>Profile</Text>
+    </View>
+
+    {/* Right section: Edit/Delete icon */}
+    <TouchableOpacity onPress={handleDelete} style={styles.rightButton}>
+      <Icon name="edit-2" size={22} color="#FF6B35" />
+      {/* or use: <Icon name="trash-2" size={22} color="#FF3B30" /> */}
+    </TouchableOpacity>
+  </View>
+</View>
+
 
       {/* Profile Image */}
       <View style={styles.profileSection}>
-        <Image 
-          source={{ uri: userData.profileImage }} 
-          style={styles.profileImage}
-        />
-        <TouchableOpacity style={styles.editButton}>
-          <Icon name="camera" size={18} color="#fff" />
-        </TouchableOpacity>
+        <View style={{width:120,height:120,backgroundColor:'#F97316',borderRadius:60,borderWidth:3,borderColor:'#F97316',overflow:'hidden',justifyContent:'center',alignItems:'center'}}>
+          <Text style={{fontSize:48,color:"#fff"}}>
+            {firstLetter}
+          </Text>
+        </View>
       </View>
 
       {/* User Information */}
@@ -43,16 +80,24 @@ export default function UserProfile() {
         {/* Username */}
         <View style={styles.infoItem}>
           <View style={styles.infoHeader}>
-            <Icon name="user" size={20} color="#4A90E2" />
+            <Icon name="user" size={20} color="#F97316" />
             <Text style={styles.infoLabel}>Username</Text>
           </View>
           <Text style={styles.infoValue}>{userData.username}</Text>
+        </View>
+        
+        <View style={styles.infoItem}>
+          <View style={styles.infoHeader}>
+            <Icon name="phone" size={20} color="#F97316" />
+            <Text style={styles.infoLabel}>Mobile No</Text>
+          </View>
+          <Text style={styles.infoValue}>{userData.mobileNo}</Text>
         </View>
 
         {/* Date of Birth */}
         <View style={styles.infoItem}>
           <View style={styles.infoHeader}>
-            <Icon name="calendar" size={20} color="#4A90E2" />
+            <Icon name="calendar" size={20} color="#F97316" />
             <Text style={styles.infoLabel}>Date of Birth</Text>
           </View>
           <Text style={styles.infoValue}>{userData.dateOfBirth}</Text>
@@ -61,7 +106,7 @@ export default function UserProfile() {
         {/* Age */}
         <View style={styles.infoItem}>
           <View style={styles.infoHeader}>
-            <Icon name="clock" size={20} color="#4A90E2" />
+            <Icon name="clock" size={20} color="#F97316" />
             <Text style={styles.infoLabel}>Age</Text>
           </View>
           <Text style={styles.infoValue}>{userData.age} years old</Text>
@@ -70,7 +115,7 @@ export default function UserProfile() {
         {/* Location */}
         <View style={styles.infoItem}>
           <View style={styles.infoHeader}>
-            <Icon name="map-pin" size={20} color="#4A90E2" />
+            <Icon name="map-pin" size={20} color="#F97316" />
             <Text style={styles.infoLabel}>Location</Text>
           </View>
           <Text style={styles.infoValue}>{userData.location}</Text>
@@ -79,14 +124,9 @@ export default function UserProfile() {
 
       {/* Action Buttons */}
       <View style={styles.actionContainer}>
-        <TouchableOpacity style={styles.editProfileButton}>
-          <Icon name="edit-3" size={18} color="#fff" />
-          <Text style={styles.buttonText}>Edit Profile</Text>
-        </TouchableOpacity>
-        
         <TouchableOpacity style={styles.settingsButton}>
-          <Icon name="settings" size={18} color="#4A90E2" />
-          <Text style={styles.settingsButtonText}>Settings</Text>
+          <Icon name="log-out" size={18} color="#F97316" />
+          <Text style={styles.settingsButtonText}>Logout</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -96,45 +136,78 @@ export default function UserProfile() {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#f8f9fa'
+    backgroundColor: '#FFF8F3',
   },
-  header: { 
-    flexDirection: "row", 
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop:20,
-    backgroundColor: '#fff',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  title: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    marginLeft: 16,
-    color: '#333'
+  header: {
+  backgroundColor: "#fff",
+  paddingHorizontal: 16,
+  paddingVertical: 14,
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  elevation: 4,
+  shadowColor: "#000",
+  shadowOpacity: 0.1,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 8,
+},
+
+headerContent: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flex: 1,
+},
+
+leftSection: {
+  flexDirection: "row",
+  alignItems: "center",
+},
+
+backButton: {
+  marginRight: 12,
+},
+
+title: {
+  fontSize: 20,
+  fontWeight: "bold",
+  color: "#333",
+},
+
+rightButton: {
+  backgroundColor: '#FFF0F0',
+  width: 40,            
+  height: 40,            
+  borderRadius: 20,      
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+
+
+  
+  deleteButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#FFF0F0',
   },
   profileSection: {
     alignItems: 'center',
-    paddingVertical: 30,
+    paddingVertical: 17,
     backgroundColor: '#fff',
     marginBottom: 20,
-    position: 'relative'
   },
   profileImage: {
     width: 120,
     height: 120,
     borderRadius: 60,
     borderWidth: 3,
-    borderColor: '#4A90E2'
+    borderColor: '#F97316'
   },
   editButton: {
     position: 'absolute',
     bottom: 25,
     right: '35%',
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#F97316',
     borderRadius: 20,
     width: 36,
     height: 36,
@@ -186,7 +259,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   editProfileButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#F97316',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -207,7 +280,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#FF6B35'
+    borderColor: '#F97316'
   },
   buttonText: {
     color: '#fff',
@@ -216,9 +289,34 @@ const styles = StyleSheet.create({
     marginLeft: 8
   },
   settingsButtonText: {
-    color: '#FF6B35',
+    color: '#F97316',
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 8
-  }
+  },
+  initialCircle: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#F97316',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  initialText: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  editIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#fff',
+    padding: 6,
+    borderRadius: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+  },
 });

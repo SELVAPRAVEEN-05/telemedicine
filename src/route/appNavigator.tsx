@@ -1,29 +1,56 @@
-import React from "react";
-import Landing from "../screen/landing";
-import Login from "../screen/login";
-import Register from "../screen/register";
-import UserProfile from "../screen/UserProfile";
-import PatientDashboard from "../screen/patientDashboard";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ImageSourcePropType } from 'react-native';
+import React from 'react';
+import Login from '../screen/login';
+import AiChecker from '../screen/pacients/aiChecker';
+import ConsultDoctor from '../screen/pacients/consultDoctor';
+import HealthRecords from '../screen/pacients/healthRecords';
+import Landing from '../screen/pacients/landing';
+import PatientDashboard from '../screen/pacients/patientDashboard';
+import PatientProfile from '../screen/pacients/profile';
+import Register from '../screen/pacients/register';
+import UpcommingEvents from '../screen/pacients/upcommingEvents';
+import ViewMedicines from '../screen/pacients/viewMedicines';
+// import Appointment from '../screen/pacients/appointment';
+import BookSlot from '../screen/pacients/bookSlot';
 
+interface Doctor {
+  id: string;
+ 
+}
 export type RootStackParamList = {
   Landing: undefined;
   Login: undefined;
   Register: undefined;
   UserProfile: undefined;
   PatientDashboard: undefined;
+  PatientProfile: undefined;
+  ConsultDoctor: undefined;
+  ViewMedicines: undefined;
+  HealthRecords: undefined;
+  AiChecker: undefined;
+  UpcommingEvents: undefined;
+    Appointment: { doctors: Doctor };
+    bookSlot: { doctors: Doctor };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="PatientDashboard">
+    <Stack.Navigator initialRouteName="ConsultDoctor" >
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
-       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="PatientProfile" component={PatientProfile} />
+      <Stack.Screen name="ConsultDoctor" component={ConsultDoctor} />
+      <Stack.Screen name="ViewMedicines" component={ViewMedicines} />
+      <Stack.Screen name="HealthRecords" component={HealthRecords} />
+      <Stack.Screen name="AiChecker" component={AiChecker} />
+      <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
+      {/* <Stack.Screen name="Appointment" component={Appointment} /> */}
+      <Stack.Screen name="bookSlot" component={BookSlot} /> 
     </Stack.Navigator>
   );
 }
