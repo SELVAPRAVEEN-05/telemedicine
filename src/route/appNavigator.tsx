@@ -11,8 +11,8 @@ import Register from '../screen/pacients/register';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
-import DoctorDashboard from '../screen/doctor/doctorDashboard';
-import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils'
+import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
+import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -24,17 +24,20 @@ export type RootStackParamList = {
   ViewMedicines: undefined;
   HealthRecords: undefined;
   AiChecker: undefined;
+  PharmacyDashboard: undefined;
   UpcommingEvents: undefined;
-  DoctorDashboard: undefined;
-  PatientRecordDetails: {record : any} ;
-  FullRecordDetailsScreen : { recordData: any };
+  PatientRecordDetails: { record: any };
+  FullRecordDetailsScreen: { recordData: any };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="DoctorDashboard" screenOptions={{headerShown:false}}>
+    <Stack.Navigator
+      initialRouteName="Landing"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -45,9 +48,15 @@ export default function AppNavigator() {
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
-      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
-      <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
-      <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
+      <Stack.Screen
+        name="PatientRecordDetails"
+        component={PatientRecordDetails}
+      />
+      <Stack.Screen
+        name="FullRecordDetailsScreen"
+        component={FullRecordDetailsScreen}
+      />
+      <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
     </Stack.Navigator>
   );
 }
