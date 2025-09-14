@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { pharmacyStyles as styles } from '../../styles/pharmacyStyles';
 import MedicineScreen from './medicineScreen';
 import PatientScreen from './patientScreen';
@@ -9,8 +10,8 @@ export default function PharmacyDashboard() {
   const pharmacyName = 'MediCare Pharmacy';
 
   const tabs = [
-    { name: 'Medicine', component: MedicineScreen, icon: '💊' },
-    { name: 'Patients', component: PatientScreen, icon: '👥' },
+    { name: 'Medicine', component: MedicineScreen, icon: 'medication' },
+    { name: 'Patients', component: PatientScreen, icon: 'people' },
   ];
 
   const renderActiveScreen = () => {
@@ -47,14 +48,15 @@ export default function PharmacyDashboard() {
             activeOpacity={0.7}
           >
             <View style={styles.tabContent}>
-              <Text
+              <Icon
+                name={tab.icon}
+                size={20}
+                color={activeTab === index ? '#FFFFFF' : '#8E8E93'}
                 style={[
                   styles.tabIcon,
                   activeTab === index && styles.activeTabIcon,
                 ]}
-              >
-                {tab.icon}
-              </Text>
+              />
               <Text
                 style={[
                   styles.topTabLabel,

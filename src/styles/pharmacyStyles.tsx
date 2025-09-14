@@ -6,7 +6,7 @@ export const pharmacyStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  
+
   // Header Styles
   header: {
     flexDirection: 'row',
@@ -25,7 +25,7 @@ export const pharmacyStyles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#FF6B00',
+    backgroundColor: '#EF7722',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#FF6B00',
@@ -54,13 +54,10 @@ export const pharmacyStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
   },
-  
+
   // Top Tab Navigation Styles
   topTabBar: {
     flexDirection: 'row',
-    backgroundColor: '#F5F5F5',
-    paddingVertical: 8,
-    paddingHorizontal: 20,
     marginHorizontal: 20,
     marginVertical: 10,
     borderRadius: 12,
@@ -77,7 +74,7 @@ export const pharmacyStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeTopTabItem: {
-    backgroundColor: '#FF6B00',
+    backgroundColor: '#EF7722',
     elevation: 2,
     shadowColor: '#FF6B00',
     shadowOffset: { width: 0, height: 2 },
@@ -93,7 +90,7 @@ export const pharmacyStyles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '700',
   },
-  
+
   tabItem: {
     flex: 1,
     alignItems: 'center',
@@ -133,7 +130,7 @@ export const pharmacyStyles = StyleSheet.create({
   },
   screenContainer: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#faf8f8ff',
     padding: 20,
   },
   title: {
@@ -209,7 +206,7 @@ export const pharmacyStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  
+
   // Empty State Styles
   emptyState: {
     flex: 1,

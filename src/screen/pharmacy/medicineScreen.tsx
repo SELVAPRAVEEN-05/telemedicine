@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  Alert,
+    Alert,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { pharmacyStyles as styles } from '../../styles/pharmacyStyles';
 
 interface Medicine {
@@ -86,7 +86,6 @@ export default function MedicineScreen() {
       'Medicine Details',
       `Name: ${medicine.name}\nStock: ${medicine.stock} units\nPrice: ₹${medicine.price}\nCategory: ${medicine.category}`,
       [
-        { text: 'Update Stock', onPress: () => console.log('Update stock') },
         { text: 'Edit Price', onPress: () => console.log('Edit price') },
         { text: 'Cancel', style: 'cancel' },
       ],
@@ -324,15 +323,23 @@ export default function MedicineScreen() {
             {/* Add Button */}
             <TouchableOpacity
               style={{
-                backgroundColor: '#FF6B00',
-                paddingHorizontal: 25,
+                backgroundColor: '#EF7722',
+                paddingHorizontal: 15,
                 paddingVertical: 10,
                 borderRadius: 6,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
               onPress={addNewMedicine}
             >
+              <Icon 
+                name="add" 
+                size={16} 
+                color="#fff" 
+                style={{ marginRight: 5 }}
+              />
               <Text style={{ color: '#fff', fontSize: 12, fontWeight: '600' }}>
-                + Add
+                Add
               </Text>
             </TouchableOpacity>
           </View>
