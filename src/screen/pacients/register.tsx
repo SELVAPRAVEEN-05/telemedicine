@@ -12,7 +12,7 @@ import { RootStackParamList } from '../../route/appNavigator';
 import { PatientRegsterstyles as styles } from '../../styles/pacientRegister';
 
 type RegisterProps = NativeStackNavigationProp<RootStackParamList, 'Register'>;
-
+              
 export default function Register() {
   const [form, setForm] = useState({
     name: '',
