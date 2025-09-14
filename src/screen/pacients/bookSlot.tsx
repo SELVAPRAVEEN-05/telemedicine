@@ -52,7 +52,7 @@ const doctor: Doctor = {
   credits: 45,
   creditsPerMin: 35,
 };
-type AppointmentRouteProp = RouteProp<RootStackParamList, "Appointment">;
+type AppointmentRouteProp = RouteProp<RootStackParamList, "bookSlot">;
 const DoctorBookingScreen: React.FC = () => {
   const { params } = useRoute<AppointmentRouteProp>();
     const { doctors } = params
