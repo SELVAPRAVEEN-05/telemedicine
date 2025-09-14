@@ -13,19 +13,17 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../route/AppNavigator";
 import { patientFullDetailsStyle as styles } from "../../styles/patientFullDetailsStyle";
 
-type FullRecordDetailsRouteProp = RouteProp<RootStackParamList, "FullRecordDetailsScreen">;
-type FullRecordDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList, "FullRecordDetailsScreen">;
 
 type Props = {
-    route: FullRecordDetailsRouteProp;
-    navigation: FullRecordDetailsNavigationProp;
+    route: any;
+    navigation: any;
 };
 
 export default function FullRecordDetailsScreen({ route, navigation }: Props) {
-    const { recordData } = route.params;
+    const  recordData  = route.params;
 
     const handleDownload = () => {
-        Alert.alert("Download", `${recordData.title} record downloaded successfully!`);
+        Alert.alert("Download", `${recordData?.title} record downloaded successfully!`);
     };
 
     const handleShare = () => {

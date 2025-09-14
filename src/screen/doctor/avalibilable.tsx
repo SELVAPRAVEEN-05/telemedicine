@@ -8,7 +8,7 @@ import {
   Switch,
   Alert,
 } from "react-native";
-import {Availavilitystyle as styles } from "../../styles/AvailavilityStyle"
+import {Availavilitystyle as styles } from "../../styles/availabilityStyles"
 
 // Utility: number of days in a month
 const getDaysInMonth = (month: number, year: number) => {
