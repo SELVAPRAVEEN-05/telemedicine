@@ -1,6 +1,8 @@
 // DoctorAppointments.tsx
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AppointmentsQueueScreen from './appointmentDetails';
+import PatientQueueScreen from './patientAppointment';
 
 export default function DoctorAppointments() {
   const [activeTab, setActiveTab] = useState<'appointments' | 'meetings'>(
@@ -9,6 +11,7 @@ export default function DoctorAppointments() {
 
   return (
     <View style={styles.container}>
+
       {/* Tabs */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
@@ -49,9 +52,11 @@ export default function DoctorAppointments() {
       {/* Tab Content */}
       <View style={styles.content}>
         {activeTab === 'appointments' ? (
-          <Text>📋 All Appointments will be listed here.</Text>
+          // <Text>📋 All Appointments will be listed here.</Text>
+          <AppointmentsQueueScreen />
         ) : (
-          <Text>📅 All Meetings will be listed here.</Text>
+          // <Text>📅 All Meetings will be listed here.</Text>
+          <PatientQueueScreen />
         )}
       </View>
     </View>

@@ -1,3 +1,5 @@
+
+// PharmacyDashboard.tsx
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -5,7 +7,11 @@ import { pharmacyStyles as styles } from '../../styles/pharmacyStyles';
 import MedicineScreen from './medicineScreen';
 import PatientScreen from './patientScreen';
 
-export default function PharmacyDashboard() {
+interface PharmacyDashboardProps {
+  navigation?: any;
+}
+
+export default function PharmacyDashboard({ navigation }: PharmacyDashboardProps) {
   const [activeTab, setActiveTab] = useState(0);
   const pharmacyName = 'MediCare Pharmacy';
 
@@ -16,7 +22,7 @@ export default function PharmacyDashboard() {
 
   const renderActiveScreen = () => {
     const ActiveComponent = tabs[activeTab].component;
-    return <ActiveComponent />;
+    return <ActiveComponent navigation={navigation} />;
   };
 
   const getProfileLetter = () => {

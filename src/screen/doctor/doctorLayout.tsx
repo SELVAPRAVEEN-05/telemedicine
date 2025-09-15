@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../route/appNavigator';
 import DoctorAppointments from './doctorAppointments';
 import DoctorDashboard from './doctorDashboard';
+import AvailabilityScreen from './avalibilable';
+import PatientRecordsScreen from './patientRecord';
 
 const Placeholder = ({ name }: { name: any }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -32,11 +34,11 @@ const BottomTabBar = () => {
       case 'Dashboard':
         return <DoctorDashboard />;
       case 'Appointments':
-        return <Placeholder name="Patients" />;
+        return <AvailabilityScreen /> ;
       case 'Available Slots':
         return <DoctorAppointments />;
       case 'Patients':
-        return <Placeholder name="Patients" />;
+        return <PatientRecordsScreen />;
       default:
         return null;
     }

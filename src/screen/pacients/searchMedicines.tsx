@@ -144,17 +144,14 @@ export default function PharmacyDetailsScreen({ route, navigation }: Props) {
       "Order Confirmation",
       `Order Summary:
 • ${selectedMedicines.length} item(s)
-• Total: $${totalAmount}
-• Pharmacy: ${pharmacy.name}
-
-Would you like to place this order?`,
+• Pharmacy: ${pharmacy.name}`,
       [
         { text: "Cancel", style: "cancel" },
         {
-          text: "Place Order",
+          text: "Reserved Medicine",
           onPress: () => {
             Alert.alert(
-              "Order Placed!",
+              "Reserved",
               "Your order has been successfully placed. You will receive a confirmation shortly.",
               [
                 {
@@ -166,12 +163,6 @@ Would you like to place this order?`,
                 }
               ]
             );
-            console.log("Order placed:", {
-              pharmacy: pharmacy.name,
-              medicines: selectedMedicines,
-              total: totalAmount,
-              timestamp: new Date().toISOString()
-            });
           }
         }
       ]
@@ -189,7 +180,6 @@ Would you like to place this order?`,
           style={styles.medicineInfo}
           onPress={() => {
             toggleMedicineSelect(medicine);
-            // setSelect(!Select);
           }}
           disabled={medicine.stock === 0}
         >
@@ -220,9 +210,14 @@ Would you like to place this order?`,
             </TouchableOpacity>
           </View>
         )}
-        <View style={styles.ratioOuter}>
-          {isSelected && <View style={styles.ratioInner} />}
-        </View>
+        <TouchableOpacity onPress={() => {
+          toggleMedicineSelect(medicine);
+
+        }}>
+          <View style={styles.ratioOuter}>
+            {isSelected && <View style={styles.ratioInner} />}
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -265,7 +260,7 @@ Would you like to place this order?`,
       {selectedMedicines.length > 0 && (
         <View style={styles.selectionSummary}>
           <Text style={styles.selectionText}>
-            {selectedMedicines.length} item(s) selected • Total: ${calculateTotal()}
+            {selectedMedicines.length} item(s) selected
           </Text>
         </View>
       )}
@@ -298,7 +293,7 @@ Would you like to place this order?`,
             onPress={handleAddToOrder}
           >
             <Text style={styles.addToCartButtonText}>
-              Place Order ({selectedMedicines.length}) • ${calculateTotal()}
+              Reserve Medicine
             </Text>
           </TouchableOpacity>
         </View>
