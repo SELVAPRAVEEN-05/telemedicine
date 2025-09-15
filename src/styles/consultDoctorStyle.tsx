@@ -169,6 +169,7 @@ export const consultDoctorstyles = StyleSheet.create({
     paddingBottom: 15,
   },
   statsText: {
+    marginLeft:20,
     fontSize: 14,
     color: '#666',
   },
@@ -177,6 +178,8 @@ export const consultDoctorstyles = StyleSheet.create({
     paddingBottom: 20,
   },
   infoRow: {
+    marginTop: 8,
+    marginLeft:20,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,

@@ -32,8 +32,8 @@ const DoctorBookingScreen: React.FC = () => {
 
   const [doctorData, setDoctorData] = useState<any>(null);
   const [slots, setSlots] = useState<any[]>([]);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<any>(null);
+  const [selectedDate, setSelectedDate] = useState<any>(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [dates, setDates] = useState<string[]>([]);
 
@@ -152,6 +152,9 @@ const { morning, afternoon, evening } = categorizeSlots(filteredSlots);
 
   return (
     <View style={styles.container}>
+      <Text>
+        Book Appointment
+      </Text>
       {/* Header */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80 }}>
         {/* Profile */}
@@ -667,7 +670,7 @@ const { morning, afternoon, evening } = categorizeSlots(filteredSlots);
           fontSize: 13,
           color: "#666",
         }}>
-          {selectedDate ? formatDate(selectedDate).dayName : ""}, {selectedDate ? formatDate(selectedDate).dayNumMonth : ""} at {selectedTime}
+          {formatDate(selectedDate).dayName}, {formatDate(selectedDate).dayNumMonth} at {selectedTime}
         </Text>
       </View>
     </View>
@@ -689,5 +692,4 @@ const { morning, afternoon, evening } = categorizeSlots(filteredSlots);
     </View>
   );
 };
-
-export default DoctorBookingScreen;
+export default DoctorBookingScreen
