@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as Keychain from 'react-native-keychain';
 import {
   Alert,
@@ -14,6 +14,7 @@ import {
 import axios from 'axios';
 import { RootStackParamList } from '../route/appNavigator';
 import { LoginStyles as styles } from '../styles/login';
+import { loadToken } from '../services';
 type LoginNav = NativeStackNavigationProp<RootStackParamList>;
 
 export default function Login() {
@@ -62,12 +63,12 @@ export default function Login() {
       );
 
       if (res.status === 200) {
-        // try {
-        //   await Keychain.setGenericPassword('jwt', res?.data?.token);
-        //   console.log('✅ Token saved securely in Android Keystore');
-        // } catch (err) {
-        //   console.log('❌ Error saving token:', err);
-        // }
+        try {
+          await Keychain.setGenericPassword('jwt', res?.data?.token);
+          console.log('✅ Token saved securely in Android Keystore');
+        } catch (err) {
+          console.log('❌ Error saving token:', err);
+        }
 
         navigation.replace('PatientDashboard');
       } else {
@@ -78,6 +79,13 @@ export default function Login() {
       console.log('Verify OTP error:', err.message);
     }
   };
+
+  useEffect(() => {
+    const token = loadToken();
+    if (!token) {
+      navigation.navigate('PatientDashboard');
+    }
+  }, []);
 
   return (
     <View style={styles.gradient}>

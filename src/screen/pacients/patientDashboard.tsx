@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { FeatureCard } from "../../components/featureCard";
-import { patientDashboardStyles as styles } from "../../styles/patientdashboard";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../route/appNavigator";
+import React, { useEffect, useState } from 'react';
 
-type DashboardNav = NativeStackNavigationProp<RootStackParamList>;
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { FeatureCard } from '../../components/featureCard';
+import { RootStackParamList } from '../../route/appNavigator';
+import { loadToken } from '../../services';
+import { patientDashboardStyles as styles } from '../../styles/patientdashboard';
+import axios from 'axios';
+
+type LoginNav = NativeStackNavigationProp<RootStackParamList>;
 
 export default function PatientDashboard() {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
-  const navigation = useNavigation<DashboardNav>();
+  const navigation = useNavigation<LoginNav>();
 
   const handleProfilePress = () => {
     navigation.navigate('PatientProfile');
