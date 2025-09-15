@@ -13,7 +13,7 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
+// import axios from "axios";
 // ✅ Import your typed routes
 import { RootStackParamList } from "../../route/appNavigator";
 import { consultDoctorstyles as styles } from "../../styles/consultDoctorStyle";
@@ -65,6 +65,12 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
   callDuration,
 }) => {
   const navigation = useNavigation<ConsultDoctorNavigationProp>();
+
+  // const GetDoctor=()=>{
+  //   try{
+  //     const res = axios.get("https://telemedicine-server-o5tc.onrender.com/doctor/get-all-doctors",)
+  //   }
+  // }
 
   return (
     <View style={styles.doctorCard}>

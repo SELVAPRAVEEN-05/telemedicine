@@ -18,6 +18,7 @@
     "@react-navigation/stack": "^7.4.8",
     "@zegocloud/zego-uikit-prebuilt-call-rn": "^6.5.11",
     "@zegocloud/zego-uikit-rn": "^2.18.8",
+    "axios": "^1.12.2",
     "react": "19.1.0",
     "react-delegate-component": "^1.0.0",
     "react-native": "0.81.4",
