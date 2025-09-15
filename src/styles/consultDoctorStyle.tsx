@@ -20,7 +20,7 @@ export const consultDoctorstyles = StyleSheet.create({
     marginBottom: 20,
   },
   header: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#0000',
     marginBottom: 20,

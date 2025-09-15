@@ -1,19 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {
-  View,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
-  StyleSheet,
+  View,
 } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../route/appNavigator";
+import { RootStackParamList } from '../../route/appNavigator';
 import { PatientRegsterstyles as styles } from '../../styles/pacientRegister';
 
-type RegisterProps = NativeStackNavigationProp<RootStackParamList, "Register">;
-
+type RegisterProps = NativeStackNavigationProp<RootStackParamList, 'Register'>;
+              
 export default function Register() {
   const [form, setForm] = useState({
     name: '',
@@ -28,7 +27,7 @@ export default function Register() {
   const navigation = useNavigation<RegisterProps>();
 
   const genders = ['Male', 'Female', 'Other'];
-  const languages = ["English","हिंदी", "ગુજરાતી", "தமிழ்"];
+  const languages = ['English', 'हिंदी', 'ગુજરાતી', 'தமிழ்'];
 
   return (
     <View style={styles.outerContainer}>
@@ -134,20 +133,24 @@ export default function Register() {
           </View>
 
           {/* Register */}
-          <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate("PatientDashboard")}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={() => navigation.navigate('PatientDashboard')}
+          >
             <Text style={styles.submitText}>Register</Text>
           </TouchableOpacity>
 
           {/* Login Link */}
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.loginLink}>
-              Already have an account?{' '}
-              <Text style={{ color: '#FF6B00', fontWeight: 'bold' }}>Log in to my Account</Text>
-            </Text>
-          </TouchableOpacity>
+          <Text style={styles.loginLink}>
+            Already have an account?{' '}
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={{ color: '#FF6B00', fontWeight: 'bold' }}>
+                Log in to my Account
+              </Text>
+            </TouchableOpacity>
+          </Text>
         </View>
       </ScrollView>
     </View>
   );
 }
-
