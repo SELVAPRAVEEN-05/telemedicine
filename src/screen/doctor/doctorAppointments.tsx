@@ -9,14 +9,6 @@ export default function DoctorAppointments() {
 
   return (
     <View style={styles.container}>
-      {/* header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Dashboard</Text>
-        <TouchableOpacity style={styles.profileAvatar}>
-          <Text style={styles.profileAvatarText}>Dr</Text>
-        </TouchableOpacity>
-      </View>
-
       {/* Tabs */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
