@@ -1,25 +1,31 @@
-// PatientRecordsScreen.js
+// PatientRecordsScreen.tsx
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import {
-  View,
-  Text,
   ScrollView,
-  TouchableOpacity,
-  StyleSheet,
   StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { RootStackParamList } from '../../route/appNavigator';
 
-const PatientRecordsScreen = ({ navigation } : any) => {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+const PatientRecordsScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
+
   const records = [
     {
       id: 1,
       date: '2024-05-18',
       title: "Dr. Sharma's Clinic",
       subtitle: 'General Checkup',
-      backgroundColor: '#E6FFFA',
+      backgroundColor: '#bfede3ff',
       iconColor: '#0D9488',
-      // Detailed information
       doctorName: 'Dr. Rajesh Sharma',
       specialty: 'General Physician',
       location: 'Main Street Medical Center, Chennai',
@@ -58,7 +64,6 @@ const PatientRecordsScreen = ({ navigation } : any) => {
       subtitle: 'Blood Test Results',
       backgroundColor: '#FED7AA',
       iconColor: '#EA580C',
-      // Detailed information
       doctorName: 'Dr. Priya Nair',
       specialty: 'Pathologist',
       location: 'City Hospital Laboratory, Chennai',
@@ -94,7 +99,6 @@ const PatientRecordsScreen = ({ navigation } : any) => {
       subtitle: 'Eye Exam',
       backgroundColor: '#FECACA',
       iconColor: '#DC2626',
-      // Detailed information
       doctorName: 'Dr. Amit Patel',
       specialty: 'Ophthalmologist',
       location: 'Vision Care Center, Chennai',
@@ -128,7 +132,7 @@ const PatientRecordsScreen = ({ navigation } : any) => {
     }
   ];
 
-  const formatDate = (dateString : any) => {
+  const formatDate = (dateString: any) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
@@ -137,54 +141,38 @@ const PatientRecordsScreen = ({ navigation } : any) => {
     });
   };
 
-  const handleRecordPress = (record : any) => {
-    // Navigate to PatientDetailsScreen with record data
-    navigation.navigate('PatientDetailsScreen', { record });
-  };
+  const handleRecordPress = (record: any) => {
+  navigation.navigate('PatientDetailsScreen', { record });
+};
 
-  const RecordItem = ({ record } : any) => (
-    <TouchableOpacity 
-      style={styles.recordItem} 
+
+  const RecordItem = ({ record }: any) => (
+    <TouchableOpacity
+      style={styles.recordItem}
       activeOpacity={0.7}
       onPress={() => handleRecordPress(record)}
     >
-      <View style={[styles.iconContainer, { backgroundColor: record.backgroundColor }]}>
-        <Icon name="description" size={24} color={record.iconColor} />
+      <View style={styles.iconContainer}>
+        <Text style={styles.firstChar}>{record.title.charAt(0)}</Text>
       </View>
-      
+
       <View style={styles.recordContent}>
         <Text style={styles.dateText}>{formatDate(record.date)}</Text>
         <Text style={styles.titleText}>{record.title}</Text>
         <Text style={styles.subtitleText}>{record.subtitle}</Text>
       </View>
-      
+
       <Icon name="chevron-right" size={20} color="#9CA3AF" />
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
-      
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#374151" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Records</Text>
-        <View style={styles.placeholder} />
-      </View>
+      {/* <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" /> */}
 
       {/* Content */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.recordsSection}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>My Records</Text>
-            <TouchableOpacity>
-              <Text style={styles.viewAllText}>View all</Text>
-            </TouchableOpacity>
-          </View>
-
           <View style={styles.recordsList}>
             {records.map((record) => (
               <RecordItem key={record.id} record={record} />
@@ -201,22 +189,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
+  firstChar:{
+    fontSize:20
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
-  },
-  backButton: {
-    padding: 4,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1F2937',
+    color: '#333',
+  },
+  profileAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 25,
+    backgroundColor: '#F97316',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileAvatarText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  backButton: {
+    padding: 4,
   },
   placeholder: {
     width: 24,
@@ -256,12 +264,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   iconContainer: {
-    width: 48,
+     width: 48,
     height: 48,
-    borderRadius: 12,
+    borderRadius: 24,
+    backgroundColor: '#e9eefc',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 16,
+    marginRight: 12,
   },
   recordContent: {
     flex: 1,
@@ -272,7 +281,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   titleText: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '500',
     color: '#1F2937',
     marginBottom: 4,

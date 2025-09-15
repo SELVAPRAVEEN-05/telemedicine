@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import DoctorAppointments from './doctorAppointments';
 import DoctorDashboard from './doctorDashboard';
+import AvailabilityScreen from './avalibilable';
+import PatientRecordsScreen from './patientRecord';
 
-const Placeholder = ({ name } : {name : any}) => (
+const Placeholder = ({ name }: { name: any }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
     <Icon name="info" size={40} color="#999" />
   </View>
@@ -24,11 +27,11 @@ const BottomTabBar = () => {
       case 'Dashboard':
         return <DoctorDashboard />;
       case 'Appointments':
-        return <Placeholder name="Appointments" />;
+        return <AvailabilityScreen /> ;
       case 'Available Slots':
-        return <Placeholder name="Available Slots" />;
+        return <DoctorAppointments />;
       case 'Patients':
-        return <Placeholder name="Patients" />;
+        return <PatientRecordsScreen />;
       default:
         return null;
     }

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const PatientDetailsScreen = ({ route, navigation } : any) => {
+const PatientDetailsShowDoctor = ({ route, navigation } : any) => {
   const { record } = route.params;
 
   const formatDate = (dateString : any) => {
@@ -28,7 +28,7 @@ const PatientDetailsScreen = ({ route, navigation } : any) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+      {/* <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" /> */}
       
       {/* Detail Header */}
       <View style={styles.header}>
@@ -36,14 +36,17 @@ const PatientDetailsScreen = ({ route, navigation } : any) => {
           <Icon name="arrow-back" size={24} color="#374151" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Medical Record</Text>
-      
       </View>
+
+
 
       <ScrollView style={styles.detailContainer} showsVerticalScrollIndicator={false}>
         {/* Header Info */}
         <View style={styles.detailHeader}>
           <View style={[styles.detailIconContainer, { backgroundColor: record.backgroundColor }]}>
-            <Icon name="description" size={32} color={record.iconColor} />
+            {/* <Icon name="description" size={32} color={record.iconColor} /> */}
+            <Text style={styles.nameFirst}>{record.title.charAt(0)}</Text>
+            
           </View>
           <Text style={styles.detailTitle}>{record.title}</Text>
           <Text style={styles.detailDate}>{formatDate(record.date)} at {record.time}</Text>
@@ -165,7 +168,10 @@ const PatientDetailsScreen = ({ route, navigation } : any) => {
 
         <View style={styles.bottomPadding} />
       </ScrollView>
+
+      
     </View>
+    
   );
 };
 
@@ -173,6 +179,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+  },
+  nameFirst:{
+    fontWeight: '700', color: '#333',fontSize:40 
   },
   header: {
     flexDirection: 'row',
@@ -351,4 +360,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientDetailsScreen;
+export default PatientDetailsShowDoctor;

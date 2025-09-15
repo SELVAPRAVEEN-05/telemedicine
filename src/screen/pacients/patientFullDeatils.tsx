@@ -13,19 +13,16 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../route/appNavigator";
 import { patientFullDetailsStyle as styles } from "../../styles/patientFullDetailsStyle";
 
-type FullRecordDetailsRouteProp = RouteProp<RootStackParamList, "FullRecordDetailsScreen">;
-type FullRecordDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList, "FullRecordDetailsScreen">;
-
 type Props = {
-    route: FullRecordDetailsRouteProp;
-    navigation: FullRecordDetailsNavigationProp;
+    route: any;
+    navigation: any;
 };
 
 export default function FullRecordDetailsScreen({ route, navigation }: Props) {
-    const { recordData } = route.params;
+    const recordData = route.params;
 
     const handleDownload = () => {
-        Alert.alert("Download", `${recordData.title} record downloaded successfully!`);
+        Alert.alert("Download", `${recordData?.title} record downloaded successfully!`);
     };
 
     const handleShare = () => {
@@ -52,60 +49,59 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
 
     return (
         <SafeAreaView style={styles.container}>
-                {/* Header */}
-                <View style={styles.header}>
-                    <TouchableOpacity 
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Text style = {styles.backButton}>←</Text>
-                    
-                    </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Medical Record Details</Text>
-                </View>
+            {/* Header */}
+            <View style={styles.header}>
+                <TouchableOpacity 
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={styles.backButton}>←</Text>
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Medical Record Details</Text>
+            </View>
+            
             <ScrollView showsVerticalScrollIndicator={false}>
-
                 {/* Main Info Card */}
-                {/* <View style={styles.mainCard}>
+                <View style={styles.mainCard}>
                     <View style={styles.cardHeader}>
                         <View>
-                            <Text style={styles.clinicName}>{recordData.title}</Text>
-                            <Text style={styles.visitDate}>{recordData.date}</Text>
-                            <Text style={styles.visitType}>{recordData.description}</Text>
-                            {recordData.patientName && (
+                            <Text style={styles.clinicName}>{recordData?.title}</Text>
+                            <Text style={styles.visitDate}>{recordData?.date}</Text>
+                            <Text style={styles.visitType}>{recordData?.description}</Text>
+                            {recordData?.patientName && (
                                 <Text style={styles.patientName}>
                                     Patient: {recordData.patientName} (Age: {recordData.patientAge})
                                 </Text>
                             )}
                         </View>
                     </View>
-                </View> */}
+                </View>
 
-                {/* Vital Signs Section
+                {/* Vital Signs Section */}
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Vital Signs</Text>
                     <View style={styles.vitalsGrid}>
                         <VitalCard 
                             label="Blood Pressure" 
-                            value={recordData.details.bloodPressure}
-                            precision={recordData.details.bloodPressurePrecision}
+                            value={recordData?.details?.bloodPressure || "N/A"}
+                            precision={recordData?.details?.bloodPressurePrecision}
                         />
                         <VitalCard 
                             label="Heart Rate" 
-                            value={recordData.details.heartRate}
-                            precision={recordData.details.heartRatePrecision}
+                            value={recordData?.details?.heartRate || "N/A"}
+                            precision={recordData?.details?.heartRatePrecision}
                         />
                         <VitalCard 
                             label="Temperature" 
-                            value={recordData.details.fever}
-                            precision={recordData.details.feverPrecision}
+                            value={recordData?.details?.fever || "N/A"}
+                            precision={recordData?.details?.feverPrecision}
                         />
                         <VitalCard 
                             label="Oxygen Level" 
-                            value={recordData.details.oxygenLevel}
-                            precision={recordData.details.oxygenLevelPrecision}
+                            value={recordData?.details?.oxygenLevel || "N/A"}
+                            precision={recordData?.details?.oxygenLevelPrecision}
                         />
                     </View>
-                </View> */}
+                </View>
 
                 {/* Physical Measurements */}
                 <View style={styles.section}>
@@ -113,21 +109,21 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
                     <View style={styles.detailsCard}>
                         <DetailRow 
                             label="Weight" 
-                            value={recordData.details.weight}
+                            value={recordData?.details?.weight || "N/A"}
                         />
                         <DetailRow 
                             label="Height" 
-                            value={recordData.details.height}
+                            value={recordData?.details?.height || "N/A"}
                         />
                     </View>
                 </View>
 
                 {/* Medications Section */}
-                {recordData.details.medications && recordData.details.medications.length > 0 && (
+                {recordData?.details?.medications && recordData.details.medications.length > 0 && (
                     <View style={styles.section}>
                         <Text style={styles.sectionTitle}>Prescribed Medications</Text>
                         <View style={styles.detailsCard}>
-                            {recordData.details.medications.map((medication:any, index : any) => (
+                            {recordData.details.medications.map((medication: any, index: number) => (
                                 <View key={index} style={styles.medicationItem}>
                                     <View style={styles.medicationHeader}>
                                         <Text style={styles.medicationName}>{medication.name}</Text>
@@ -147,8 +143,8 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Diagnosis & Treatment</Text>
                     <View style={styles.detailsCard}>
-                        <DetailRow label="Diagnosis" value={recordData.details.diagnosis} />
-                        <DetailRow label="Prescription" value={recordData.details.prescription} />
+                        <DetailRow label="Diagnosis" value={recordData?.details?.diagnosis || "N/A"} />
+                        <DetailRow label="Prescription" value={recordData?.details?.prescription || "N/A"} />
                     </View>
                 </View>
 
@@ -157,7 +153,7 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
                     <Text style={styles.sectionTitle}>Doctor's Notes</Text>
                     <View style={styles.notesCard}>
                         <Text style={styles.notesText}>
-                            {recordData.details.notes || "No additional notes provided."}
+                            {recordData?.details?.notes || "No additional notes provided."}
                         </Text>
                     </View>
                 </View>
