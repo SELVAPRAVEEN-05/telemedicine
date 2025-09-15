@@ -178,13 +178,6 @@ export default function DoctorDashboard(): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Dashboard</Text>
-        <TouchableOpacity style={styles.profileAvatar}>
-          <Text style={styles.profileAvatarText}>Dr</Text>
-        </TouchableOpacity>
-      </View>
-
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={{ paddingBottom: 24 }}

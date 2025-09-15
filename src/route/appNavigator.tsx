@@ -5,8 +5,9 @@ import AppointmentsQueueScreen from '../screen/doctor/appointmentDetails';
 import AvailabilityScreen from '../screen/doctor/avalibilable';
 import DoctorAppointments from '../screen/doctor/doctorAppointments';
 import DoctorDashboard from '../screen/doctor/doctorDashboard';
-import doctorLayout from '../screen/doctor/doctorLayout';
+import DoctorLayout from '../screen/doctor/doctorLayout';
 import DoctorPatientQueue from '../screen/doctor/doctorPatientQueue';
+import DoctorRegister from '../screen/doctor/doctorRegister';
 import PatientDetailsShowDoctor from "../screen/doctor/PatientDetailsScreen";
 import PatientRecordsScreen from '../screen/doctor/patientRecord';
 import Login from '../screen/login';
@@ -25,9 +26,12 @@ import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
+
+import DoctorProfile from '../screen/doctor/doctorProfile';
+import Videocall from '../screen/trial/VideoCall';
+
 interface Doctor {
   id: string;
-
 }
 export type RootStackParamList = {
   Landing: undefined;
@@ -44,6 +48,8 @@ export type RootStackParamList = {
   UpcommingEvents: undefined;
   bookSlot: { doctors: Doctor };
   doctorLayout: undefined;
+
+  DoctorLayout: undefined;
   DoctorDashboard: undefined;
   PatientRecordDetails: { record: any };
   FullRecordDetailsScreen: { recordData: any };
@@ -56,13 +62,19 @@ export type RootStackParamList = {
   DoctorPatientQueue: undefined;
   AppointmentsQueueScreen: undefined,
   PatientQueueScreen: undefined
+  Videocall: undefined;
+  DoctorRegister: undefined;
+  DoctorProfile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="doctorLayout" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="DoctorRegister"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -77,9 +89,10 @@ export default function AppNavigator() {
       <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
       <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
-      <Stack.Screen name="doctorLayout" component={doctorLayout} />
+      <Stack.Screen name="DoctorLayout" component={DoctorLayout} />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
       <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
+      <Stack.Screen name="Videocall" component={Videocall} />
       <Stack.Screen name="DoctorAppointments" component={DoctorAppointments} />
       <Stack.Screen name="DoctorPatientQueue" component={DoctorPatientQueue} />
       <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
@@ -88,6 +101,8 @@ export default function AppNavigator() {
       <Stack.Screen name="PatientDetailsScreen" component={PatientDetailsShowDoctor} />
       <Stack.Screen name="AppointmentsQueueScreen" component={AppointmentsQueueScreen} />
       <Stack.Screen name="PatientQueueScreen" component={PatientDetailsShowDoctor} />
+      <Stack.Screen name="DoctorRegister" component={DoctorRegister} />
+      <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
     </Stack.Navigator>
   );
 }

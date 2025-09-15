@@ -11,7 +11,6 @@ export default function DoctorAppointments() {
 
   return (
     <View style={styles.container}>
-   
 
       {/* Tabs */}
       <View style={styles.tabContainer}>
