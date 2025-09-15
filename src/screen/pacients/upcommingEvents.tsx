@@ -221,7 +221,7 @@ const MyBookingsPage = () => {
                   <TouchableOpacity
                     style={styles.modalJoinButton}
                     onPress={() => {
-                      setSelectedBooking(null);
+                      navigation.navigate('Videocall');
                       // 🚀 Handle actual join call logic here
                     }}
                   >
