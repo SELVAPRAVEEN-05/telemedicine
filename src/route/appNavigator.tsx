@@ -13,7 +13,6 @@ import PatientDetailsShowDoctor from '../screen/doctor/PatientDetailsScreen';
 import PatientRecordsScreen from '../screen/doctor/patientRecord';
 import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
-import BookSlot from '../screen/pacients/bookSlot';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
 import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
@@ -29,6 +28,7 @@ import ViewMedicines from '../screen/pacients/viewMedicines';
 import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
 import Videocall from '../screen/trial/VideoCall';
+import Translator from '../screen/pacients/translator'
 
 interface Doctor {
   id: string;
@@ -60,6 +60,7 @@ export type RootStackParamList = {
   PatientDetailsScreen: { record: any };
   DoctorAppointments: undefined;
   DoctorPatientQueue: undefined;
+  Translator : undefined
   AppointmentsQueueScreen: undefined;
   PatientQueueScreen: undefined;
   Videocall: undefined;
@@ -67,6 +68,7 @@ export type RootStackParamList = {
   DoctorProfile: undefined;
   PatienrtLayout: undefined;
 };
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -79,14 +81,13 @@ export default function AppNavigator() {
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
+
       <Stack.Screen name="PatientProfile" component={PatientProfile} />
-      <Stack.Screen name="ConsultDoctor" component={ConsultDoctor} />
+      
       <Stack.Screen name="ViewMedicines" component={ViewMedicines} />
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
-      <Stack.Screen name="bookSlot" component={BookSlot} />
       <Stack.Screen
         name="PatientRecordDetails"
         component={PatientRecordDetails}
@@ -103,6 +104,9 @@ export default function AppNavigator() {
       <Stack.Screen name="DoctorAppointments" component={DoctorAppointments} />
       <Stack.Screen name="DoctorPatientQueue" component={DoctorPatientQueue} />
       <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
+            <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
+      <Stack.Screen name="Translator" component={Translator} />
+      <Stack.Screen name="ConsultDoctor" component={ConsultDoctor} />
       <Stack.Screen name="EditMedicineScreen" component={EditMedicineScreen} />
       <Stack.Screen
         name="PatientRecordsScreen"
