@@ -61,10 +61,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="PatientDashboard"
+      initialRouteName="Landing"
       screenOptions={{ headerShown: false }}
     >
-      {/* <Stack.Screen name="Landing" component={Landing} />
+      <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
 
@@ -86,7 +86,7 @@ export default function AppNavigator() {
 
       <Stack.Screen name="DoctorAppointments" component={DoctorAppointments} />
       <Stack.Screen name="DoctorPatientQueue" component={DoctorPatientQueue} />
-      <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} /> */}
+      <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
             <Stack.Screen name="bookSlot" component={BookSlot} /> 
             <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
       <Stack.Screen name="Translator" component={Translator} />

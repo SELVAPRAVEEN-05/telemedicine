@@ -229,7 +229,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
 
         {/* Experience & Calls */}
         <Text style={styles.statsText}>
-          {experience}{t.yearsExperience} | {totalCalls} {t.callsAttended}
+          {experience} {t.yearsExperience} | {totalCalls} {t.callsAttended}
         </Text>
 
         {/* Languages */}
