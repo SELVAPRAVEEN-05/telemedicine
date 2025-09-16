@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
   Alert,
   Dimensions,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
-import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../route/appNavigator"; 
+import Icon from 'react-native-vector-icons/Feather';
+import { RootStackParamList } from '../../route/appNavigator';
 import { bookSLotstyles as styles } from '../../styles/bookSlot';
 
 const { width } = Dimensions.get('window');
@@ -53,8 +53,8 @@ const doctor: Doctor = {
   creditsPerMin: 35,
 };
 
-type AppointmentRouteProp = RouteProp<RootStackParamList, "bookSlot">;
-type AppointmentNavProp = StackNavigationProp<RootStackParamList, "bookSlot">;
+type AppointmentRouteProp = RouteProp<RootStackParamList, 'bookSlot'>;
+type AppointmentNavProp = StackNavigationProp<RootStackParamList, 'bookSlot'>;
 
 const DoctorBookingScreen: React.FC = () => {
   const route = useRoute<AppointmentRouteProp>();
@@ -97,34 +97,51 @@ const DoctorBookingScreen: React.FC = () => {
 
   const handleBookAppointment = () => {
     if (!selectedTime) {
-      Alert.alert('Select a time slot', 'Please select a time slot before booking.');
+      Alert.alert(
+        'Select a time slot',
+        'Please select a time slot before booking.',
+      );
       return;
     }
     setBookingSuccess(true);
-    Alert.alert('Booking Confirmed', `Your appointment is booked for ${selectedTime}`);
+    Alert.alert(
+      'Booking Confirmed',
+      `Your appointment is booked for ${selectedTime}`,
+    );
   };
 
   return (
     <View style={styles.container}>
       {/* Back Button + Header */}
-      
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", marginTop: 40 }}>
-        <TouchableOpacity
-          onPress={() => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            } else {
-              navigation.navigate('PatientDashboard');
-            }
-          }}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <View
+          style={{ flexDirection: 'row', alignItems: 'center', marginTop: 40 }}
         >
-        <Icon name="arrow-left" size={26} style={{marginLeft:15,marginTop:5,marginRight:10}} color="#000000"/>  
-        </TouchableOpacity>
-        
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Book Appointment</Text>
-      </View> 
+          <TouchableOpacity
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('PatienrtLayout');
+              }
+            }}
+          >
+            <Icon
+              name="arrow-left"
+              size={26}
+              style={{ marginLeft: 15, marginTop: 5, marginRight: 10 }}
+              color="#000000"
+            />
+          </TouchableOpacity>
+
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            Book Appointment
+          </Text>
+        </View>
         <View style={styles.profileCard}>
           <LinearGradient
             colors={['#FFA500', '#FF7F50', '#eea185ff']}
@@ -149,7 +166,9 @@ const DoctorBookingScreen: React.FC = () => {
           <View style={{ padding: 20 }}>
             <View style={styles.specialityContainer}>
               <Icon name="briefcase" size={16} color="#4285F4" />
-              <Text style={styles.specialityText}>Specialized in {doctor.speciality}</Text>
+              <Text style={styles.specialityText}>
+                Specialized in {doctor.speciality}
+              </Text>
             </View>
 
             <View style={styles.nameContainer}>
@@ -158,10 +177,14 @@ const DoctorBookingScreen: React.FC = () => {
                 <View
                   style={[
                     styles.statusDot,
-                    { backgroundColor: doctor.isActive ? '#4CAF50' : '#FFA726' },
+                    {
+                      backgroundColor: doctor.isActive ? '#4CAF50' : '#FFA726',
+                    },
                   ]}
                 />
-                <Text style={styles.statusText}>{doctor.isActive ? 'Active' : 'Busy'}</Text>
+                <Text style={styles.statusText}>
+                  {doctor.isActive ? 'Active' : 'Busy'}
+                </Text>
               </View>
             </View>
 
@@ -172,7 +195,9 @@ const DoctorBookingScreen: React.FC = () => {
 
             <View style={styles.infoRow}>
               <Icon name="dollar-sign" size={14} color="#666" />
-              <Text style={styles.infoText}>Finance Management, Credit Advise +2 more</Text>
+              <Text style={styles.infoText}>
+                Finance Management, Credit Advise +2 more
+              </Text>
             </View>
 
             <View style={styles.infoRow}>
@@ -182,8 +207,12 @@ const DoctorBookingScreen: React.FC = () => {
 
             <View style={styles.creditsContainer}>
               <View>
-                <Text style={styles.creditsLabel}>{doctor.credits} credits</Text>
-                <Text style={styles.creditsRate}>{doctor.creditsPerMin} Credits /Min</Text>
+                <Text style={styles.creditsLabel}>
+                  {doctor.credits} credits
+                </Text>
+                <Text style={styles.creditsRate}>
+                  {doctor.creditsPerMin} Credits /Min
+                </Text>
               </View>
             </View>
           </View>
@@ -220,11 +249,26 @@ const DoctorBookingScreen: React.FC = () => {
 
           <View style={{ marginVertical: 20, paddingBottom: 10 }}>
             <View style={{ marginBottom: 16, paddingBottom: 10 }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, fontWeight: '600', color: '#1a1a1a' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{ fontSize: 18, fontWeight: '600', color: '#1a1a1a' }}
+                >
                   Available dates
                 </Text>
-                <View style={{ flexDirection: 'row', borderRadius: 20, gap: 8, padding: 2 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    borderRadius: 20,
+                    gap: 8,
+                    padding: 2,
+                  }}
+                >
                   <TouchableOpacity
                     style={{
                       width: 36,
@@ -238,7 +282,7 @@ const DoctorBookingScreen: React.FC = () => {
                       shadowOffset: { width: 0, height: 1 },
                       shadowOpacity: 0.1,
                       shadowRadius: 2,
-                      elevation: 2
+                      elevation: 2,
                     }}
                     onPress={scrollLeft}
                   >
@@ -257,7 +301,7 @@ const DoctorBookingScreen: React.FC = () => {
                       shadowOffset: { width: 0, height: 1 },
                       shadowOpacity: 0.1,
                       shadowRadius: 2,
-                      elevation: 2
+                      elevation: 2,
                     }}
                     onPress={scrollRight}
                   >
@@ -282,55 +326,82 @@ const DoctorBookingScreen: React.FC = () => {
                     width: 80,
                     paddingVertical: 16,
                     paddingHorizontal: 12,
-                    backgroundColor: selectedDate === dateItem.date ? '#007AFF' : '#fff',
+                    backgroundColor:
+                      selectedDate === dateItem.date ? '#007AFF' : '#fff',
                     borderRadius: 16,
                     alignItems: 'center',
                     borderWidth: 1,
-                    borderColor: selectedDate === dateItem.date ? '#007AFF' : '#e5e5e5',
+                    borderColor:
+                      selectedDate === dateItem.date ? '#007AFF' : '#e5e5e5',
                     shadowColor: '#000',
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.08,
                     shadowRadius: 4,
                     elevation: 3,
                     marginRight: 12,
-                    transform: selectedDate === dateItem.date ? [{ scale: 1.02 }] : [{ scale: 1 }]
+                    transform:
+                      selectedDate === dateItem.date
+                        ? [{ scale: 1.02 }]
+                        : [{ scale: 1 }],
                   }}
                   onPress={() => handleDateSelect(dateItem.date)}
                 >
-                  <Text style={{
-                    fontSize: 12,
-                    fontWeight: '500',
-                    color: selectedDate === dateItem.date ? '#fff' : '#666',
-                    marginBottom: 4,
-                    textTransform: 'uppercase'
-                  }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: '500',
+                      color: selectedDate === dateItem.date ? '#fff' : '#666',
+                      marginBottom: 4,
+                      textTransform: 'uppercase',
+                    }}
+                  >
                     {dateItem.day}
                   </Text>
-                  <View style={{ height: 50, display: 'flex', justifyContent: 'center' }}>
-                    <Text style={{
-                      fontSize: 16,
-                      fontWeight: '700',
-                      color: selectedDate === dateItem.date ? '#fff' : '#1a1a1a',
-                      marginBottom: 8
-                    }}>
+                  <View
+                    style={{
+                      height: 50,
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: '700',
+                        color:
+                          selectedDate === dateItem.date ? '#fff' : '#1a1a1a',
+                        marginBottom: 8,
+                      }}
+                    >
                       {dateItem.date}
                     </Text>
                   </View>
                   <View style={{ width: '100%', alignItems: 'center' }}>
-                    <View style={{
-                      backgroundColor: selectedDate === dateItem.date ? 'rgba(255, 255, 255, 0.2)' : '#f0f9ff',
-                      paddingHorizontal: 8,
-                      paddingVertical: 4,
-                      borderRadius: 12,
-                      borderWidth: 1,
-                      borderColor: selectedDate === dateItem.date ? 'rgba(255, 255, 255, 0.3)' : '#e0f2fe'
-                    }}>
-                      <Text style={{
-                        fontSize: 10,
-                        fontWeight: '600',
-                        color: selectedDate === dateItem.date ? '#fff' : '#0284c7',
-                        textAlign: 'center'
-                      }}>
+                    <View
+                      style={{
+                        backgroundColor:
+                          selectedDate === dateItem.date
+                            ? 'rgba(255, 255, 255, 0.2)'
+                            : '#f0f9ff',
+                        paddingHorizontal: 8,
+                        paddingVertical: 4,
+                        borderRadius: 12,
+                        borderWidth: 1,
+                        borderColor:
+                          selectedDate === dateItem.date
+                            ? 'rgba(255, 255, 255, 0.3)'
+                            : '#e0f2fe',
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          fontWeight: '600',
+                          color:
+                            selectedDate === dateItem.date ? '#fff' : '#0284c7',
+                          textAlign: 'center',
+                        }}
+                      >
                         {dateItem.slots} Slots
                       </Text>
                     </View>
@@ -346,10 +417,18 @@ const DoctorBookingScreen: React.FC = () => {
             {doctor.availableTimes.map((time, index) => (
               <TouchableOpacity
                 key={index}
-                style={[styles.timeSlot, selectedTime === time && styles.timeSlotSelected]}
+                style={[
+                  styles.timeSlot,
+                  selectedTime === time && styles.timeSlotSelected,
+                ]}
                 onPress={() => handleTimeSelect(time)}
               >
-                <Text style={[styles.timeSlotText, selectedTime === time && styles.timeSlotTextSelected]}>
+                <Text
+                  style={[
+                    styles.timeSlotText,
+                    selectedTime === time && styles.timeSlotTextSelected,
+                  ]}
+                >
                   {time}
                 </Text>
               </TouchableOpacity>
@@ -360,7 +439,10 @@ const DoctorBookingScreen: React.FC = () => {
 
       {/* Bottom Book Button */}
       <View style={styles.bottomContainer}>
-        <TouchableOpacity style={styles.bookButton} onPress={handleBookAppointment}>
+        <TouchableOpacity
+          style={styles.bookButton}
+          onPress={handleBookAppointment}
+        >
           <Text style={styles.bookButtonText}>
             Schedule Call For Today, {selectedTime || '09:30 AM'}
           </Text>

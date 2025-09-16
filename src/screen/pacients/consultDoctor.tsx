@@ -1,25 +1,28 @@
-import React from "react";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React from 'react';
 import {
-  View,
-  Text,
   FlatList,
   Image,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
   ImageSourcePropType,
   ListRenderItem,
-} from "react-native";
-import Icon from "react-native-vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 // ✅ Import your typed routes
-import { RootStackParamList } from "../../route/appNavigator";
-import { consultDoctorstyles as styles } from "../../styles/consultDoctorStyle";
+import { RootStackParamList } from '../../route/appNavigator';
+import { consultDoctorstyles as styles } from '../../styles/consultDoctorStyle';
 
 // ✅ Navigation type for this screen
-type ConsultDoctorNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ConsultDoctor'>;
+type ConsultDoctorNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'ConsultDoctor'
+>;
 
 // Doctor interface
 interface Doctor {
@@ -37,8 +40,6 @@ interface Doctor {
   rating: number;
   isActive: boolean;
   languages: string[];
-  credits: number;
-  creditsPerMin: number;
 }
 
 // Props for DoctorCard
@@ -54,15 +55,10 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
   profileImage,
   rating,
   experience,
-  availableTimes,
   isActive,
   totalCalls,
-  credits,
   languages,
-  qualifications,
-  bio,
   consultationFee,
-  callDuration,
 }) => {
   const navigation = useNavigation<ConsultDoctorNavigationProp>();
 
@@ -75,6 +71,7 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
 
       {/* Doctor Info */}
       <View style={styles.infoContainer}>
+        {/* Speciality */}
         <View style={styles.specialitySection}>
           <Icon name="briefcase" size={16} color="#FF6B35" />
           <Text style={styles.specialityText}>Specialized in {speciality}</Text>
@@ -87,16 +84,16 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
             <View
               style={[
                 styles.statusDot,
-                { backgroundColor: isActive ? "#4CAF50" : "#FFA726" },
+                { backgroundColor: isActive ? '#4CAF50' : '#FFA726' },
               ]}
             />
             <Text
               style={[
                 styles.statusText,
-                { color: isActive ? "#4CAF50" : "#FFA726" },
+                { color: isActive ? '#4CAF50' : '#FFA726' },
               ]}
             >
-              {isActive ? "Available Now" : "In another Call"}
+              {isActive ? 'Available Now' : 'In another Call'}
             </Text>
           </View>
         </View>
@@ -112,23 +109,18 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
         <View style={styles.infoSection}>
           <View style={styles.infoRow}>
             <Icon name="globe" size={14} color="#666" />
-            <Text style={styles.infoText}>{languages.join(", ")}</Text>
+            <Text style={styles.infoText}>{languages.join(', ')}</Text>
           </View>
         </View>
 
-        {/* Credits + Book Button */}
+        {/* Payment + Book Button */}
         <View style={styles.actionSection}>
-          <View style={styles.creditsSection}>
-            <Text style={styles.creditsLabel}>{credits} credits</Text>
-            <Text style={styles.creditsRate}>
-              {Math.floor(credits * 0.7)} Credits /Min
-            </Text>
+          <View>
+            <Text style={styles.feeLabel}>Consultation Fee</Text>
+            <Text style={styles.feeAmount}>₹{consultationFee}</Text>
           </View>
-          <TouchableOpacity
-            style={styles.callButton}
-            onPress={() => navigation.navigate("bookSlot", { doctors: { id } })}
-          >
-            <Text style={styles.callButtonText}>Book Appointment</Text>
+          <TouchableOpacity style={styles.callButton}>
+            <Text style={styles.callButtonText}>Pay & Connect</Text>
           </TouchableOpacity>
         </View>
 
@@ -148,116 +140,93 @@ const ConsultDoctor: React.FC = () => {
 
   const doctors: Doctor[] = [
     {
-      id: "1",
-      name: "Nancy John Sarikha",
-      speciality: "Credit Management",
-      qualifications: "MBA Finance, CFA",
-      bio: "Experienced financial advisor with 5+ years in credit management and financial planning.",
-      profileImage: require("../../assets/Images/image1.png"),
-      consultationFee: 500,
-      availableTimes: ["8:00 AM", "9:20 AM", "12:00 AM", "4:00 AM", "5:00 AM"],
-      experience: "5 Years Experience",
+      id: '1',
+      name: 'Dr. Nancy John Sarikha',
+      speciality: 'Cardiologist',
+      qualifications: 'MBBS, MD (Cardiology)',
+      bio: 'Experienced cardiologist specializing in preventive heart care, with 5+ years of experience treating patients with cardiovascular diseases.',
+      profileImage: require('../../assets/Images/image1.png'),
+      consultationFee: 200,
+      availableTimes: ['8:00 AM', '9:30 AM', '12:00 PM', '4:00 PM', '5:00 PM'],
+      experience: '5 Years Experience',
       totalCalls: 85,
-      callDuration: "150 Mins",
+      callDuration: '150 Mins',
       rating: 4.5,
       isActive: true,
-      languages: ["Tamil", "English"],
-      credits: 45,
-      creditsPerMin: 35,
+      languages: ['Tamil', 'English'],
     },
     {
-      id: "2",
-      name: "Michael Lee",
-      speciality: "Finance Management",
-      qualifications: "MBA Accounting, CPA",
-      bio: "12+ years of expertise in financial planning and corporate finance.",
-      profileImage: require("../../assets/Images/image1.png"),
-      consultationFee: 600,
-      availableTimes: ["9:00 AM", "11:00 AM", "3:00 PM", "6:00 PM"],
-      experience: "12 Years Experience",
+      id: '2',
+      name: 'Dr. Michael Lee',
+      speciality: 'General Physician',
+      qualifications: 'MBBS, MD (Internal Medicine)',
+      bio: 'General physician with 12+ years of expertise in internal medicine, preventive care, and chronic disease management.',
+      profileImage: require('../../assets/Images/image1.png'),
+      consultationFee: 150,
+      availableTimes: ['9:00 AM', '11:00 AM', '3:00 PM', '6:00 PM'],
+      experience: '12 Years Experience',
       totalCalls: 120,
-      callDuration: "200 Mins",
+      callDuration: '200 Mins',
       rating: 4.7,
       isActive: false,
-      languages: ["English", "Tamil"],
-      credits: 38,
-      creditsPerMin: 30,
+      languages: ['English', 'Tamil'],
     },
     {
-      id: "3",
-      name: "Emily Davis",
-      speciality: "Investment Advisory",
-      qualifications: "MBA Finance, CFA, CFP",
-      bio: "Helping clients achieve their investment goals with 18 years of experience.",
-      profileImage: require("../../assets/Images/image1.png"),
+      id: '3',
+      name: 'Dr. Emily Davis',
+      speciality: 'Pediatrician',
+      qualifications: 'MBBS, DCH, MD (Pediatrics)',
+      bio: 'Passionate pediatrician helping children stay healthy and supporting parents with expert guidance. 18 years of experience in child care.',
+      profileImage: require('../../assets/Images/image1.png'),
       consultationFee: 750,
-      availableTimes: ["8:30 AM", "10:00 AM", "1:00 PM", "4:30 PM"],
-      experience: "18 Years Experience",
-      totalCalls: 200,
-      callDuration: "350 Mins",
+      availableTimes: ['8:30 AM', '10:00 AM', '1:00 PM', '4:30 PM'],
+      experience: '18 Years Experience',
+      totalCalls: 250,
+      callDuration: '350 Mins',
       rating: 4.9,
       isActive: true,
-      languages: ["English", "Hindi"],
-      credits: 52,
-      creditsPerMin: 40,
+      languages: ['English', 'Hindi'],
     },
   ];
 
   const renderDoctor: ListRenderItem<Doctor> = ({ item }) => (
-    <DoctorCard {...item} onPress={() => console.log("Selected:", item.name)} />
+    <DoctorCard {...item} onPress={() => console.log('Selected:', item.name)} />
   );
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 20 }}>
+    <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.headerSection}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}> 
-          {/* Back Arrow */}
+        {/* Search Bar */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {/* Search Box */}
+          <View style={[styles.searchContainer, { flex: 1, marginRight: 10 }]}>
+            <Icon
+              name="search"
+              size={20}
+              color="#FF6B35"
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search experts, specialities..."
+              placeholderTextColor="#999"
+            />
+          </View>
+
+          {/* Filter Icon */}
           <TouchableOpacity
-            onPress={() => {
-              if (navigation.canGoBack()) {
-                navigation.goBack();
-              } else {
-                navigation.navigate("PatientDashboard"); // fallback
-              }
+            style={{
+              padding: 10,
+              backgroundColor: '#F8F9FA',
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: '#d1d1d1ff',
             }}
           >
-           <Icon name="arrow-left" size={26} style={{marginBottom:15,marginRight:10}} color="#000000"/>
+            <Icon name="filter" size={22} color="#666" />
           </TouchableOpacity>
-
-          <Text style={styles.header}>Find Your Expert</Text>
         </View>
-
-        {/* Search Bar */}
-       <View style={{ flexDirection: "row", alignItems: "center", marginTop: 10 }}>
-  {/* Search Box */}
-  <View style={[styles.searchContainer, { flex: 1, marginRight: 10 }]}>
-    <Icon
-      name="search"
-      size={20}
-      color="#FF6B35"
-      style={styles.searchIcon}
-    />
-    <TextInput
-      style={styles.searchInput}
-      placeholder="Search experts, specialities..."
-      placeholderTextColor="#999"
-    />
-  </View>
-
-  {/* Filter Icon */}
-  <TouchableOpacity
-    style={{
-      padding: 10,
-      backgroundColor: "#F8F9FA",
-      borderRadius: 8,
-    }}
-  >
-    <Icon name="filter" size={22} color="#666" />
-  </TouchableOpacity>
-</View>
-
-        
       </View>
 
       {/* Doctor List */}
@@ -265,7 +234,7 @@ const ConsultDoctor: React.FC = () => {
         scrollEnabled={false}
         data={doctors}
         renderItem={renderDoctor}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContainer}
       />

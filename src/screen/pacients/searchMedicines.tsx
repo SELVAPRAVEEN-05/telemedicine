@@ -13,6 +13,8 @@ import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../route/appNavigator";
 import { SearchMedicine as styles } from '../../styles/SearchMedicine';
+import Icon from 'react-native-vector-icons/Feather';
+
 
 type PharmacyDetailsRouteProp = RouteProp<RootStackParamList>;
 type PharmacyDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -226,15 +228,28 @@ export default function PharmacyDetailsScreen({ route, navigation }: Props) {
     <SafeAreaView style={styles.container}>
       {/* Header */}
 
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
+      <View
+          style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }}
         >
-          <Text style={styles.backButton}>←</Text>
+          <TouchableOpacity
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              }
+            }}
+          >
+            <Icon
+              name="arrow-left"
+              size={26}
+              style={{ marginLeft: 15, marginTop: 5, marginRight: 10 }}
+              color="#000000"
+            />
+          </TouchableOpacity>
 
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Available Medicines</Text>
-      </View>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            Available Medicines
+          </Text>
+        </View>
 
       {/* Pharmacy Info */}
       <View style={styles.pharmacyInfo}>

@@ -135,7 +135,7 @@ export default function Register() {
           {/* Register */}
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={() => navigation.navigate('PatientDashboard')}
+            onPress={() => navigation.navigate('PatienrtLayout')}
           >
             <Text style={styles.submitText}>Register</Text>
           </TouchableOpacity>
