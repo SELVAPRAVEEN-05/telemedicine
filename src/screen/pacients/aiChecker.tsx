@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  TextInput,
-  Alert,
-} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import {
+  Alert,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { RootStackParamList } from '../../route/appNavigator';
 import { aiCheckerStyles as styles } from '../../styles/aiCheckerStyles';
 
@@ -39,10 +40,20 @@ const SYMPTOMS: Symptom[] = [
   { id: '7', name: 'Fatigue', emoji: '😴', category: 'general' },
   { id: '8', name: 'Dizziness', emoji: '😵', category: 'neurological' },
   { id: '9', name: 'Chest Pain', emoji: '💔', category: 'cardiac' },
-  { id: '10', name: 'Shortness of Breath', emoji: '😤', category: 'respiratory' },
+  {
+    id: '10',
+    name: 'Shortness of Breath',
+    emoji: '😤',
+    category: 'respiratory',
+  },
   { id: '11', name: 'Joint Pain', emoji: '🦴', category: 'musculoskeletal' },
   { id: '12', name: 'Skin Rash', emoji: '🔴', category: 'dermatological' },
-  { id: '13', name: 'Eye Irritation', emoji: '👁️', category: 'ophthalmological' },
+  {
+    id: '13',
+    name: 'Eye Irritation',
+    emoji: '👁️',
+    category: 'ophthalmological',
+  },
   { id: '14', name: 'Back Pain', emoji: '🏃', category: 'musculoskeletal' },
   { id: '15', name: 'Runny Nose', emoji: '👃', category: 'respiratory' },
   { id: '16', name: 'Muscle Ache', emoji: '💪', category: 'musculoskeletal' },
@@ -52,26 +63,33 @@ export default function AiChecker() {
   const navigation = useNavigation<AiCheckerNav>();
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [customSymptoms, setCustomSymptoms] = useState('');
-  const [severity, setSeverity] = useState<'mild' | 'moderate' | 'severe'>('mild');
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [severity, setSeverity] = useState<'mild' | 'moderate' | 'severe'>(
+    'mild',
+  );
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
+    null,
+  );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const toggleSymptom = (symptomId: string) => {
-    setSelectedSymptoms(prev => 
-      prev.includes(symptomId) 
+    setSelectedSymptoms(prev =>
+      prev.includes(symptomId)
         ? prev.filter(id => id !== symptomId)
-        : [...prev, symptomId]
+        : [...prev, symptomId],
     );
   };
 
   const analyzeSymptoms = async () => {
     if (selectedSymptoms.length === 0 && !customSymptoms.trim()) {
-      Alert.alert('No Symptoms Selected', 'Please select at least one symptom or describe your symptoms to continue.');
+      Alert.alert(
+        'No Symptoms Selected',
+        'Please select at least one symptom or describe your symptoms to continue.',
+      );
       return;
     }
 
     setIsAnalyzing(true);
-    
+
     // Simulate AI analysis
     setTimeout(() => {
       const result = generateAnalysis();
@@ -81,9 +99,9 @@ export default function AiChecker() {
   };
 
   const generateAnalysis = (): AnalysisResult => {
-    const selectedSymptomNames = selectedSymptoms.map(id => 
-      SYMPTOMS.find(s => s.id === id)?.name
-    ).filter(Boolean);
+    const selectedSymptomNames = selectedSymptoms
+      .map(id => SYMPTOMS.find(s => s.id === id)?.name)
+      .filter(Boolean);
 
     // Simple rule-based analysis for demonstration
     let riskLevel: 'low' | 'moderate' | 'high' = 'low';
@@ -91,14 +109,16 @@ export default function AiChecker() {
     let recommendations: string[] = [];
     let possibleConditions: string[] = [];
 
-    const hasCardiacSymptoms = selectedSymptomNames.some(name => 
-      ['Chest Pain', 'Shortness of Breath'].includes(name!)
+    const hasCardiacSymptoms = selectedSymptomNames.some(name =>
+      ['Chest Pain', 'Shortness of Breath'].includes(name!),
     );
-    const hasRespiratorySymptoms = selectedSymptomNames.some(name => 
-      ['Cough', 'Sore Throat', 'Shortness of Breath', 'Runny Nose'].includes(name!)
+    const hasRespiratorySymptoms = selectedSymptomNames.some(name =>
+      ['Cough', 'Sore Throat', 'Shortness of Breath', 'Runny Nose'].includes(
+        name!,
+      ),
     );
-    const hasDigestiveSymptoms = selectedSymptomNames.some(name => 
-      ['Nausea', 'Stomach Pain'].includes(name!)
+    const hasDigestiveSymptoms = selectedSymptomNames.some(name =>
+      ['Nausea', 'Stomach Pain'].includes(name!),
     );
     const hasFever = selectedSymptomNames.includes('Fever');
 
@@ -110,7 +130,7 @@ export default function AiChecker() {
         'Seek immediate emergency medical attention',
         'Call emergency services (911) immediately',
         'Do not drive yourself to the hospital',
-        'Take prescribed heart medications if available'
+        'Take prescribed heart medications if available',
       ];
     } else if (hasFever && selectedSymptoms.length >= 3) {
       riskLevel = 'moderate';
@@ -120,17 +140,21 @@ export default function AiChecker() {
         'Schedule an appointment with your doctor within 24-48 hours',
         'Stay hydrated and get plenty of rest',
         'Monitor your temperature regularly',
-        'Avoid contact with others to prevent spread'
+        'Avoid contact with others to prevent spread',
       ];
     } else if (hasRespiratorySymptoms) {
       riskLevel = severity === 'severe' ? 'moderate' : 'low';
       urgency = severity === 'severe' ? 'urgent' : 'routine';
-      possibleConditions = ['Common Cold', 'Upper Respiratory Infection', 'Allergies'];
+      possibleConditions = [
+        'Common Cold',
+        'Upper Respiratory Infection',
+        'Allergies',
+      ];
       recommendations = [
         'Rest and stay hydrated',
         'Use over-the-counter medications as needed',
         'Gargle with warm salt water for sore throat',
-        'Consider seeing a doctor if symptoms worsen'
+        'Consider seeing a doctor if symptoms worsen',
       ];
     } else if (hasDigestiveSymptoms) {
       riskLevel = 'low';
@@ -139,7 +163,7 @@ export default function AiChecker() {
         'Stay hydrated with small sips of water',
         'Follow the BRAT diet (Bananas, Rice, Applesauce, Toast)',
         'Avoid dairy and fatty foods',
-        'See a doctor if symptoms persist for more than 2 days'
+        'See a doctor if symptoms persist for more than 2 days',
       ];
     } else {
       possibleConditions = ['Minor Ailment', 'Stress-related symptoms'];
@@ -147,7 +171,7 @@ export default function AiChecker() {
         'Monitor your symptoms',
         'Get adequate rest and maintain good hygiene',
         'Stay hydrated and eat nutritious foods',
-        'Consider lifestyle factors that may be contributing'
+        'Consider lifestyle factors that may be contributing',
       ];
     }
 
@@ -156,7 +180,7 @@ export default function AiChecker() {
       confidence: Math.floor(Math.random() * 30) + 70, // 70-99%
       recommendations,
       possibleConditions,
-      urgency
+      urgency,
     };
   };
 
@@ -177,124 +201,130 @@ export default function AiChecker() {
       'If this is a medical emergency, please call your local emergency number immediately.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Call Emergency', onPress: () => console.log('Call emergency services') }
-      ]
+        {
+          text: 'Call Emergency',
+          onPress: () => console.log('Call emergency services'),
+        },
+      ],
     );
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>AI Symptom Checker</Text>
+    <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 20,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            }
+          }}
+        >
+          <Icon
+            name="arrow-left"
+            size={26}
+            style={{ marginLeft: 15, marginTop: 5, marginRight: 10 }}
+            color="#000000"
+          />
+        </TouchableOpacity>
+
+        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+          AI Symptom Checker
+        </Text>
+      </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.subtitle}>
           Get preliminary health insights based on your symptoms
         </Text>
-      </View>
+        {/* Disclaimer */}
+        <View style={styles.disclaimer}>
+          <Text style={styles.disclaimerText}>
+            ⚠️ This is not a substitute for professional medical advice. Always
+            consult with a healthcare provider for proper diagnosis and
+            treatment.
+          </Text>
+        </View>
 
-      {/* Disclaimer */}
-      <View style={styles.disclaimer}>
-        <Text style={styles.disclaimerText}>
-          ⚠️ This is not a substitute for professional medical advice. 
-          Always consult with a healthcare provider for proper diagnosis and treatment.
-        </Text>
-      </View>
+        {!analysisResult ? (
+          <>
+            {/* Symptom Selection */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Select Your Symptoms</Text>
+              <View style={styles.symptomsGrid}>
+                {SYMPTOMS.map(symptom => (
+                  <TouchableOpacity
+                    key={symptom.id}
+                    style={[
+                      styles.symptomCard,
+                      selectedSymptoms.includes(symptom.id) &&
+                        styles.symptomCardSelected,
+                    ]}
+                    onPress={() => toggleSymptom(symptom.id)}
+                  >
+                    <Text style={styles.symptomEmoji}>{symptom.emoji}</Text>
+                    <Text
+                      style={[
+                        styles.symptomText,
+                        selectedSymptoms.includes(symptom.id) &&
+                          styles.symptomTextSelected,
+                      ]}
+                    >
+                      {symptom.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
 
-      {!analysisResult ? (
-        <>
-          {/* Symptom Selection */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Select Your Symptoms</Text>
-            <View style={styles.symptomsGrid}>
-              {SYMPTOMS.map(symptom => (
-                <TouchableOpacity
-                  key={symptom.id}
-                  style={[
-                    styles.symptomCard,
-                    selectedSymptoms.includes(symptom.id) && styles.symptomCardSelected
-                  ]}
-                  onPress={() => toggleSymptom(symptom.id)}
-                >
-                  <Text style={styles.symptomEmoji}>{symptom.emoji}</Text>
-                  <Text style={[
-                    styles.symptomText,
-                    selectedSymptoms.includes(symptom.id) && styles.symptomTextSelected
-                  ]}>
-                    {symptom.name}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+              {/* Custom Symptoms Input */}
+              <View style={styles.customInputContainer}>
+                <Text style={styles.customInputLabel}>
+                  Describe any other symptoms:
+                </Text>
+                <TextInput
+                  style={styles.customInput}
+                  multiline
+                  placeholder="Describe any additional symptoms you're experiencing..."
+                  value={customSymptoms}
+                  onChangeText={setCustomSymptoms}
+                  placeholderTextColor="#9CA3AF"
+                />
+              </View>
             </View>
 
-            {/* Custom Symptoms Input */}
-            <View style={styles.customInputContainer}>
-              <Text style={styles.customInputLabel}>
-                Describe any other symptoms:
+            {/* Analyze Button */}
+            <TouchableOpacity
+              style={[
+                styles.analyzeButton,
+                selectedSymptoms.length === 0 &&
+                  !customSymptoms.trim() &&
+                  styles.analyzeButtonDisabled,
+              ]}
+              onPress={analyzeSymptoms}
+              disabled={
+                isAnalyzing ||
+                (selectedSymptoms.length === 0 && !customSymptoms.trim())
+              }
+            >
+              <Text style={styles.analyzeButtonText}>
+                {isAnalyzing ? 'Analyzing Symptoms...' : 'Analyze Symptoms'}
               </Text>
-              <TextInput
-                style={styles.customInput}
-                multiline
-                placeholder="Describe any additional symptoms you're experiencing..."
-                value={customSymptoms}
-                onChangeText={setCustomSymptoms}
-                placeholderTextColor="#9CA3AF"
-              />
-            </View>
-          </View>
-
-          {/* Severity Selection */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>How severe are your symptoms?</Text>
-            <View style={styles.severityButtons}>
-              {(['mild', 'moderate', 'severe'] as const).map(level => (
-                <TouchableOpacity
-                  key={level}
-                  style={[
-                    styles.severityButton,
-                    severity === level && styles.severityButtonSelected,
-                    severity === level && level === 'mild' && styles.severityButtonMild,
-                    severity === level && level === 'moderate' && styles.severityButtonModerate,
-                    severity === level && level === 'severe' && styles.severityButtonSevere,
-                  ]}
-                  onPress={() => setSeverity(level)}
-                >
-                  <Text style={[
-                    styles.severityText,
-                    severity === level && styles.severityTextSelected,
-                    severity === level && level === 'mild' && styles.severityTextMild,
-                    severity === level && level === 'moderate' && styles.severityTextModerate,
-                    severity === level && level === 'severe' && styles.severityTextSevere,
-                  ]}>
-                    {level.charAt(0).toUpperCase() + level.slice(1)}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Analyze Button */}
-          <TouchableOpacity
-            style={[
-              styles.analyzeButton,
-              (selectedSymptoms.length === 0 && !customSymptoms.trim()) && styles.analyzeButtonDisabled
-            ]}
-            onPress={analyzeSymptoms}
-            disabled={isAnalyzing || (selectedSymptoms.length === 0 && !customSymptoms.trim())}
-          >
-            <Text style={styles.analyzeButtonText}>
-              {isAnalyzing ? 'Analyzing Symptoms...' : 'Analyze Symptoms'}
-            </Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <AnalysisResults 
-          result={analysisResult}
-          onConsultDoctor={handleConsultDoctor}
-          onEmergency={handleEmergency}
-          onReset={resetAnalysis}
-        />
-      )}
-    </ScrollView>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <AnalysisResults
+            result={analysisResult}
+            onConsultDoctor={handleConsultDoctor}
+            onEmergency={handleEmergency}
+            onReset={resetAnalysis}
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 }
 
@@ -309,33 +339,39 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
   result,
   onConsultDoctor,
   onEmergency,
-  onReset
+  onReset,
 }) => {
   return (
     <View style={styles.resultContainer}>
       <Text style={styles.resultTitle}>Analysis Results</Text>
-      
+
       {/* Risk Level */}
-      <View style={[
-        styles.riskLevel,
-        result.riskLevel === 'low' && styles.riskLevelLow,
-        result.riskLevel === 'moderate' && styles.riskLevelModerate,
-        result.riskLevel === 'high' && styles.riskLevelHigh,
-      ]}>
-        <Text style={[
-          styles.riskText,
-          result.riskLevel === 'low' && styles.riskTextLow,
-          result.riskLevel === 'moderate' && styles.riskTextModerate,
-          result.riskLevel === 'high' && styles.riskTextHigh,
-        ]}>
+      <View
+        style={[
+          styles.riskLevel,
+          result.riskLevel === 'low' && styles.riskLevelLow,
+          result.riskLevel === 'moderate' && styles.riskLevelModerate,
+          result.riskLevel === 'high' && styles.riskLevelHigh,
+        ]}
+      >
+        <Text
+          style={[
+            styles.riskText,
+            result.riskLevel === 'low' && styles.riskTextLow,
+            result.riskLevel === 'moderate' && styles.riskTextModerate,
+            result.riskLevel === 'high' && styles.riskTextHigh,
+          ]}
+        >
           {result.riskLevel.toUpperCase()} RISK
         </Text>
-        <Text style={[
-          styles.riskDescription,
-          result.riskLevel === 'low' && styles.riskDescriptionLow,
-          result.riskLevel === 'moderate' && styles.riskDescriptionModerate,
-          result.riskLevel === 'high' && styles.riskDescriptionHigh,
-        ]}>
+        <Text
+          style={[
+            styles.riskDescription,
+            result.riskLevel === 'low' && styles.riskDescriptionLow,
+            result.riskLevel === 'moderate' && styles.riskDescriptionModerate,
+            result.riskLevel === 'high' && styles.riskDescriptionHigh,
+          ]}
+        >
           Confidence: {result.confidence}%
         </Text>
       </View>
@@ -366,9 +402,7 @@ const AnalysisResults: React.FC<AnalysisResultsProps> = ({
       )}
 
       <TouchableOpacity style={styles.consultButton} onPress={onConsultDoctor}>
-        <Text style={styles.consultButtonText}>
-          📞 Consult a Doctor
-        </Text>
+        <Text style={styles.consultButtonText}>📞 Consult a Doctor</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.resetButton} onPress={onReset}>

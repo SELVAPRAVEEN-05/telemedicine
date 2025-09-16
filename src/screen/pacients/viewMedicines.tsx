@@ -1,74 +1,75 @@
-import React, { useState } from "react";
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  SafeAreaView,
   Image,
-  TextInput,
+  SafeAreaView,
   ScrollView,
+  Text,
+  TextInput,
   TouchableOpacity,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { ViewMedicineStyles as styles } from "../../styles/ViewMedicineStyles";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../route/appNavigator";
+  View,
+} from 'react-native';
+import { RootStackParamList } from '../../route/appNavigator';
+import { ViewMedicineStyles as styles } from '../../styles/ViewMedicineStyles';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-
 const pharmacies = [
   {
-    id: "1",
-    name: "LifeCare Pharmacy",
-    status: "Open",
-    openUntil: "9 PM",
-    address: "123 Health Street, Medical District",
-    phone: "+1 234-567-8900",
-    image: "https://www.nationalhealthexecutive.com/sites/nhe/files/styles/banner/public/2023-12/Pharmacy%20concept.jpg?itok=Eh9DOKi4",
+    id: '1',
+    name: 'LifeCare Pharmacy',
+    status: 'Open',
+    openUntil: '9 PM',
+    address: '123 Health Street, Medical District',
+    phone: '+1 234-567-8900',
+    image:
+      'https://www.nationalhealthexecutive.com/sites/nhe/files/styles/banner/public/2023-12/Pharmacy%20concept.jpg?itok=Eh9DOKi4',
   },
   {
-    id: "2",
-    name: "HealthPlus Chemist",
-    status: "Closed",
-    openUntil: "10 PM",
-    address: "456 Wellness Ave, Downtown",
-    phone: "+1 234-567-8901",
-    image: "https://www.nationalhealthexecutive.com/sites/nhe/files/styles/banner/public/2023-12/Pharmacy%20concept.jpg?itok=Eh9DOKi4",
+    id: '2',
+    name: 'HealthPlus Chemist',
+    status: 'Closed',
+    openUntil: '10 PM',
+    address: '456 Wellness Ave, Downtown',
+    phone: '+1 234-567-8901',
+    image:
+      'https://www.nationalhealthexecutive.com/sites/nhe/files/styles/banner/public/2023-12/Pharmacy%20concept.jpg?itok=Eh9DOKi4',
   },
   {
-    id: "3",
-    name: "MediMart",
-    status: "Open",
-    openUntil: "8 PM",
-    address: "789 Care Road, Suburb",
-    phone: "+1 234-567-8902",
-    image: "https://placehold.co/100x80?text=MediMart",
+    id: '3',
+    name: 'MediMart',
+    status: 'Open',
+    openUntil: '8 PM',
+    address: '789 Care Road, Suburb',
+    phone: '+1 234-567-8902',
+    image: 'https://placehold.co/100x80?text=MediMart',
   },
   {
-    id: "4",
-    name: "Wellness Pharmacy",
-    status: "Closed",
-    openUntil: "11 PM",
-    address: "321 Medicine Lane, Central",
-    phone: "+1 234-567-8903",
-    image: "https://placehold.co/100x80?text=Wellness",
+    id: '4',
+    name: 'Wellness Pharmacy',
+    status: 'Closed',
+    openUntil: '11 PM',
+    address: '321 Medicine Lane, Central',
+    phone: '+1 234-567-8903',
+    image: 'https://placehold.co/100x80?text=Wellness',
   },
 ];
 
 export default function ViewMedicines() {
   const navigation = useNavigation<NavigationProp>();
-  const [search, setSearch] = useState<string>("");
-  const [filter, setFilter] = useState<string>("All");
+  const [search, setSearch] = useState<string>('');
+  const [filter, setFilter] = useState<string>('All');
   const [filteredData, setFilteredData] = useState(pharmacies);
 
   const applyFilters = (text: string, filterOption: string) => {
-    let results = pharmacies.filter((item) =>
-      item.name.toLowerCase().includes(text.toLowerCase())
+    let results = pharmacies.filter(item =>
+      item.name.toLowerCase().includes(text.toLowerCase()),
     );
 
-    if (filterOption !== "All") {
-      results = results.filter((item) => item.status === filterOption);
+    if (filterOption !== 'All') {
+      results = results.filter(item => item.status === filterOption);
     }
 
     setFilteredData(results);
@@ -85,24 +86,12 @@ export default function ViewMedicines() {
   };
 
   const handlePharmacyPress = (pharmacy: any) => {
-    navigation.navigate("PharmacyDetails", { pharmacy });
+    navigation.navigate('PharmacyDetails', { pharmacy });
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButton}>←</Text>
-
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.headerTitle}>Medicine Availability</Text>
-          </View>
-        </View>
-
         {/* Search + Filter */}
         <View style={styles.searchFilterRow}>
           <TextInput
@@ -117,7 +106,9 @@ export default function ViewMedicines() {
             <Picker
               selectedValue={filter}
               style={styles.filterPicker}
-              onValueChange={(itemValue: string) => handleFilterChange(itemValue)}
+              onValueChange={(itemValue: string) =>
+                handleFilterChange(itemValue)
+              }
               mode="dropdown"
             >
               <Picker.Item label="All" value="All" />
@@ -134,7 +125,7 @@ export default function ViewMedicines() {
           contentContainerStyle={{ paddingBottom: 20 }}
         >
           {filteredData.length > 0 ? (
-            filteredData.map((item) => (
+            filteredData.map(item => (
               <TouchableOpacity
                 key={item.id}
                 style={styles.card}
@@ -143,17 +134,32 @@ export default function ViewMedicines() {
               >
                 {/* Status Row */}
                 <View style={styles.statusRow}>
-                  <View style={{ backgroundColor: item.status === "Open" ? "#c6edc8ff" : "#fbdeddff", paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12, flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      backgroundColor:
+                        item.status === 'Open' ? '#c6edc8ff' : '#fbdeddff',
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                      borderRadius: 12,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
                     <View
                       style={[
                         styles.statusDot,
-                        { backgroundColor: item.status === "Open" ? "#4caf50ff" : "#F44336" },
+                        {
+                          backgroundColor:
+                            item.status === 'Open' ? '#4caf50ff' : '#F44336',
+                        },
                       ]}
                     />
                     <Text
                       style={[
                         styles.statusText,
-                        { color: item.status === "Open" ? "#4CAF50" : "#F44336" },
+                        {
+                          color: item.status === 'Open' ? '#4CAF50' : '#F44336',
+                        },
                       ]}
                     >
                       {item.status}
@@ -163,7 +169,7 @@ export default function ViewMedicines() {
                 </View>
 
                 {/* Pharmacy Info */}
-                < View style={styles.infoRow} >
+                <View style={styles.infoRow}>
                   <View style={styles.textContainer}>
                     <Text style={styles.name}>{item.name}</Text>
                     <Text style={styles.open}>Open until {item.openUntil}</Text>
@@ -184,10 +190,9 @@ export default function ViewMedicines() {
                 Try adjusting your search or filter criteria
               </Text>
             </View>
-          )
-          }
-        </ScrollView >
-      </View >
-    </SafeAreaView >
+          )}
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }

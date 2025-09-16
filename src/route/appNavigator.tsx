@@ -7,8 +7,9 @@ import DoctorAppointments from '../screen/doctor/doctorAppointments';
 import DoctorDashboard from '../screen/doctor/doctorDashboard';
 import DoctorLayout from '../screen/doctor/doctorLayout';
 import DoctorPatientQueue from '../screen/doctor/doctorPatientQueue';
+import DoctorProfile from '../screen/doctor/doctorProfile';
 import DoctorRegister from '../screen/doctor/doctorRegister';
-import PatientDetailsShowDoctor from "../screen/doctor/PatientDetailsScreen";
+import PatientDetailsShowDoctor from '../screen/doctor/PatientDetailsScreen';
 import PatientRecordsScreen from '../screen/doctor/patientRecord';
 import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
@@ -18,6 +19,7 @@ import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
 import PatientDashboard from '../screen/pacients/patientDashboard';
 import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
+import PatienrtLayout from '../screen/pacients/patientLayout';
 import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
 import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
@@ -26,8 +28,6 @@ import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
-
-import DoctorProfile from '../screen/doctor/doctorProfile';
 import Videocall from '../screen/trial/VideoCall';
 
 interface Doctor {
@@ -60,11 +60,12 @@ export type RootStackParamList = {
   PatientDetailsScreen: { record: any };
   DoctorAppointments: undefined;
   DoctorPatientQueue: undefined;
-  AppointmentsQueueScreen: undefined,
-  PatientQueueScreen: undefined
+  AppointmentsQueueScreen: undefined;
+  PatientQueueScreen: undefined;
   Videocall: undefined;
   DoctorRegister: undefined;
   DoctorProfile: undefined;
+  PatienrtLayout: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -72,7 +73,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="DoctorRegister"
+      initialRouteName="Landing"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Landing" component={Landing} />
@@ -86,8 +87,14 @@ export default function AppNavigator() {
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
       <Stack.Screen name="bookSlot" component={BookSlot} />
-      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
-      <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
+      <Stack.Screen
+        name="PatientRecordDetails"
+        component={PatientRecordDetails}
+      />
+      <Stack.Screen
+        name="FullRecordDetailsScreen"
+        component={FullRecordDetailsScreen}
+      />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
       <Stack.Screen name="DoctorLayout" component={DoctorLayout} />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
@@ -97,12 +104,25 @@ export default function AppNavigator() {
       <Stack.Screen name="DoctorPatientQueue" component={DoctorPatientQueue} />
       <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
       <Stack.Screen name="EditMedicineScreen" component={EditMedicineScreen} />
-      <Stack.Screen name="PatientRecordsScreen" component={PatientRecordsScreen} />
-      <Stack.Screen name="PatientDetailsScreen" component={PatientDetailsShowDoctor} />
-      <Stack.Screen name="AppointmentsQueueScreen" component={AppointmentsQueueScreen} />
-      <Stack.Screen name="PatientQueueScreen" component={PatientDetailsShowDoctor} />
+      <Stack.Screen
+        name="PatientRecordsScreen"
+        component={PatientRecordsScreen}
+      />
+      <Stack.Screen
+        name="PatientDetailsScreen"
+        component={PatientDetailsShowDoctor}
+      />
+      <Stack.Screen
+        name="AppointmentsQueueScreen"
+        component={AppointmentsQueueScreen}
+      />
+      <Stack.Screen
+        name="PatientQueueScreen"
+        component={PatientDetailsShowDoctor}
+      />
       <Stack.Screen name="DoctorRegister" component={DoctorRegister} />
       <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
+      <Stack.Screen name="PatienrtLayout" component={PatienrtLayout} />
     </Stack.Navigator>
   );
 }
