@@ -1,29 +1,104 @@
-import React, { useState } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from 'react-native-gesture-handler';
+import React, { useState,useEffect } from 'react';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../route/appNavigator';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+// Translation object
+const translations: Record<string, any> = {
+  English: {
+    selectLanguage: "Select Language",
+    upcomingAppointment: "Last Appointment",
+    // appointmentDetails: "Dr. Singh - 20 Sep 2025, 10:00 AM",
+    aiCheckerTitle: "AI Symptom Checker",
+    aiCheckerSubtitle: "Describe your symptoms and get instant guidance from our AI doctor.",
+    healthTips: "Health Tips",
+    tip1: "• Drink plenty of water daily to stay hydrated.",
+    tip2: "• Wash hands regularly to prevent infections.",
+    tip3: "• Take short walks or light exercise to improve circulation.",
+  },
+  हिंदी: {
+    selectLanguage: "भाषा चुनें",
+    upcomingAppointment: "अंतिम नियुक्ति",
+    // appointmentDetails: "डॉ. सिंह - 20 सितम्बर 2025, 10:00 AM",
+    aiCheckerTitle: "एआई लक्षण चेकर",
+    aiCheckerSubtitle: "अपने लक्षणों का वर्णन करें और हमारे एआई डॉक्टर से तुरंत मार्गदर्शन प्राप्त करें।",
+    healthTips: "स्वास्थ्य सुझाव",
+    tip1: "• हाइड्रेटेड रहने के लिए रोजाना पर्याप्त पानी पिएं।",
+    tip2: "• संक्रमण से बचने के लिए नियमित रूप से हाथ धोएं।",
+    tip3: "• रक्त संचार सुधारने के लिए छोटी सैर या हल्का व्यायाम करें।",
+  },
+ ਪੰਜਾਬੀ: {
+  selectLanguage: "ਭਾਸ਼ਾ ਚੁਣੋ",
+  upcomingAppointment: "ਆਖਰੀ ਮੁਲਾਕਾਤ",
+  // appointmentDetails: "ਡਾ. ਸਿੰਘ - 20 ਸਤੰਬਰ 2025, ਸਵੇਰੇ 10:00 ਵਜੇ",
+  aiCheckerTitle: "ਏਆਈ ਲੱਛਣ ਚੈੱਕਰ",
+  aiCheckerSubtitle: "ਆਪਣੇ ਲੱਛਣਾਂ ਦਾ ਵਰਣਨ ਕਰੋ ਅਤੇ ਸਾਡੇ ਏਆਈ ਡਾਕਟਰ ਤੋਂ ਤੁਰੰਤ ਮਾਰਗਦਰਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ।",
+  healthTips: "ਸਿਹਤ ਸੁਝਾਅ",
+  tip1: "• ਹਾਈਡਰੇਟ ਰਹਿਣ ਲਈ ਹਰ ਰੋਜ਼ ਕਾਫ਼ੀ ਪਾਣੀ ਪੀਓ।",
+  tip2: "• ਸੰਕਰਮਣ ਤੋਂ ਬਚਣ ਲਈ ਆਪਣੇ ਹੱਥ ਨਿਯਮਿਤ ਤੌਰ 'ਤੇ ਧੋਵੋ।",
+  tip3: "• ਖੂਨ ਦਾ ਸੰਚਾਰ ਸੁਧਾਰਨ ਲਈ ਛੋਟੇ ਫੇਰੇ ਲਓ ਜਾਂ ਹਲਕੀ ਕਸਰਤ ਕਰੋ।",
+},
+
+  தமிழ்: {
+    selectLanguage: "மொழியைத் தேர்ந்தெடுக்கவும்",
+    upcomingAppointment: "கடைசி நேர்முகம்",
+    // appointmentDetails: "டாக்டர் சிங் - 20 செப்டம்பர் 2025, காலை 10:00",
+    aiCheckerTitle: "ஏ.ஐ அறிகுறி சரிபார்ப்பான்",
+    aiCheckerSubtitle: "உங்கள் அறிகுறிகளை விவரித்து எங்கள் ஏ.ஐ மருத்துவரிடமிருந்து உடனடி வழிகாட்டலைப் பெறுங்கள்.",
+    healthTips: "ஆரோக்கிய குறிப்புகள்",
+    tip1: "• தினமும் அதிகளவு தண்ணீர் குடிக்கவும்.",
+    tip2: "• தொற்றுகளைத் தடுப்பதற்காக கைகளை அடிக்கடி கழுவவும்.",
+    tip3: "• இரத்த ஓட்டத்தை மேம்படுத்த சிறிய நடை அல்லது லேசான உடற்பயிற்சி செய்யவும்.",
+  },
+};
 
 export default function PatientAImodal() {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   const navigation = useNavigation<NavigationProp>();
 
+  // Load saved language from AsyncStorage
+  useEffect(() => {
+    const loadLanguage = async () => {
+      try {
+        const savedLang = await AsyncStorage.getItem('appLanguage');
+        if (savedLang) {
+          setSelectedLanguage(savedLang);
+        }
+      } catch (error) {
+        console.error('Failed to load language:', error);
+      }
+    };
+    loadLanguage();
+  }, []);
+
+  // Save selected language whenever it changes
+  const handleLanguageChange = async (lang: string) => {
+    try {
+      setSelectedLanguage(lang);
+      await AsyncStorage.setItem('appLanguage', lang);
+    } catch (error) {
+      console.error('Failed to save language:', error);
+    }
+  };
+
+  const t = translations[selectedLanguage];
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: 16 }}>
-      <Text style={styles.langLabel}>Select Language</Text>
+      <Text style={styles.langLabel}>{t.selectLanguage}</Text>
       <View style={styles.languageRow}>
-        {['हिंदी', 'ગુજરાતી', 'தமிழ்', 'English'].map((lang, idx) => (
+        {['हिंदी', 'ਪੰਜਾਬੀ', 'தமிழ்', 'English'].map((lang, idx) => (
           <TouchableOpacity
             key={idx}
             style={[
               styles.langButton,
               selectedLanguage === lang && styles.langButtonSelected,
             ]}
-            onPress={() => setSelectedLanguage(lang)}
+            onPress={() => handleLanguageChange(lang)}
           >
             <Text
               style={[
@@ -39,10 +114,8 @@ export default function PatientAImodal() {
 
       {/* Upcoming Appointment */}
       <TouchableOpacity style={styles.card}>
-        <Text style={styles.cardTitle}>Upcoming Appointment</Text>
-        <Text style={styles.cardSubtitle}>
-          Dr. Singh - 20 Sep 2025, 10:00 AM
-        </Text>
+        <Text style={styles.cardTitle}>{t.upcomingAppointment}</Text>
+        <Text style={styles.cardSubtitle}>Dr. Singh - 20 Sep 2025, 10:00 AM</Text>
       </TouchableOpacity>
 
       {/* AI Symptom Checker */}
@@ -55,10 +128,8 @@ export default function PatientAImodal() {
             <Icon name="medical-services" size={28} color="#FF6B35" />
           </View>
           <View style={{ flex: 1, marginLeft: 16 }}>
-            <Text style={styles.aiCardTitle}>AI Symptom Checker</Text>
-            <Text style={styles.aiCardSubtitle}>
-              Describe your symptoms and get instant guidance from our AI doctor.
-            </Text>
+            <Text style={styles.aiCardTitle}>{t.aiCheckerTitle}</Text>
+            <Text style={styles.aiCardSubtitle}>{t.aiCheckerSubtitle}</Text>
           </View>
           <Image
             source={{
@@ -71,11 +142,11 @@ export default function PatientAImodal() {
 
       {/* Health Tips */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Health Tips</Text>
+        <Text style={styles.cardTitle}>{t.healthTips}</Text>
         <View style={styles.tipsContainer}>
-          <Text style={styles.tip}>• Drink plenty of water daily to stay hydrated.</Text>
-          <Text style={styles.tip}>• Wash hands regularly to prevent infections.</Text>
-          <Text style={styles.tip}>• Take short walks or light exercise to improve circulation.</Text>
+          <Text style={styles.tip}>{t.tip1}</Text>
+          <Text style={styles.tip}>{t.tip2}</Text>
+          <Text style={styles.tip}>{t.tip3}</Text>
         </View>
       </View>
     </ScrollView>
