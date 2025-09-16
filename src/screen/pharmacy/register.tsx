@@ -51,6 +51,7 @@ const PharmacyRegisterScreen = () => {
 
         <TextInput
           style={styles.input}
+          placeholderTextColor="black"
           placeholder="Pharmacy Name"
           value={form.pharmacyName}
           onChangeText={text => handleChange('pharmacyName', text)}
@@ -58,11 +59,13 @@ const PharmacyRegisterScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Owner Name"
+          placeholderTextColor="black"
           value={form.ownerName}
           onChangeText={text => handleChange('ownerName', text)}
         />
         <TextInput
           style={styles.input}
+          placeholderTextColor="black"
           placeholder="License Number"
           value={form.licenseNumber}
           onChangeText={text => handleChange('licenseNumber', text)}
@@ -70,6 +73,7 @@ const PharmacyRegisterScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Phone"
+          placeholderTextColor="black"
           keyboardType="phone-pad"
           value={form.phone}
           onChangeText={text => handleChange('phone', text)}
@@ -77,18 +81,21 @@ const PharmacyRegisterScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Address"
+          placeholderTextColor="black"
           value={form.address}
           onChangeText={text => handleChange('address', text)}
         />
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor="black"
           keyboardType="email-address"
           value={form.email}
           onChangeText={text => handleChange('email', text)}
         />
         <TextInput
           style={styles.input}
+          placeholderTextColor="black"
           placeholder="Password"
           secureTextEntry
           value={form.password}

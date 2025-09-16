@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -27,30 +27,6 @@ const initialAppointments: Appointment[] = [
     gender: 'Female',
     reason:
       'Follow-up consultation for diabetes management and blood sugar monitoring',
-  },
-  {
-    id: 2,
-    name: 'Rajesh Verma',
-    time: '11:30 AM',
-    age: 45,
-    gender: 'Male',
-    reason: 'Chest pain evaluation and cardiovascular health assessment',
-  },
-  {
-    id: 3,
-    name: 'Anita Singh',
-    time: '12:30 PM',
-    age: 29,
-    gender: 'Female',
-    reason: 'Routine health check-up',
-  },
-  {
-    id: 4,
-    name: 'Rohit Mehta',
-    time: '2:00 PM',
-    age: 38,
-    gender: 'Male',
-    reason: 'Back pain and physiotherapy consultation',
   },
 ];
 

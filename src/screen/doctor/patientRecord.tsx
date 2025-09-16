@@ -267,6 +267,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
     borderRadius: 12,
     marginBottom: 16,
+    borderWidth:1,
+    borderColor:"#d9d9d9ff"
   },
   iconContainer: {
     width: 48,
