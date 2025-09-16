@@ -17,7 +17,7 @@ import Tts from 'react-native-tts';
 const LANGUAGE_KEY = 'appLanguage';
 const { width, height } = Dimensions.get('window');
 
-const GEMINI_API_KEY = 'AIzaSyBwIFSpYKs3YIKvGp1a20Jf5C7g65zRHgc';
+const GEMINI_API_KEY = 'AIzaSyA_X9X6ku4GsyxkmsgmBTRGfMrElWVBS64';
 const GEMINI_URL =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
