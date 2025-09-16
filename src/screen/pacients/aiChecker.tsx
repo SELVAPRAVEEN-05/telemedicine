@@ -1,46 +1,48 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
-  Platform,
-  Dimensions,
 } from 'react-native';
 import Tts from 'react-native-tts';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LANGUAGE_KEY = "appLanguage"; 
+const LANGUAGE_KEY = 'appLanguage';
 const { width, height } = Dimensions.get('window');
 
 const GEMINI_API_KEY = 'AIzaSyBwIFSpYKs3YIKvGp1a20Jf5C7g65zRHgc';
 const GEMINI_URL =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
- const translations: Record<any,any> = {
+const translations: Record<any, any> = {
   en: {
-    title: "Healthcare Assistant",
-    subtitle: "Describe your symptoms and I'll help you understand possible causes and suggest which doctor to consult.",
+    title: 'Healthcare Assistant',
+    subtitle:
+      "Describe your symptoms and I'll help you understand possible causes and suggest which doctor to consult.",
   },
   hi: {
-    title: "स्वास्थ्य सहायक",
-    subtitle: "अपने लक्षण बताएं और मैं आपको संभावित कारण समझाने और किस डॉक्टर से परामर्श करना चाहिए यह सुझाव दूंगा।",
+    title: 'स्वास्थ्य सहायक',
+    subtitle:
+      'अपने लक्षण बताएं और मैं आपको संभावित कारण समझाने और किस डॉक्टर से परामर्श करना चाहिए यह सुझाव दूंगा।',
   },
   ta: {
-    title: "சுகாதார உதவியாளர்",
-    subtitle: "உங்கள் அறிகுறிகளை விவரிக்கவும், சாத்தியமான காரணங்களை விளக்கி எந்த மருத்துவரை அணுக வேண்டும் என்று பரிந்துரைப்பேன்.",
+    title: 'சுகாதார உதவியாளர்',
+    subtitle:
+      'உங்கள் அறிகுறிகளை விவரிக்கவும், சாத்தியமான காரணங்களை விளக்கி எந்த மருத்துவரை அணுக வேண்டும் என்று பரிந்துரைப்பேன்.',
   },
   pa: {
-    title: "ਹੈਲਥਕੇਅਰ ਸਹਾਇਕ",
-    subtitle: "ਆਪਣੇ ਲੱਛਣਾਂ ਬਾਰੇ ਦੱਸੋ ਅਤੇ ਮੈਂ ਤੁਹਾਨੂੰ ਸੰਭਾਵਿਤ ਕਾਰਨਾਂ ਬਾਰੇ ਸਮਝਾਵਾਂਗਾ ਅਤੇ ਕਿਹੜੇ ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਕਰਨੀ ਹੈ, ਇਹ ਸੁਝਾਅ ਦੇਵਾਂਗਾ।",
+    title: 'ਹੈਲਥਕੇਅਰ ਸਹਾਇਕ',
+    subtitle:
+      'ਆਪਣੇ ਲੱਛਣਾਂ ਬਾਰੇ ਦੱਸੋ ਅਤੇ ਮੈਂ ਤੁਹਾਨੂੰ ਸੰਭਾਵਿਤ ਕਾਰਨਾਂ ਬਾਰੇ ਸਮਝਾਵਾਂਗਾ ਅਤੇ ਕਿਹੜੇ ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਕਰਨੀ ਹੈ, ਇਹ ਸੁਝਾਅ ਦੇਵਾਂਗਾ।',
   },
-}; 
-
+};
 
 // Doctor Icon Component
 const DoctorIcon = () => (
@@ -50,7 +52,8 @@ const DoctorIcon = () => (
     </View>
     <Text style={styles.welcomeTitle}>Healthcare Assistant</Text>
     <Text style={styles.welcomeSubtitle}>
-      Describe your symptoms and I'll help you understand possible causes and suggest which doctor to consult.
+      Describe your symptoms and I'll help you understand possible causes and
+      suggest which doctor to consult.
     </Text>
   </View>
 );
@@ -59,7 +62,7 @@ export default function App() {
   const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<any>('');
   const [loading, setLoading] = useState<any>(false);
-  const [appLanguage, setAppLanguage] = useState<string>("en");
+  const [appLanguage, setAppLanguage] = useState<string>('en');
 
   useEffect(() => {
     // Load stored language
@@ -75,12 +78,12 @@ export default function App() {
 
   // Configure TTS based on language
   const configureTTS = (lang: string) => {
-    let voiceLang = "en-US"; // fallback
-    if (lang === "ta") voiceLang = "ta-IN";
-    if (lang === "hi") voiceLang = "hi-IN";
-    if (lang === "te") voiceLang = "te-IN";
-    if (lang === "ml") voiceLang = "ml-IN";
-    if (lang === "kn") voiceLang = "kn-IN";
+    let voiceLang = 'en-US'; // fallback
+    if (lang === 'ta') voiceLang = 'ta-IN';
+    if (lang === 'hi') voiceLang = 'hi-IN';
+    if (lang === 'te') voiceLang = 'te-IN';
+    if (lang === 'ml') voiceLang = 'ml-IN';
+    if (lang === 'kn') voiceLang = 'kn-IN';
 
     Tts.setDefaultLanguage(voiceLang);
     Tts.setDefaultRate(0.5);
@@ -167,10 +170,12 @@ export default function App() {
         item.role === 'user' ? styles.userBubble : styles.botBubble,
       ]}
     >
-      <Text style={[
-        styles.message, 
-        item.role === 'user' ? styles.userMessage : styles.botMessage
-      ]}>
+      <Text
+        style={[
+          styles.message,
+          item.role === 'user' ? styles.userMessage : styles.botMessage,
+        ]}
+      >
         {item.content}
       </Text>
       {item.role === 'assistant' && (
@@ -187,9 +192,9 @@ export default function App() {
   const renderEmptyComponent = () => <DoctorIcon />;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
-        style={styles.keyboardContainer} 
+    <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
@@ -206,7 +211,7 @@ export default function App() {
           renderItem={renderItem}
           contentContainerStyle={[
             styles.messagesList,
-            messages.length === 0 && styles.emptyMessagesList
+            messages.length === 0 && styles.emptyMessagesList,
           ]}
           ListEmptyComponent={renderEmptyComponent}
           showsVerticalScrollIndicator={false}
@@ -238,14 +243,14 @@ export default function App() {
           </View>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#F8F9FA' 
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
   },
   keyboardContainer: {
     flex: 1,
@@ -361,15 +366,15 @@ const styles = StyleSheet.create({
   botMessage: {
     color: '#333',
   },
-  speakBtn: { 
-    marginLeft: 8, 
+  speakBtn: {
+    marginLeft: 8,
     padding: 8,
     borderRadius: 16,
     backgroundColor: '#FFF3E0',
   },
-  speakText: { 
-    fontSize: 16, 
-    color: '#FF6F00' 
+  speakText: {
+    fontSize: 16,
+    color: '#FF6F00',
   },
   inputContainer: {
     backgroundColor: '#fff',
@@ -418,7 +423,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCC80',
     shadowOpacity: 0.1,
   },
-  sendText: { 
+  sendText: {
     fontSize: 20,
   },
 });

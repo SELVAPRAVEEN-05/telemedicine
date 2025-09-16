@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useRef, useState } from 'react';
-import * as Keychain from 'react-native-keychain';
+import axios from 'axios';
+import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import axios from 'axios';
 import { RootStackParamList } from '../../route/appNavigator';
 import { LoginStyles as styles } from '../../styles/login';
 type LoginNav = NativeStackNavigationProp<RootStackParamList>;

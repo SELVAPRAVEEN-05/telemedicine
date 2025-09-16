@@ -40,6 +40,7 @@ const PharmacyLoginScreen = () => {
 
         <TextInput
           style={styles.input}
+          placeholderTextColor="black"
           placeholder="Email"
           keyboardType="email-address"
           value={email}
@@ -47,6 +48,7 @@ const PharmacyLoginScreen = () => {
         />
         <TextInput
           style={styles.input}
+          placeholderTextColor="black"
           placeholder="Password"
           secureTextEntry
           value={password}
