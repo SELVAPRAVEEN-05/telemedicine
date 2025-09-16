@@ -1,413 +1,247 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Alert,
-  ScrollView,
+  ActivityIndicator,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import { RootStackParamList } from '../../route/appNavigator';
-import { aiCheckerStyles as styles } from '../../styles/aiCheckerStyles';
+import Tts from 'react-native-tts';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type AiCheckerNav = NativeStackNavigationProp<RootStackParamList>;
+const LANGUAGE_KEY = "appLanguage"; 
 
-interface Symptom {
-  id: string;
-  name: string;
-  emoji: string;
-  category: string;
-}
+const GEMINI_API_KEY = 'AIzaSyBwIFSpYKs3YIKvGp1a20Jf5C7g65zRHgc';
+const GEMINI_URL =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
-interface AnalysisResult {
-  riskLevel: 'low' | 'moderate' | 'high';
-  confidence: number;
-  recommendations: string[];
-  possibleConditions: string[];
-  urgency: 'routine' | 'urgent' | 'emergency';
-}
+export default function App() {
+  const [messages, setMessages] = useState<any>([]);
+  const [input, setInput] = useState<any>('');
+  const [loading, setLoading] = useState<any>(false);
+  const [appLanguage, setAppLanguage] = useState<string>("en"); // default English
 
-const SYMPTOMS: Symptom[] = [
-  { id: '1', name: 'Fever', emoji: '🤒', category: 'general' },
-  { id: '2', name: 'Headache', emoji: '🤕', category: 'neurological' },
-  { id: '3', name: 'Cough', emoji: '😷', category: 'respiratory' },
-  { id: '4', name: 'Sore Throat', emoji: '😣', category: 'respiratory' },
-  { id: '5', name: 'Nausea', emoji: '🤢', category: 'digestive' },
-  { id: '6', name: 'Stomach Pain', emoji: '😖', category: 'digestive' },
-  { id: '7', name: 'Fatigue', emoji: '😴', category: 'general' },
-  { id: '8', name: 'Dizziness', emoji: '😵', category: 'neurological' },
-  { id: '9', name: 'Chest Pain', emoji: '💔', category: 'cardiac' },
-  {
-    id: '10',
-    name: 'Shortness of Breath',
-    emoji: '😤',
-    category: 'respiratory',
-  },
-  { id: '11', name: 'Joint Pain', emoji: '🦴', category: 'musculoskeletal' },
-  { id: '12', name: 'Skin Rash', emoji: '🔴', category: 'dermatological' },
-  {
-    id: '13',
-    name: 'Eye Irritation',
-    emoji: '👁️',
-    category: 'ophthalmological',
-  },
-  { id: '14', name: 'Back Pain', emoji: '🏃', category: 'musculoskeletal' },
-  { id: '15', name: 'Runny Nose', emoji: '👃', category: 'respiratory' },
-  { id: '16', name: 'Muscle Ache', emoji: '💪', category: 'musculoskeletal' },
-];
-
-export default function AiChecker() {
-  const navigation = useNavigation<AiCheckerNav>();
-  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
-  const [customSymptoms, setCustomSymptoms] = useState('');
-  const [severity, setSeverity] = useState<'mild' | 'moderate' | 'severe'>(
-    'mild',
-  );
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
-    null,
-  );
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const toggleSymptom = (symptomId: string) => {
-    setSelectedSymptoms(prev =>
-      prev.includes(symptomId)
-        ? prev.filter(id => id !== symptomId)
-        : [...prev, symptomId],
-    );
-  };
-
-  const analyzeSymptoms = async () => {
-    if (selectedSymptoms.length === 0 && !customSymptoms.trim()) {
-      Alert.alert(
-        'No Symptoms Selected',
-        'Please select at least one symptom or describe your symptoms to continue.',
-      );
-      return;
-    }
-
-    setIsAnalyzing(true);
-
-    // Simulate AI analysis
-    setTimeout(() => {
-      const result = generateAnalysis();
-      setAnalysisResult(result);
-      setIsAnalyzing(false);
-    }, 2000);
-  };
-
-  const generateAnalysis = (): AnalysisResult => {
-    const selectedSymptomNames = selectedSymptoms
-      .map(id => SYMPTOMS.find(s => s.id === id)?.name)
-      .filter(Boolean);
-
-    // Simple rule-based analysis for demonstration
-    let riskLevel: 'low' | 'moderate' | 'high' = 'low';
-    let urgency: 'routine' | 'urgent' | 'emergency' = 'routine';
-    let recommendations: string[] = [];
-    let possibleConditions: string[] = [];
-
-    const hasCardiacSymptoms = selectedSymptomNames.some(name =>
-      ['Chest Pain', 'Shortness of Breath'].includes(name!),
-    );
-    const hasRespiratorySymptoms = selectedSymptomNames.some(name =>
-      ['Cough', 'Sore Throat', 'Shortness of Breath', 'Runny Nose'].includes(
-        name!,
-      ),
-    );
-    const hasDigestiveSymptoms = selectedSymptomNames.some(name =>
-      ['Nausea', 'Stomach Pain'].includes(name!),
-    );
-    const hasFever = selectedSymptomNames.includes('Fever');
-
-    if (hasCardiacSymptoms && severity === 'severe') {
-      riskLevel = 'high';
-      urgency = 'emergency';
-      possibleConditions = ['Cardiac Emergency', 'Heart Attack', 'Angina'];
-      recommendations = [
-        'Seek immediate emergency medical attention',
-        'Call emergency services (911) immediately',
-        'Do not drive yourself to the hospital',
-        'Take prescribed heart medications if available',
-      ];
-    } else if (hasFever && selectedSymptoms.length >= 3) {
-      riskLevel = 'moderate';
-      urgency = 'urgent';
-      possibleConditions = ['Viral Infection', 'Bacterial Infection', 'Flu'];
-      recommendations = [
-        'Schedule an appointment with your doctor within 24-48 hours',
-        'Stay hydrated and get plenty of rest',
-        'Monitor your temperature regularly',
-        'Avoid contact with others to prevent spread',
-      ];
-    } else if (hasRespiratorySymptoms) {
-      riskLevel = severity === 'severe' ? 'moderate' : 'low';
-      urgency = severity === 'severe' ? 'urgent' : 'routine';
-      possibleConditions = [
-        'Common Cold',
-        'Upper Respiratory Infection',
-        'Allergies',
-      ];
-      recommendations = [
-        'Rest and stay hydrated',
-        'Use over-the-counter medications as needed',
-        'Gargle with warm salt water for sore throat',
-        'Consider seeing a doctor if symptoms worsen',
-      ];
-    } else if (hasDigestiveSymptoms) {
-      riskLevel = 'low';
-      possibleConditions = ['Gastroenteritis', 'Food Poisoning', 'Indigestion'];
-      recommendations = [
-        'Stay hydrated with small sips of water',
-        'Follow the BRAT diet (Bananas, Rice, Applesauce, Toast)',
-        'Avoid dairy and fatty foods',
-        'See a doctor if symptoms persist for more than 2 days',
-      ];
-    } else {
-      possibleConditions = ['Minor Ailment', 'Stress-related symptoms'];
-      recommendations = [
-        'Monitor your symptoms',
-        'Get adequate rest and maintain good hygiene',
-        'Stay hydrated and eat nutritious foods',
-        'Consider lifestyle factors that may be contributing',
-      ];
-    }
-
-    return {
-      riskLevel,
-      confidence: Math.floor(Math.random() * 30) + 70, // 70-99%
-      recommendations,
-      possibleConditions,
-      urgency,
+  useEffect(() => {
+    // Load stored language
+    const loadLanguage = async () => {
+      const lang = await AsyncStorage.getItem(LANGUAGE_KEY);
+      if (lang) {
+        setAppLanguage(lang);
+        configureTTS(lang);
+      }
     };
+    loadLanguage();
+  }, []);
+
+  // Configure TTS based on language
+  const configureTTS = (lang: string) => {
+    let voiceLang = "en-US"; // fallback
+    if (lang === "ta") voiceLang = "ta-IN";
+    if (lang === "hi") voiceLang = "hi-IN";
+    if (lang === "te") voiceLang = "te-IN";
+    if (lang === "ml") voiceLang = "ml-IN";
+    if (lang === "kn") voiceLang = "kn-IN";
+    // add more as needed
+
+    Tts.setDefaultLanguage(voiceLang);
+    Tts.setDefaultRate(0.5);
+    Tts.setDefaultPitch(1.1);
   };
 
-  const resetAnalysis = () => {
-    setSelectedSymptoms([]);
-    setCustomSymptoms('');
-    setSeverity('mild');
-    setAnalysisResult(null);
+  const speakText:any = (text: string) => {
+    Tts.stop();
+    Tts.speak(text);
   };
 
-  const handleConsultDoctor = () => {
-    navigation.navigate('ConsultDoctor' as any);
-  };
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-  const handleEmergency = () => {
-    Alert.alert(
-      'Emergency Services',
-      'If this is a medical emergency, please call your local emergency number immediately.',
-      [
-        { text: 'Cancel', style: 'cancel' },
+    const userMessage = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: input.trim(),
+    };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text:
+                    `Give the response ONLY in ${appLanguage} language. ` +
+                    `You are a healthcare assistant. ` +
+                    `When the user describes symptoms, respond in simple points:\n` +
+                    `1. List possible common causes.\n` +
+                    `2. Suggest the type of doctor they should consult.\n` +
+                    `User: ${userMessage.content}`,
+                },
+              ],
+            },
+          ],
+        }),
+      });
+
+      const data = await response.json();
+      console.log('Gemini response:', data);
+
+      let replyText =
+        data.candidates?.[0]?.content?.parts?.[0]?.text ||
+        data.error?.message ||
+        'No response from Gemini.';
+
+      const botMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: replyText,
+      };
+      setMessages(prev => [...prev, botMessage]);
+      speakText(replyText);
+    } catch (err) {
+      console.error('Error:', err);
+      const errorMsg = 'Network error: ' + err.message;
+      setMessages(prev => [
+        ...prev,
         {
-          text: 'Call Emergency',
-          onPress: () => console.log('Call emergency services'),
+          id: (Date.now() + 2).toString(),
+          role: 'assistant',
+          content: errorMsg,
         },
-      ],
-    );
+      ]);
+      speakText(errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginVertical: 20,
-        }}
-      >
+  const renderItem = ({ item }) => (
+    <View
+      style={[
+        styles.bubble,
+        item.role === 'user' ? styles.userBubble : styles.botBubble,
+      ]}
+    >
+      <Text style={styles.message}>{item.content}</Text>
+      {item.role === 'assistant' && (
         <TouchableOpacity
-          onPress={() => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            }
-          }}
+          style={styles.speakBtn}
+          onPress={() => speakText(item.content)}
         >
-          <Icon
-            name="arrow-left"
-            size={26}
-            style={{ marginLeft: 15, marginTop: 5, marginRight: 10 }}
-            color="#000000"
-          />
-        </TouchableOpacity>
-
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-          AI Symptom Checker
-        </Text>
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.subtitle}>
-          Get preliminary health insights based on your symptoms
-        </Text>
-        {/* Disclaimer */}
-        <View style={styles.disclaimer}>
-          <Text style={styles.disclaimerText}>
-            ⚠️ This is not a substitute for professional medical advice. Always
-            consult with a healthcare provider for proper diagnosis and
-            treatment.
-          </Text>
-        </View>
-
-        {!analysisResult ? (
-          <>
-            {/* Symptom Selection */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Select Your Symptoms</Text>
-              <View style={styles.symptomsGrid}>
-                {SYMPTOMS.map(symptom => (
-                  <TouchableOpacity
-                    key={symptom.id}
-                    style={[
-                      styles.symptomCard,
-                      selectedSymptoms.includes(symptom.id) &&
-                        styles.symptomCardSelected,
-                    ]}
-                    onPress={() => toggleSymptom(symptom.id)}
-                  >
-                    <Text style={styles.symptomEmoji}>{symptom.emoji}</Text>
-                    <Text
-                      style={[
-                        styles.symptomText,
-                        selectedSymptoms.includes(symptom.id) &&
-                          styles.symptomTextSelected,
-                      ]}
-                    >
-                      {symptom.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              {/* Custom Symptoms Input */}
-              <View style={styles.customInputContainer}>
-                <Text style={styles.customInputLabel}>
-                  Describe any other symptoms:
-                </Text>
-                <TextInput
-                  style={styles.customInput}
-                  multiline
-                  placeholder="Describe any additional symptoms you're experiencing..."
-                  value={customSymptoms}
-                  onChangeText={setCustomSymptoms}
-                  placeholderTextColor="#9CA3AF"
-                />
-              </View>
-            </View>
-
-            {/* Analyze Button */}
-            <TouchableOpacity
-              style={[
-                styles.analyzeButton,
-                selectedSymptoms.length === 0 &&
-                  !customSymptoms.trim() &&
-                  styles.analyzeButtonDisabled,
-              ]}
-              onPress={analyzeSymptoms}
-              disabled={
-                isAnalyzing ||
-                (selectedSymptoms.length === 0 && !customSymptoms.trim())
-              }
-            >
-              <Text style={styles.analyzeButtonText}>
-                {isAnalyzing ? 'Analyzing Symptoms...' : 'Analyze Symptoms'}
-              </Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <AnalysisResults
-            result={analysisResult}
-            onConsultDoctor={handleConsultDoctor}
-            onEmergency={handleEmergency}
-            onReset={resetAnalysis}
-          />
-        )}
-      </ScrollView>
-    </View>
-  );
-}
-
-interface AnalysisResultsProps {
-  result: AnalysisResult;
-  onConsultDoctor: () => void;
-  onEmergency: () => void;
-  onReset: () => void;
-}
-
-const AnalysisResults: React.FC<AnalysisResultsProps> = ({
-  result,
-  onConsultDoctor,
-  onEmergency,
-  onReset,
-}) => {
-  return (
-    <View style={styles.resultContainer}>
-      <Text style={styles.resultTitle}>Analysis Results</Text>
-
-      {/* Risk Level */}
-      <View
-        style={[
-          styles.riskLevel,
-          result.riskLevel === 'low' && styles.riskLevelLow,
-          result.riskLevel === 'moderate' && styles.riskLevelModerate,
-          result.riskLevel === 'high' && styles.riskLevelHigh,
-        ]}
-      >
-        <Text
-          style={[
-            styles.riskText,
-            result.riskLevel === 'low' && styles.riskTextLow,
-            result.riskLevel === 'moderate' && styles.riskTextModerate,
-            result.riskLevel === 'high' && styles.riskTextHigh,
-          ]}
-        >
-          {result.riskLevel.toUpperCase()} RISK
-        </Text>
-        <Text
-          style={[
-            styles.riskDescription,
-            result.riskLevel === 'low' && styles.riskDescriptionLow,
-            result.riskLevel === 'moderate' && styles.riskDescriptionModerate,
-            result.riskLevel === 'high' && styles.riskDescriptionHigh,
-          ]}
-        >
-          Confidence: {result.confidence}%
-        </Text>
-      </View>
-
-      {/* Possible Conditions */}
-      <Text style={styles.recommendationsTitle}>Possible Conditions:</Text>
-      {result.possibleConditions.map((condition, index) => (
-        <View key={index} style={styles.recommendation}>
-          <Text style={styles.recommendationBullet}>•</Text>
-          <Text style={styles.recommendationText}>{condition}</Text>
-        </View>
-      ))}
-
-      {/* Recommendations */}
-      <Text style={styles.recommendationsTitle}>Recommendations:</Text>
-      {result.recommendations.map((rec, index) => (
-        <View key={index} style={styles.recommendation}>
-          <Text style={styles.recommendationBullet}>•</Text>
-          <Text style={styles.recommendationText}>{rec}</Text>
-        </View>
-      ))}
-
-      {/* Action Buttons */}
-      {result.urgency === 'emergency' && (
-        <TouchableOpacity style={styles.emergencyButton} onPress={onEmergency}>
-          <Text style={styles.emergencyButtonText}>🚨 EMERGENCY HELP</Text>
+          <Text style={styles.speakText}>🔊</Text>
         </TouchableOpacity>
       )}
-
-      <TouchableOpacity style={styles.consultButton} onPress={onConsultDoctor}>
-        <Text style={styles.consultButtonText}>📞 Consult a Doctor</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.resetButton} onPress={onReset}>
-        <Text style={styles.resetButtonText}>Start New Analysis</Text>
-      </TouchableOpacity>
     </View>
   );
-};
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={messages}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{ padding: 12 }}
+      />
+
+      <View style={styles.inputRow}>
+        <TextInput
+          style={styles.input}
+          placeholder="Describe your symptoms..."
+          value={input}
+          onChangeText={setInput}
+          editable={!loading}
+        />
+        <TouchableOpacity
+          style={styles.sendBtn}
+          onPress={sendMessage}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.sendText}>Send</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  bubble: {
+    marginVertical: 6,
+    padding: 12,
+    borderRadius: 18,
+    maxWidth: '75%',
+    shadowColor: '#000',
+    color: '#fff',
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  userBubble: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#FFA726',
+    color: '#fff',
+    borderBottomRightRadius: 4,
+  },
+  botBubble: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#fff',
+    borderLeftWidth: 2,
+    borderLeftColor: '#FFA726',
+    borderBottomLeftRadius: 4,
+  },
+  message: {
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#333',
+    flex: 1,
+  },
+  speakBtn: { marginLeft: 8, padding: 4 },
+  speakText: { fontSize: 18, color: '#FFA726' },
+  inputRow: {
+    flexDirection: 'row',
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#FFA726',
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    fontSize: 16,
+    backgroundColor: '#FFF8E1',
+    color: '#333',
+  },
+  sendBtn: {
+    marginLeft: 8,
+    backgroundColor: '#FF9800',
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  sendText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+});
