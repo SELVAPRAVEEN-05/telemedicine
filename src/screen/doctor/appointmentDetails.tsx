@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -108,13 +107,13 @@ const AppointmentsQueueScreen: React.FC = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {appointments.map(appointment => (
           <AppointmentCard key={appointment.id} appointment={appointment} />
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

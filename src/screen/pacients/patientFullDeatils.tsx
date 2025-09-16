@@ -1,11 +1,10 @@
 import React from 'react';
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { patientFullDetailsStyle as styles } from '../../styles/patientFullDetailsStyle';
@@ -64,7 +63,7 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View
         style={{
           flexDirection: 'row',
@@ -219,6 +218,6 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

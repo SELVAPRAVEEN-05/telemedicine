@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useEffect, useState } from "react";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from "react-native";
+import Icon from 'react-native-vector-icons/Feather';
 import { RootStackParamList } from "../../route/appNavigator";
 import { SearchMedicine as styles } from '../../styles/SearchMedicine';
-import Icon from 'react-native-vector-icons/Feather';
 
 
 type PharmacyDetailsRouteProp = RouteProp<RootStackParamList>;
@@ -225,7 +224,7 @@ export default function PharmacyDetailsScreen({ route, navigation }: Props) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
 
       <View
@@ -313,6 +312,6 @@ export default function PharmacyDetailsScreen({ route, navigation }: Props) {
           </TouchableOpacity>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }

@@ -4,7 +4,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
@@ -90,7 +89,7 @@ export default function ViewMedicines() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.content}>
         {/* Search + Filter */}
         <View style={styles.searchFilterRow}>
@@ -193,6 +192,6 @@ export default function ViewMedicines() {
           )}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

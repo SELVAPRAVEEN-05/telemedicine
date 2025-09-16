@@ -1,14 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  Dimensions,
+    Dimensions,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -69,7 +68,7 @@ export default function RoleSelectionScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Welcome to HealthApp</Text>
         <Text style={styles.subtitle}>Please select your role to continue</Text>
@@ -86,7 +85,7 @@ export default function RoleSelectionScreen() {
           Choose the option that best describes your role
         </Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

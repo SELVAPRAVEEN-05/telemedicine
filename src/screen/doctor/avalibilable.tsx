@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   Switch,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { Availavilitystyle as styles } from "../../styles/availabilityStyles";
 
@@ -151,7 +150,7 @@ export default function AvailabilityScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Calendar */}
         {renderCalendarGrid()}
@@ -180,7 +179,7 @@ export default function AvailabilityScreen() {
           <Text style={styles.saveButtonText}>Save Availability</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

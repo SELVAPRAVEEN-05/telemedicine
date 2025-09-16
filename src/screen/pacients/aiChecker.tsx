@@ -144,7 +144,7 @@ export default function App() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={messages}
         keyExtractor={item => item.id}
@@ -172,7 +172,7 @@ export default function App() {
           )}
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

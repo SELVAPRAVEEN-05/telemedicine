@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import {
   Alert,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 interface PastMeeting {
@@ -52,7 +51,7 @@ const PatientQueueScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cardsContainer}
@@ -90,7 +89,7 @@ const PatientQueueScreen: React.FC = () => {
           </View>
         ))}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
