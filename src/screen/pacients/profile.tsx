@@ -1,4 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from "@react-navigation/stack";
+import type { RootStackParamList } from "../../route/appNavigator";
 import React from 'react';
 import {
   ScrollView,
@@ -9,9 +11,15 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+type UserProfileNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "PatientProfile"
+>;
+
+
 
 export default function UserProfile() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<UserProfileNavigationProp>();
 
   // Sample user data - you can replace this with actual user data from props or state
   const userData = {
@@ -22,6 +30,9 @@ export default function UserProfile() {
     age: 34,
     location: 'New York, USA',
   };
+  const handlenavigate=()=>{
+      navigation.navigate("Login")
+  }
 
   const firstLetter = userData.name.charAt(0).toUpperCase();
 
@@ -119,10 +130,12 @@ export default function UserProfile() {
 
       {/* Action Buttons */}
       <View style={styles.actionContainer}>
-        <TouchableOpacity style={styles.settingsButton}>
-          <Icon name="log-out" size={18} color="#F97316" />
-          <Text style={styles.settingsButtonText}>Logout</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+      style={styles.settingsButton}
+      onPress={() => navigation.navigate("Login")}
+    >
+      <Text style={styles.settingsButtonText}>Logout</Text>
+    </TouchableOpacity>
       </View>
     </ScrollView>
   );
