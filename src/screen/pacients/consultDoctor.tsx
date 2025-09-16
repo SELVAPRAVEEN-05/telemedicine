@@ -150,23 +150,23 @@ const translations: Record<string, any> = {
 
 const specialityTranslations:any = {
   English: {
-    Cardiology: "Cardiology",
-    Dermatology: "Dermatology",
+    Cardiologist: "Cardiology",
+    Dermatologist: "Dermatology",
     Orthopedics: "Orthopedics",
   },
   हिंदी: {
-    Cardiology: "हृदय रोग विशेषज्ञ",
-    Dermatology: "त्वचा रोग विशेषज्ञ",
+    Cardiologist: "हृदय रोग विशेषज्ञ",
+    Dermatologist: "त्वचा रोग विशेषज्ञ",
     Orthopedics: "हड्डी रोग विशेषज्ञ",
   },
   ਪੰਜਾਬੀ: {
-    Cardiology: "ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
-    Dermatology: "ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ",
+    Cardiologist: "ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
+    Dermatologist: "ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ",
     Orthopedics: "ਹੱਡੀਆਂ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
   },
   தமிழ்: {
-    Cardiology: "இதய நோய் நிபுணர்",
-    Dermatology: "தோல் நோய் நிபுணர்",
+    Cardiologist: "இதய நோய் நிபுணர்",
+    Dermatologist: "தோல் நோய் நிபுணர்",
     Orthopedics: "எலும்பியல் நிபுணர்",
   },
 };
@@ -205,32 +205,39 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
 
    
 
-//   const [translatedName, setTranslatedName] = useState(name);
+  const [translatedName, setTranslatedName] = useState(name);
 
-// useEffect(() => {
-//   const translateName = async () => {
-//     try {
-//       const targetLangMap: Record<string, string> = {
-//         English: "en",
-//         हिंदी: "hi",
-//         ਪੰਜਾਬੀ: "pa",
-//         தமிழ்: "ta",
-//       };
-//       const targetLang = targetLangMap[selectedLanguage] || "en";
+useEffect(() => {
+  const translateName = async () => {
+    if (selectedLanguage === "English") {
+      setTranslatedName(name); // ✅ Always keep original
+      return;
+    }
 
-//       const res = await axios.get("https://api.mymemory.translated.net/get", {
-//         params: { q: name, langpair: `en|${targetLang}` },
-//       });
+    try {
+      const targetLangMap: Record<string, string> = {
+        English: "en",
+        हिंदी: "hi",
+        ਪੰਜਾਬੀ: "pa",
+        தமிழ்: "ta",
+      };
+      const targetLang = targetLangMap[selectedLanguage] || "en";
 
-//       const translatedText = res.data.responseData.translatedText;
-//       setTranslatedName(translatedText);
-//     } catch (err) {
-//       console.error("Translation error:", err);
-//     }
-//   };
+      const res = await axios.get("https://api.mymemory.translated.net/get", {
+        params: { q: name, langpair: `en|${targetLang}` },
+      });
 
-//   translateName();
-// }, [name, selectedLanguage]);
+      const translatedText = res.data.responseData.translatedText;
+      setTranslatedName(translatedText);
+    } catch (err) {
+      console.error("Translation error:", err);
+      setTranslatedName(name); // fallback
+    }
+  };
+
+  translateName();
+}, [name, selectedLanguage]);
+
 
   return (
     <View style={styles.doctorCard}>
@@ -257,8 +264,8 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
 
         {/* Name + Status */}
         <View style={styles.nameSection}>
-          {/* <Text style={styles.doctorName}>{translatedName}</Text> */}
-           <Text style={styles.doctorName}>{name}</Text>
+          <Text style={styles.doctorName}>{translatedName}</Text>
+           {/* <Text style={styles.doctorName}>{name}</Text> */}
           <View style={styles.statusContainer}>
             <View
               style={[
@@ -445,4 +452,3 @@ const ConsultDoctor: React.FC = () => {
 };
 
 export default ConsultDoctor;
- 
