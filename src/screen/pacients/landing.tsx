@@ -49,14 +49,14 @@ export default function Landing() {
         {/* Buttons */}
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => navigation.navigate('Register')}
+          onPress={() => navigation.navigate('RoleSelectionScreen')}
         >
           <Text style={styles.primaryText}>Get Started</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.secondaryButton}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('RoleSelectionScreen')}
         >
           <Text style={styles.secondaryText}>Log In</Text>
         </TouchableOpacity>

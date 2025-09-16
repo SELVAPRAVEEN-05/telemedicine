@@ -275,7 +275,9 @@ export default function DoctorRegister() {
           {/* Login Link */}
           <View style={styles.loginLink}>
             <Text>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('DocterLogin')}
+            >
               <Text style={{ color: '#FF6B00', fontWeight: 'bold' }}>
                 Log in to my Account
               </Text>
