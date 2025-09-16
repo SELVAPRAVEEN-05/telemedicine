@@ -37,7 +37,7 @@ export default function Register() {
   const handleRegister = async () => {
     // Basic validation
     const requiredFields = ['fullName', 'dob', 'phone'];
-    const missingFields = requiredFields.filter(field => !form[field]);
+    const missingFields = requiredFields.filter(field => !form[field as keyof typeof form]);
 
     if (missingFields.length > 0) {
       Alert.alert('Error', 'Please fill all required fields');
@@ -206,8 +206,7 @@ export default function Register() {
           {/* Register */}
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={handleRegister}
-            disabled={loading}
+            onPress={() => navigation.navigate('PatienrtLayout')}
           >
             <Text style={styles.submitText}>
               {loading ? 'Registering...' : 'Register'}

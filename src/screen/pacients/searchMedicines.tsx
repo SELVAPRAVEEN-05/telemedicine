@@ -13,6 +13,8 @@ import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../route/appNavigator";
 import { SearchMedicine as styles } from '../../styles/SearchMedicine';
+import Icon from 'react-native-vector-icons/Feather';
+
 
 type PharmacyDetailsRouteProp = RouteProp<RootStackParamList>;
 type PharmacyDetailsNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -144,17 +146,14 @@ export default function PharmacyDetailsScreen({ route, navigation }: Props) {
       "Order Confirmation",
       `Order Summary:
 • ${selectedMedicines.length} item(s)
-• Total: $${totalAmount}
-• Pharmacy: ${pharmacy.name}
-
-Would you like to place this order?`,
+• Pharmacy: ${pharmacy.name}`,
       [
         { text: "Cancel", style: "cancel" },
         {
-          text: "Place Order",
+          text: "Reserved Medicine",
           onPress: () => {
             Alert.alert(
-              "Order Placed!",
+              "Reserved",
               "Your order has been successfully placed. You will receive a confirmation shortly.",
               [
                 {
@@ -166,12 +165,6 @@ Would you like to place this order?`,
                 }
               ]
             );
-            console.log("Order placed:", {
-              pharmacy: pharmacy.name,
-              medicines: selectedMedicines,
-              total: totalAmount,
-              timestamp: new Date().toISOString()
-            });
           }
         }
       ]
@@ -189,7 +182,6 @@ Would you like to place this order?`,
           style={styles.medicineInfo}
           onPress={() => {
             toggleMedicineSelect(medicine);
-            // setSelect(!Select);
           }}
           disabled={medicine.stock === 0}
         >
@@ -220,9 +212,14 @@ Would you like to place this order?`,
             </TouchableOpacity>
           </View>
         )}
-        <View style={styles.ratioOuter}>
-          {isSelected && <View style={styles.ratioInner} />}
-        </View>
+        <TouchableOpacity onPress={() => {
+          toggleMedicineSelect(medicine);
+
+        }}>
+          <View style={styles.ratioOuter}>
+            {isSelected && <View style={styles.ratioInner} />}
+          </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -231,15 +228,28 @@ Would you like to place this order?`,
     <SafeAreaView style={styles.container}>
       {/* Header */}
 
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
+      <View
+          style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 20 }}
         >
-          <Text style={styles.backButton}>←</Text>
+          <TouchableOpacity
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              }
+            }}
+          >
+            <Icon
+              name="arrow-left"
+              size={26}
+              style={{ marginLeft: 15, marginTop: 5, marginRight: 10 }}
+              color="#000000"
+            />
+          </TouchableOpacity>
 
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Available Medicines</Text>
-      </View>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            Available Medicines
+          </Text>
+        </View>
 
       {/* Pharmacy Info */}
       <View style={styles.pharmacyInfo}>
@@ -265,7 +275,7 @@ Would you like to place this order?`,
       {selectedMedicines.length > 0 && (
         <View style={styles.selectionSummary}>
           <Text style={styles.selectionText}>
-            {selectedMedicines.length} item(s) selected • Total: ${calculateTotal()}
+            {selectedMedicines.length} item(s) selected
           </Text>
         </View>
       )}
@@ -298,7 +308,7 @@ Would you like to place this order?`,
             onPress={handleAddToOrder}
           >
             <Text style={styles.addToCartButtonText}>
-              Place Order ({selectedMedicines.length}) • ${calculateTotal()}
+              Reserve Medicine
             </Text>
           </TouchableOpacity>
         </View>

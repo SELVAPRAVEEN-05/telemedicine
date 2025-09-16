@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const consultDoctorstyles = StyleSheet.create({
   container: {
@@ -6,17 +6,8 @@ export const consultDoctorstyles = StyleSheet.create({
     // backgroundColor: '#FFF8F3',
   },
   headerSection: {
-    backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingTop: 40,
-    paddingBottom: 20,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
+    marginTop: 20,
     marginBottom: 20,
   },
   header: {
@@ -28,10 +19,12 @@ export const consultDoctorstyles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
     backgroundColor: '#F8F9FA',
     borderRadius: 15,
     paddingHorizontal: 15,
     height: 50,
+    borderColor: '#d1d1d1ff',
   },
   searchIcon: {
     marginRight: 12,
@@ -62,8 +55,8 @@ export const consultDoctorstyles = StyleSheet.create({
     // position: 'relative',
     overflow: 'hidden',
   },
-  infoContainer:{
-    position: 'relative'
+  infoContainer: {
+    position: 'relative',
   },
   imageSection: {
     height: 200,
@@ -133,6 +126,7 @@ export const consultDoctorstyles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 10,
+    gap:10
   },
   specialityText: {
     fontSize: 14,
@@ -204,6 +198,19 @@ export const consultDoctorstyles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#F0F0F0',
   },
+
+  feeLabel: {
+    fontSize: 12,
+    color: '#777',
+    marginBottom: 4,
+  },
+
+  feeAmount: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FF6B35',
+  },
+
   creditsSection: {
     flex: 1,
   },

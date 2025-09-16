@@ -69,7 +69,7 @@ export default function Login() {
         //   console.log('❌ Error saving token:', err);
         // }
 
-        navigation.replace('PatientDashboard');
+        navigation.replace('PatienrtLayout');
       } else {
         Alert.alert('Error', res.data?.message || 'Invalid OTP');
       }

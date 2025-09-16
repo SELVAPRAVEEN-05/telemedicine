@@ -6,6 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { pharmacyStyles as styles } from '../../styles/pharmacyStyles';
@@ -16,6 +17,13 @@ interface Medicine {
   stock: number;
   price: number;
   category: string;
+  manufacturer?: string;
+  expiryDate?: string;
+  description?: string;
+}
+
+interface MedicineScreenProps {
+  navigation?: any;
 }
 
 const SAMPLE_MEDICINES: Medicine[] = [
@@ -25,6 +33,9 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 150,
     price: 25.5,
     category: 'Pain Relief',
+    manufacturer: 'ABC Pharma',
+    expiryDate: '12/2025',
+    description: 'Pain relief and fever reducer',
   },
   {
     id: '2',
@@ -32,6 +43,9 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 85,
     price: 180.0,
     category: 'Antibiotic',
+    manufacturer: 'XYZ Healthcare',
+    expiryDate: '08/2025',
+    description: 'Antibiotic for bacterial infections',
   },
   {
     id: '3',
@@ -39,6 +53,9 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 200,
     price: 15.75,
     category: 'Pain Relief',
+    manufacturer: 'MediCore Ltd',
+    expiryDate: '10/2025',
+    description: 'Anti-inflammatory and pain relief',
   },
   {
     id: '4',
@@ -46,6 +63,9 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 0,
     price: 45.25,
     category: 'Allergy',
+    manufacturer: 'HealthPlus',
+    expiryDate: '06/2025',
+    description: 'Antihistamine for allergies',
   },
   {
     id: '5',
@@ -53,6 +73,9 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 60,
     price: 120.0,
     category: 'Gastric',
+    manufacturer: 'PharmaCorp',
+    expiryDate: '09/2025',
+    description: 'Proton pump inhibitor',
   },
   {
     id: '6',
@@ -60,14 +83,19 @@ const SAMPLE_MEDICINES: Medicine[] = [
     stock: 0,
     price: 32.0,
     category: 'Pain Relief',
+    manufacturer: 'MediCore Ltd',
+    expiryDate: '11/2025',
+    description: 'Anti-inflammatory and pain relief',
   },
 ];
 
-export default function MedicineScreen() {
+export default function MedicineScreen({ navigation }: MedicineScreenProps) {
   const [medicines, setMedicines] = useState<Medicine[]>(SAMPLE_MEDICINES);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [selectedMedicine, setSelectedMedicine] = useState<Medicine | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const filteredMedicines = medicines.filter(medicine => {
     const matchesSearch = medicine.name
@@ -82,14 +110,60 @@ export default function MedicineScreen() {
   });
 
   const handleMedicinePress = (medicine: Medicine) => {
-    Alert.alert(
-      'Medicine Details',
-      `Name: ${medicine.name}\nStock: ${medicine.stock} units\nPrice: ₹${medicine.price}\nCategory: ${medicine.category}`,
-      [
-        { text: 'Edit Price', onPress: () => console.log('Edit price') },
-        { text: 'Cancel', style: 'cancel' },
-      ],
+    setSelectedMedicine(medicine);
+    setModalVisible(true);
+  };
+
+  const handleEditPress = () => {
+    setModalVisible(false);
+    if (navigation && selectedMedicine) {
+      navigation.navigate('EditMedicineScreen', {
+        medicine: selectedMedicine,
+        onSave: handleMedicineSave,
+      });
+    } else {
+      // Fallback if navigation is not available
+      Alert.alert('Edit Medicine', `Edit ${selectedMedicine?.name}`);
+    }
+  };
+
+  const handleMedicineSave = (updatedMedicine: Medicine) => {
+    setMedicines(prevMedicines =>
+      prevMedicines.map(medicine =>
+        medicine.id === updatedMedicine.id ? updatedMedicine : medicine
+      )
     );
+  };
+
+  const handleDeletePress = () => {
+    if (!selectedMedicine) return;
+    
+    Alert.alert(
+      'Delete Medicine',
+      `Are you sure you want to delete ${selectedMedicine.name}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            setMedicines(prevMedicines =>
+              prevMedicines.filter(medicine => medicine.id !== selectedMedicine.id)
+            );
+            setModalVisible(false);
+          },
+        },
+      ]
+    );
+  };
+
+  const getStockColor = (stock: number) => {
+    if (stock < 50) return '#ff3b30';
+    if (stock < 100) return '#ff9500';
+    return '#34c759';
   };
 
   const addNewMedicine = () => {
@@ -180,6 +254,103 @@ export default function MedicineScreen() {
     setSelectedFilter(filter);
     setFilterDropdownVisible(false);
   };
+
+  const renderMedicineModal = () => (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => setModalVisible(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          {/* Modal Header */}
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Medicine Details</Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Icon name="close" size={24} color="#666" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Modal Body */}
+          <ScrollView style={styles.modalBody} showsVerticalScrollIndicator={false}>
+            {selectedMedicine && (
+              <View>
+                {/* Medicine Name */}
+                <View style={styles.medicineCardHeader}>
+                  <Text style={styles.medicineCardName}>
+                    {selectedMedicine.name}
+                  </Text>
+                  <View style={[
+                    styles.medicineCardStock,
+                    { backgroundColor: getStockColor(selectedMedicine.stock) + '20' }
+                  ]}>
+                    <Text style={[
+                      styles.medicineStock,
+                      { color: getStockColor(selectedMedicine.stock) }
+                    ]}>
+                      Stock: {selectedMedicine.stock}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* Medicine Details */}
+                <View style={styles.medicineCardDetails}>
+                  <View style={styles.medicineCardDetailRow}>
+                    <Text style={styles.medicineCardLabel}>Price:</Text>
+                    <Text style={styles.medicineCardValue}>₹{selectedMedicine.price}</Text>
+                  </View>
+
+                  <View style={styles.medicineCardDetailRow}>
+                    <Text style={styles.medicineCardLabel}>Category:</Text>
+                    <Text style={styles.medicineCardValue}>{selectedMedicine.category}</Text>
+                  </View>
+
+                
+
+                  {selectedMedicine.expiryDate && (
+                    <View style={styles.medicineCardDetailRow}>
+                      <Text style={styles.medicineCardLabel}>Expiry Date:</Text>
+                      <Text style={styles.medicineCardValue}>{selectedMedicine.expiryDate}</Text>
+                    </View>
+                  )}
+
+                  {selectedMedicine.description && (
+                    <View style={[styles.medicineCardDetailRow, { flexDirection: 'column', alignItems: 'flex-start' }]}>
+                      <Text style={styles.medicineCardLabel}>Description:</Text>
+                      <Text style={[styles.medicineCardValue, { marginTop: 4 }]}>
+                        {selectedMedicine.description}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+
+                {/* Action Buttons */}
+                <View style={styles.medicineCardActions}>
+                  <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={handleEditPress}
+                  >
+                    <Text style={styles.cardButtonText}>Edit</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={handleDeletePress}
+                  >
+                    <Text style={styles.cardButtonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
+  );
 
   return (
     <View style={styles.screenContainer}>
@@ -400,6 +571,9 @@ export default function MedicineScreen() {
           )}
         </ScrollView>
       </View>
+
+      {/* Render Modal */}
+      {renderMedicineModal()}
     </View>
   );
 }

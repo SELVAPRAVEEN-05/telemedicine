@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
+  Alert,
   SafeAreaView,
-  TouchableOpacity,
   ScrollView,
   Switch,
-  Alert,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import {Availavilitystyle as styles } from "../../styles/availabilityStyles"
+import { Availavilitystyle as styles } from "../../styles/availabilityStyles";
 
 // Utility: number of days in a month
 const getDaysInMonth = (month: number, year: number) => {
@@ -74,9 +74,9 @@ export default function AvailabilityScreen() {
     Alert.alert(
       "Availability Saved",
       `Date: ${selectedAvailability.date}-${selectedAvailability.month}-${selectedAvailability.year}\n` +
-        `Slots: ${selectedAvailability.slots
-          .map((s) => s.time)
-          .join(", ") || "No slots selected"}`
+      `Slots: ${selectedAvailability.slots
+        .map((s) => s.time)
+        .join(", ") || "No slots selected"}`
     );
 
     console.log("Saved Availability:", selectedAvailability);
@@ -152,11 +152,6 @@ export default function AvailabilityScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Availability</Text>
-      </View>
-
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Calendar */}
         {renderCalendarGrid()}
