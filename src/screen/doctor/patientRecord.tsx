@@ -4,7 +4,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import {
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -22,7 +21,7 @@ const PatientRecordsScreen = () => {
     {
       id: 1,
       date: '2024-05-18',
-      title: "Dr. Sharma's Clinic",
+      title: 'Sharma',
       subtitle: 'General Checkup',
       backgroundColor: '#bfede3ff',
       iconColor: '#0D9488',
@@ -35,7 +34,7 @@ const PatientRecordsScreen = () => {
       diagnosis: 'Patient is in good health. All vital signs normal.',
       prescription: [
         'Vitamin D3 - 1 tablet daily for 30 days',
-        'Multivitamin - 1 capsule daily after breakfast'
+        'Multivitamin - 1 capsule daily after breakfast',
       ],
       nextAppointment: '2024-11-18',
       vitals: {
@@ -43,10 +42,11 @@ const PatientRecordsScreen = () => {
         heartRate: '72 bpm',
         temperature: '98.6°F',
         weight: '70 kg',
-        height: '175 cm'
+        height: '175 cm',
       },
       labTests: ['Complete Blood Count', 'Lipid Profile', 'Blood Sugar'],
-      notes: 'Patient advised to maintain current diet and exercise routine. Follow up in 6 months.',
+      notes:
+        'Patient advised to maintain current diet and exercise routine. Follow up in 6 months.',
       patientInfo: {
         name: 'John Doe',
         age: 35,
@@ -54,13 +54,13 @@ const PatientRecordsScreen = () => {
         bloodGroup: 'O+',
         phone: '+91 9876543210',
         email: 'john.doe@email.com',
-        address: '123 Anna Salai, Chennai, Tamil Nadu 600002'
-      }
+        address: '123 Anna Salai, Chennai, Tamil Nadu 600002',
+      },
     },
     {
       id: 2,
       date: '2024-04-25',
-      title: 'City Hospital',
+      title: 'dharnish k',
       subtitle: 'Blood Test Results',
       backgroundColor: '#FED7AA',
       iconColor: '#EA580C',
@@ -78,10 +78,15 @@ const PatientRecordsScreen = () => {
         heartRate: 'Not measured',
         temperature: 'Not measured',
         weight: 'Not measured',
-        height: 'Not measured'
+        height: 'Not measured',
       },
-      labTests: ['Hemoglobin: 13.5 g/dL (Normal)', 'WBC Count: 7,200/μL (Normal)', 'Platelet Count: 250,000/μL (Normal)'],
-      notes: 'All test results are within normal limits. No further action required.',
+      labTests: [
+        'Hemoglobin: 13.5 g/dL (Normal)',
+        'WBC Count: 7,200/μL (Normal)',
+        'Platelet Count: 250,000/μL (Normal)',
+      ],
+      notes:
+        'All test results are within normal limits. No further action required.',
       patientInfo: {
         name: 'John Doe',
         age: 35,
@@ -89,13 +94,13 @@ const PatientRecordsScreen = () => {
         bloodGroup: 'O+',
         phone: '+91 9876543210',
         email: 'john.doe@email.com',
-        address: '123 Anna Salai, Chennai, Tamil Nadu 600002'
-      }
+        address: '123 Anna Salai, Chennai, Tamil Nadu 600002',
+      },
     },
     {
       id: 3,
       date: '2024-04-12',
-      title: "Dr. Patel's Clinic",
+      title: 'prasanth',
       subtitle: 'Eye Exam',
       backgroundColor: '#FECACA',
       iconColor: '#DC2626',
@@ -108,7 +113,7 @@ const PatientRecordsScreen = () => {
       diagnosis: 'Mild myopia in both eyes. Prescription updated.',
       prescription: [
         'New eyeglasses prescription: -1.25 D (both eyes)',
-        'Eye drops for dry eyes - 2 drops twice daily'
+        'Eye drops for dry eyes - 2 drops twice daily',
       ],
       nextAppointment: '2025-04-12',
       vitals: {
@@ -116,10 +121,11 @@ const PatientRecordsScreen = () => {
         heartRate: 'Not measured',
         temperature: 'Not measured',
         weight: 'Not measured',
-        height: 'Not measured'
+        height: 'Not measured',
       },
       labTests: ['Visual Acuity Test', 'Refraction Test', 'Eye Pressure Test'],
-      notes: 'Patient should wear prescribed glasses regularly. Avoid prolonged screen time without breaks.',
+      notes:
+        'Patient should wear prescribed glasses regularly. Avoid prolonged screen time without breaks.',
       patientInfo: {
         name: 'John Doe',
         age: 35,
@@ -127,9 +133,9 @@ const PatientRecordsScreen = () => {
         bloodGroup: 'O+',
         phone: '+91 9876543210',
         email: 'john.doe@email.com',
-        address: '123 Anna Salai, Chennai, Tamil Nadu 600002'
-      }
-    }
+        address: '123 Anna Salai, Chennai, Tamil Nadu 600002',
+      },
+    },
   ];
 
   const formatDate = (dateString: any) => {
@@ -137,14 +143,13 @@ const PatientRecordsScreen = () => {
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: '2-digit',
-      day: '2-digit'
+      day: '2-digit',
     });
   };
 
   const handleRecordPress = (record: any) => {
-  navigation.navigate('PatientDetailsScreen', { record });
-};
-
+    navigation.navigate('PatientDetailsScreen', { record });
+  };
 
   const RecordItem = ({ record }: any) => (
     <TouchableOpacity
@@ -174,7 +179,7 @@ const PatientRecordsScreen = () => {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.recordsSection}>
           <View style={styles.recordsList}>
-            {records.map((record) => (
+            {records.map(record => (
               <RecordItem key={record.id} record={record} />
             ))}
           </View>
@@ -189,8 +194,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  firstChar:{
-    fontSize:20
+  firstChar: {
+    fontSize: 20,
   },
   header: {
     flexDirection: 'row',
@@ -264,7 +269,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   iconContainer: {
-     width: 48,
+    width: 48,
     height: 48,
     borderRadius: 24,
     backgroundColor: '#e9eefc',

@@ -7,14 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../route/appNavigator';
 import DoctorAppointments from './doctorAppointments';
 import DoctorDashboard from './doctorDashboard';
-import AvailabilityScreen from './avalibilable';
 import PatientRecordsScreen from './patientRecord';
 
-const Placeholder = ({ name }: { name: any }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Icon name="info" size={40} color="#999" />
-  </View>
-);
 type DocterLayout = NativeStackNavigationProp<RootStackParamList>;
 
 const BottomTabBar = () => {
@@ -24,20 +18,17 @@ const BottomTabBar = () => {
 
   const tabs = [
     { name: 'Dashboard', icon: 'dashboard' },
-    { name: 'Appointments', icon: 'event' },
-    { name: 'Available Slots', icon: 'schedule' },
-    { name: 'Patients', icon: 'people' },
+    { name: 'Patients Appointments', icon: 'schedule' },
+    { name: 'Patients Records', icon: 'people' },
   ];
 
   const renderScreen = () => {
     switch (activeTab) {
       case 'Dashboard':
         return <DoctorDashboard />;
-      case 'Appointments':
-        return <AvailabilityScreen /> ;
-      case 'Available Slots':
+      case 'Patients Appointments':
         return <DoctorAppointments />;
-      case 'Patients':
+      case 'Patients Records':
         return <PatientRecordsScreen />;
       default:
         return null;

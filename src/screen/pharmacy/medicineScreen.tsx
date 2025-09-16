@@ -354,7 +354,6 @@ export default function MedicineScreen({ navigation }: MedicineScreenProps) {
 
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.title}>Medicine Inventory</Text>
 
       {/* Search Bar */}
       <View style={{ marginBottom: 20 }}>

@@ -1,22 +1,24 @@
 // AppNavigator.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import RoleSelectionScreen from '../screen/choose';
 import AppointmentsQueueScreen from '../screen/doctor/appointmentDetails';
 import AvailabilityScreen from '../screen/doctor/avalibilable';
 import DoctorAppointments from '../screen/doctor/doctorAppointments';
 import DoctorDashboard from '../screen/doctor/doctorDashboard';
 import DoctorLayout from '../screen/doctor/doctorLayout';
+import DocterLogin from '../screen/doctor/doctorLogin';
 import DoctorPatientQueue from '../screen/doctor/doctorPatientQueue';
 import DoctorProfile from '../screen/doctor/doctorProfile';
 import DoctorRegister from '../screen/doctor/doctorRegister';
 import PatientDetailsShowDoctor from '../screen/doctor/PatientDetailsScreen';
 import PatientRecordsScreen from '../screen/doctor/patientRecord';
-import Login from '../screen/login';
 import AiChecker from '../screen/pacients/aiChecker';
 import BookSlot from '../screen/pacients/bookSlot';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
 import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
+import Login from '../screen/pacients/login';
 import PatientDashboard from '../screen/pacients/patientDashboard';
 import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
 import PatienrtLayout from '../screen/pacients/patientLayout';
@@ -27,7 +29,9 @@ import PharmacyDetailsScreen from '../screen/pacients/searchMedicines';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
 import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
+import PharmacyLoginScreen from '../screen/pharmacy/login';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
+import PharmacyRegisterScreen from '../screen/pharmacy/register';
 import Videocall from '../screen/trial/VideoCall';
 
 interface Doctor {
@@ -66,6 +70,10 @@ export type RootStackParamList = {
   DoctorRegister: undefined;
   DoctorProfile: undefined;
   PatienrtLayout: undefined;
+  PharmacyLoginScreen: undefined;
+  PharmacyRegisterScreen: undefined;
+  DocterLogin: undefined;
+  RoleSelectionScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -121,8 +129,21 @@ export default function AppNavigator() {
         component={PatientDetailsShowDoctor}
       />
       <Stack.Screen name="DoctorRegister" component={DoctorRegister} />
+      <Stack.Screen
+        name="RoleSelectionScreen"
+        component={RoleSelectionScreen}
+      />
       <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
       <Stack.Screen name="PatienrtLayout" component={PatienrtLayout} />
+      <Stack.Screen name="DocterLogin" component={DocterLogin} />
+      <Stack.Screen
+        name="PharmacyLoginScreen"
+        component={PharmacyLoginScreen}
+      />
+      <Stack.Screen
+        name="PharmacyRegisterScreen"
+        component={PharmacyRegisterScreen}
+      />
     </Stack.Navigator>
   );
 }

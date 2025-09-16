@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { RootStackParamList } from '../route/appNavigator';
-import { LoginStyles as styles } from '../styles/login';
+import { RootStackParamList } from '../../route/appNavigator';
+import { LoginStyles as styles } from '../../styles/login';
 type LoginNav = NativeStackNavigationProp<RootStackParamList>;
 
 export default function Login() {

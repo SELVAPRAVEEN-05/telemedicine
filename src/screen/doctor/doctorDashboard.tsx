@@ -5,18 +5,11 @@ import React, { JSX, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { AppointmentCard } from '../../components/appointmentCard';
 import { PatientQueueCard } from '../../components/patientQueueCard';
 import { RootStackParamList } from '../../route/appNavigator';
 import { docterDashboardstyles as styles } from '../../styles/doctordashboard';
@@ -100,9 +93,9 @@ export default function DoctorDashboard(): JSX.Element {
   ];
 
   const stats = [
-    { value: '6', label: 'Today\nAppointments', bg: '#ffe6e0' }, // light peach
-    { value: '3', label: 'Pending\nRequests', bg: '#fff2cc' }, // light yellow
-    { value: '4.9', label: 'Rating', bg: '#e6f7ff' }, // light blue
+    { value: '6', label: 'Total Attended\nAppointments', bg: '#ffe6e0' },
+    { value: '3', label: 'Waiting\nPatients', bg: '#fff2cc' },
+    { value: '4.9', label: 'Rating', bg: '#e6ffe6ff' },
   ];
 
   const [selectedAppointment, setSelectedAppointment] =
@@ -201,25 +194,6 @@ export default function DoctorDashboard(): JSX.Element {
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Today's Appointments</Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('DoctorAppointments')}
-            >
-              <Text style={styles.viewAllText}>View All</Text>
-            </TouchableOpacity>
-          </View>
-
-          {appointments.slice(0, 2).map(a => (
-            <AppointmentCard
-              key={a.id}
-              appointment={a}
-              onpress={() => openModal(a?.id)}
-            />
-          ))}
-        </View>
-
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Patient Queue</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('DoctorAppointments')}
@@ -228,162 +202,11 @@ export default function DoctorDashboard(): JSX.Element {
             </TouchableOpacity>
           </View>
 
-          {patientQueue.slice(0, 2).map(p => (
+          {patientQueue.slice(0, 3).map(p => (
             <PatientQueueCard key={p.id} patient={p} />
           ))}
         </View>
       </ScrollView>
-
-      {/* ---------------- Appointment Modal ---------------- */}
-      <Modal
-        transparent
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={closeModal}
-      >
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <View style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
-              <Animated.View
-                style={[
-                  styles.modalContent,
-                  { transform: [{ translateY: slideAnim }] },
-                ]}
-              >
-                <View style={styles.modalHeader}>
-                  <Text style={styles.modalTitle}>Appointment Details</Text>
-                  <TouchableOpacity onPress={closeModal}>
-                    <MaterialIcons name="close" size={22} color="#666" />
-                  </TouchableOpacity>
-                </View>
-
-                {selectedAppointment && (
-                  <>
-                    <View style={styles.modalPatientSection}>
-                      <View style={styles.largeAvatar}>
-                        <Text style={styles.largeAvatarText}>
-                          {selectedAppointment.name.charAt(0)}
-                        </Text>
-                      </View>
-                      <Text style={styles.modalPatientName}>
-                        {selectedAppointment.name}
-                      </Text>
-
-                      <View style={styles.modalPatientDetails}>
-                        <View style={styles.iconRow}>
-                          <MaterialIcons name="schedule" size={18} />
-                          <Text style={styles.modalDetailText}>
-                            {selectedAppointment.time}
-                          </Text>
-                        </View>
-                        <View style={styles.iconRow}>
-                          <MaterialIcons name="person" size={18} />
-                          <Text style={styles.modalDetailText}>
-                            Age: {selectedAppointment.age},{' '}
-                            {selectedAppointment.gender}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-
-                    <View style={styles.reasonSection}>
-                      <Text style={styles.reasonTitle}>
-                        Reason for Appointment
-                      </Text>
-                      <View style={styles.reasonBox}>
-                        <Text style={styles.reasonText}>
-                          {selectedAppointment.reason}
-                        </Text>
-                        {selectedAppointment.status === 'rejected' &&
-                        selectedAppointment.rejectReason ? (
-                          <Text style={styles.rejectReasonText}>
-                            Reject reason: {selectedAppointment.rejectReason}
-                          </Text>
-                        ) : null}
-                      </View>
-                    </View>
-
-                    <View style={styles.actionButtons}>
-                      <TouchableOpacity
-                        style={[
-                          styles.rejectButton,
-                          selectedAppointment.status !== 'pending' &&
-                            styles.buttonDisabled,
-                        ]}
-                        onPress={() => setRejectModalVisible(true)}
-                        disabled={selectedAppointment.status !== 'pending'}
-                      >
-                        <Text style={styles.rejectButtonText}>Reject</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
-                        style={[
-                          styles.approveButton,
-                          selectedAppointment.status === 'approved' &&
-                            styles.approvedButton,
-                        ]}
-                        onPress={handleApprove}
-                        disabled={selectedAppointment.status === 'approved'}
-                      >
-                        <Text style={styles.approveButtonText}>
-                          {selectedAppointment.status === 'approved'
-                            ? 'Approved'
-                            : 'Approve'}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </>
-                )}
-              </Animated.View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
-      {/* ---------------- Reject Reason Modal (sibling) ---------------- */}
-      <Modal
-        transparent
-        visible={rejectModalVisible}
-        animationType="slide"
-        onRequestClose={() => setRejectModalVisible(false)}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={styles.rejectOverlay}
-        >
-          <View style={styles.rejectModal}>
-            <Text style={styles.rejectTitle}>Reason for Rejection</Text>
-            <TextInput
-              value={rejectReason}
-              onChangeText={setRejectReason}
-              placeholder="Enter reason"
-              style={styles.rejectInput}
-              multiline
-              numberOfLines={3}
-            />
-
-            <View style={styles.rejectActions}>
-              <TouchableOpacity
-                style={styles.rejectCancel}
-                onPress={() => setRejectModalVisible(false)}
-              >
-                <Text style={styles.rejectCancelText}>Cancel</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.rejectConfirm,
-                  !rejectReason.trim() && styles.buttonDisabled,
-                ]}
-                onPress={handleRejectConfirm}
-                disabled={!rejectReason.trim()}
-              >
-                <Text style={styles.rejectConfirmText}>OK</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
-      </Modal>
     </View>
   );
 }

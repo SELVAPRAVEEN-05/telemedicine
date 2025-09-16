@@ -5,13 +5,12 @@ import AppointmentsQueueScreen from './appointmentDetails';
 import PatientQueueScreen from './patientAppointment';
 
 export default function DoctorAppointments() {
-  const [activeTab, setActiveTab] = useState<'appointments' | 'meetings'>(
+  const [activeTab, setActiveTab] = useState<'appointments' | 'Past Meetings'>(
     'appointments',
   );
 
   return (
     <View style={styles.container}>
-
       {/* Tabs */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
@@ -34,17 +33,17 @@ export default function DoctorAppointments() {
         <TouchableOpacity
           style={[
             styles.tabButton,
-            activeTab === 'meetings' && styles.activeTab,
+            activeTab === 'Past Meetings' && styles.activeTab,
           ]}
-          onPress={() => setActiveTab('meetings')}
+          onPress={() => setActiveTab('Past Meetings')}
         >
           <Text
             style={[
               styles.tabText,
-              activeTab === 'meetings' && styles.activeTabText,
+              activeTab === 'Past Meetings' && styles.activeTabText,
             ]}
           >
-            Meetings
+            Past Meetings
           </Text>
         </TouchableOpacity>
       </View>
@@ -52,10 +51,8 @@ export default function DoctorAppointments() {
       {/* Tab Content */}
       <View style={styles.content}>
         {activeTab === 'appointments' ? (
-          // <Text>📋 All Appointments will be listed here.</Text>
           <AppointmentsQueueScreen />
         ) : (
-          // <Text>📅 All Meetings will be listed here.</Text>
           <PatientQueueScreen />
         )}
       </View>
@@ -124,8 +121,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     margin: 16,
   },
 });
