@@ -92,6 +92,7 @@ export default function Login() {
             <TextInput
               style={[styles.input, { flex: 1, marginRight: 10 }]}
               placeholder="Mobile Number"
+            placeholderTextColor={'#999'}
               keyboardType="phone-pad"
               maxLength={10}
               value={phone}
@@ -112,6 +113,7 @@ export default function Login() {
           <View style={styles.otpRow}>
             <TextInput
               style={[styles.input, { flex: 1, marginRight: 10 }]}
+            placeholderTextColor={'#999'}
               placeholder="Enter OTP"
               keyboardType="number-pad"
               maxLength={6} // change to 6 if your OTP is 6 digits

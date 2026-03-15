@@ -21,7 +21,7 @@ export default function RoleSelectionScreen() {
       title: "Doctor",
       description: "Medical professional providing healthcare services",
       image:
-        "https://www.future-doctor.de/wp-content/uploads/2024/08/shutterstock_2480850611.jpg.webp",
+        "https://th.bing.com/th/id/OIP.EYNhOZf7XZzQ5vteLXAC3AHaE8?w=263&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
       navigateTo: "DoctorRegister", 
     },
     {

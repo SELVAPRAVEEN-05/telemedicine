@@ -40,6 +40,7 @@ const DocterLogin = () => {
 
         <TextInput
           style={styles.input}
+            placeholderTextColor={'#999'}
           placeholder="Email"
           keyboardType="email-address"
           value={email}
@@ -47,6 +48,7 @@ const DocterLogin = () => {
         />
         <TextInput
           style={styles.input}
+            placeholderTextColor={'#999'}
           placeholder="Password"
           secureTextEntry
           value={password}
