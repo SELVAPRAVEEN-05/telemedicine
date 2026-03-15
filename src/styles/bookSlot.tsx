@@ -85,7 +85,7 @@ export const bookSLotstyles = StyleSheet.create({
   },
   scheduleTitle: { fontSize: 16, fontWeight: '600', color: '#333', marginBottom: 8 },
   scheduleSubtitle: { fontSize: 14, color: '#666', marginBottom: 20 },
-  sectionTitle: { fontSize: 14, fontWeight: '600', color: '#333', marginBottom: 12 },
+  sectionTitle: { fontSize: 22, fontWeight: '600', color: '#333', marginBottom: 12 },
   datesContainer: { flexDirection: 'row', marginBottom: 24 },
   dateCard: {
     flex: 1,

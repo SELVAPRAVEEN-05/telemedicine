@@ -1,30 +1,41 @@
+// AppNavigator.tsx
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ImageSourcePropType } from 'react-native';
 import React from 'react';
+import RoleSelectionScreen from '../screen/choose';
+import AppointmentsQueueScreen from '../screen/doctor/appointmentDetails';
 import AvailabilityScreen from '../screen/doctor/avalibilable';
 import DoctorAppointments from '../screen/doctor/doctorAppointments';
 import DoctorDashboard from '../screen/doctor/doctorDashboard';
-import doctorLayout from '../screen/doctor/doctorLayout';
+import DoctorLayout from '../screen/doctor/doctorLayout';
+import DocterLogin from '../screen/doctor/doctorLogin';
 import DoctorPatientQueue from '../screen/doctor/doctorPatientQueue';
-import Login from '../screen/login';
+import DoctorProfile from '../screen/doctor/doctorProfile';
+import DoctorRegister from '../screen/doctor/doctorRegister';
+import PatientDetailsShowDoctor from '../screen/doctor/PatientDetailsScreen';
+import PatientRecordsScreen from '../screen/doctor/patientRecord';
 import AiChecker from '../screen/pacients/aiChecker';
 import ConsultDoctor from '../screen/pacients/consultDoctor';
 import HealthRecords from '../screen/pacients/healthRecords';
 import Landing from '../screen/pacients/landing';
+import Login from '../screen/pacients/login';
 import PatientDashboard from '../screen/pacients/patientDashboard';
 import FullRecordDetailsScreen from '../screen/pacients/patientFullDeatils';
+import PatienrtLayout from '../screen/pacients/patientLayout';
 import PatientRecordDetails from '../screen/pacients/patientRecordDetails';
 import PatientProfile from '../screen/pacients/profile';
 import Register from '../screen/pacients/register';
 import PharmacyDetailsScreen from '../screen/pacients/searchMedicines';
 import UpcommingEvents from '../screen/pacients/upcommingEvents';
 import ViewMedicines from '../screen/pacients/viewMedicines';
-import BookSlot from '../screen/pacients/bookSlot';
+import EditMedicineScreen from '../screen/pharmacy/EditPharmacyDeatils';
+import PharmacyLoginScreen from '../screen/pharmacy/login';
 import PharmacyDashboard from '../screen/pharmacy/pharmacyDashboard';
+import PharmacyRegisterScreen from '../screen/pharmacy/register';
+import Videocall from '../screen/trial/VideoCall';
+import Translator from '../screen/pacients/translator'
 
 interface Doctor {
   id: string;
- 
 }
 export type RootStackParamList = {
   Landing: undefined;
@@ -39,46 +50,104 @@ export type RootStackParamList = {
   AiChecker: undefined;
   PharmacyDashboard: undefined;
   UpcommingEvents: undefined;
-    bookSlot: { doctors: Doctor };
- 
+  bookSlot: { doctors: Doctor };
   doctorLayout: undefined;
+
+  DoctorLayout: undefined;
   DoctorDashboard: undefined;
   PatientRecordDetails: { record: any };
   FullRecordDetailsScreen: { recordData: any };
   PharmacyDetails: { pharmacy: any };
   AvailabilityScreen: undefined;
+  EditMedicineScreen: { medicine: any; onSave: (medicine: any) => void };
+  PatientRecordsScreen: undefined;
+  PatientDetailsScreen: { record: any };
   DoctorAppointments: undefined;
   DoctorPatientQueue: undefined;
+  Translator : undefined
+  AppointmentsQueueScreen: undefined;
+  PatientQueueScreen: undefined;
+  Videocall: undefined;
+  DoctorRegister: undefined;
+  DoctorProfile: undefined;
+  PatienrtLayout: undefined;
+  PharmacyLoginScreen: undefined;
+  PharmacyRegisterScreen: undefined;
+  DocterLogin: undefined;
+  RoleSelectionScreen: undefined;
 };
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="doctorLayout"
+      initialRouteName="Landing"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
+
       <Stack.Screen name="PatientProfile" component={PatientProfile} />
-      <Stack.Screen name="ConsultDoctor" component={ConsultDoctor} />
+      
       <Stack.Screen name="ViewMedicines" component={ViewMedicines} />
       <Stack.Screen name="HealthRecords" component={HealthRecords} />
       <Stack.Screen name="AiChecker" component={AiChecker} />
       <Stack.Screen name="UpcommingEvents" component={UpcommingEvents} />
-      <Stack.Screen name="bookSlot" component={BookSlot} /> 
-      <Stack.Screen name="PatientRecordDetails" component={PatientRecordDetails} />
-      <Stack.Screen name="FullRecordDetailsScreen" component={FullRecordDetailsScreen} />
+      <Stack.Screen
+        name="PatientRecordDetails"
+        component={PatientRecordDetails}
+      />
+      <Stack.Screen
+        name="FullRecordDetailsScreen"
+        component={FullRecordDetailsScreen}
+      />
       <Stack.Screen name="DoctorDashboard" component={DoctorDashboard} />
-      <Stack.Screen name="doctorLayout" component={doctorLayout} />
+      <Stack.Screen name="DoctorLayout" component={DoctorLayout} />
       <Stack.Screen name="PharmacyDetails" component={PharmacyDetailsScreen} />
       <Stack.Screen name="AvailabilityScreen" component={AvailabilityScreen} />
+      <Stack.Screen name="Videocall" component={Videocall} />
       <Stack.Screen name="DoctorAppointments" component={DoctorAppointments} />
       <Stack.Screen name="DoctorPatientQueue" component={DoctorPatientQueue} />
       <Stack.Screen name="PharmacyDashboard" component={PharmacyDashboard} />
+            <Stack.Screen name="PatientDashboard" component={PatientDashboard} />
+      <Stack.Screen name="Translator" component={Translator} />
+      <Stack.Screen name="ConsultDoctor" component={ConsultDoctor} />
+      <Stack.Screen name="EditMedicineScreen" component={EditMedicineScreen} />
+      <Stack.Screen
+        name="PatientRecordsScreen"
+        component={PatientRecordsScreen}
+      />
+      <Stack.Screen
+        name="PatientDetailsScreen"
+        component={PatientDetailsShowDoctor}
+      />
+      <Stack.Screen
+        name="AppointmentsQueueScreen"
+        component={AppointmentsQueueScreen}
+      />
+      <Stack.Screen
+        name="PatientQueueScreen"
+        component={PatientDetailsShowDoctor}
+      />
+      <Stack.Screen name="DoctorRegister" component={DoctorRegister} />
+      <Stack.Screen
+        name="RoleSelectionScreen"
+        component={RoleSelectionScreen}
+      />
+      <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
+      <Stack.Screen name="PatienrtLayout" component={PatienrtLayout} />
+      <Stack.Screen name="DocterLogin" component={DocterLogin} />
+      <Stack.Screen
+        name="PharmacyLoginScreen"
+        component={PharmacyLoginScreen}
+      />
+      <Stack.Screen
+        name="PharmacyRegisterScreen"
+        component={PharmacyRegisterScreen}
+      />
     </Stack.Navigator>
   );
 }

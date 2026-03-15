@@ -3,8 +3,7 @@ import { StyleSheet } from "react-native";
 export const patientRecordDetails = StyleSheet.create({
     container: { 
         flex: 1, 
-        backgroundColor: "#fff", 
-        padding: 20 
+        backgroundColor: "#fff",
     },
          header: {
         flexDirection: "row",

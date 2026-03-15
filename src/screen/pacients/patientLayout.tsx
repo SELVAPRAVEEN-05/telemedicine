@@ -5,31 +5,34 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { RootStackParamList } from '../../route/appNavigator';
-import DoctorAppointments from './doctorAppointments';
-import DoctorDashboard from './doctorDashboard';
-import PatientRecordsScreen from './patientRecord';
+import HealthRecords from './healthRecords';
+import PatientAImodal from './patientAImodal';
+import ViewMedicines from './viewMedicines';
+import ConsultDoctor from './consultDoctor';
 
-type DocterLayout = NativeStackNavigationProp<RootStackParamList>;
+type PatientLayout = NativeStackNavigationProp<RootStackParamList>;
 
-const BottomTabBar = () => {
-  const navigation = useNavigation<DocterLayout>();
-
-  const [activeTab, setActiveTab] = useState('Dashboard');
+export default function PatienrtLayout() {
+  const navigation = useNavigation<PatientLayout>();
+  const [activeTab, setActiveTab] = useState('Home');
 
   const tabs = [
-    { name: 'Dashboard', icon: 'dashboard' },
-    { name: 'Patients Appointments', icon: 'schedule' },
-    { name: 'Patients Records', icon: 'people' },
+    { name: 'Home', icon: 'home' },
+    { name: 'Find Your Expert', icon: 'event' },
+    { name: 'Pharmacy', icon: 'local-pharmacy' },
+    { name: 'Records', icon: 'folder' },
   ];
 
   const renderScreen = () => {
     switch (activeTab) {
-      case 'Dashboard':
-        return <DoctorDashboard />;
-      case 'Patients Appointments':
-        return <DoctorAppointments />;
-      case 'Patients Records':
-        return <PatientRecordsScreen />;
+      case 'Home':
+        return <PatientAImodal />;
+      case 'Find Your Expert':
+        return <ConsultDoctor />;
+      case 'Pharmacy':
+        return <ViewMedicines />;
+      case 'Records':
+        return <HealthRecords />;
       default:
         return null;
     }
@@ -37,21 +40,21 @@ const BottomTabBar = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Render the selected screen */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{activeTab}</Text>
         <TouchableOpacity
           style={styles.profileAvatar}
-          onPress={() => {
-            navigation.navigate('DoctorProfile');
-          }}
+          onPress={() => navigation.navigate('PatientProfile')}
         >
-          <Text style={styles.profileAvatarText}>Dr</Text>
+          <Text style={styles.profileAvatarText}>P</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Main Content */}
       <View style={{ flex: 1 }}>{renderScreen()}</View>
 
-      {/* Bottom Tab Bar */}
+      {/* Bottom Tabs */}
       <View style={styles.container}>
         {tabs.map(tab => {
           const isActive = activeTab === tab.name;
@@ -73,7 +76,7 @@ const BottomTabBar = () => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -126,6 +129,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  screenText: { fontSize: 18, textAlign: 'center', marginTop: 20 },
 });
-
-export default BottomTabBar;

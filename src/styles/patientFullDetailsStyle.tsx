@@ -5,7 +5,6 @@ export const patientFullDetailsStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#f8f9fa",
-        marginTop:20
     },
     header: {
         flexDirection: "row",

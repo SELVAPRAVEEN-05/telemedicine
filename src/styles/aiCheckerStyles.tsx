@@ -4,15 +4,9 @@ export const aiCheckerStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8FAFC',
-    padding: 20,
   },
   scrollContainer: {
-    flexGrow: 1,
-  },
-  header: {
-    marginTop: 15,
-    marginBottom: 25,
-    alignItems: 'center',
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 28,
@@ -28,6 +22,7 @@ export const aiCheckerStyles = StyleSheet.create({
     marginTop: 8,
     fontWeight: '500',
     lineHeight: 22,
+    marginBottom: 16,
   },
   disclaimer: {
     backgroundColor: '#FEF3C7',
@@ -67,7 +62,7 @@ export const aiCheckerStyles = StyleSheet.create({
     borderRadius: 15,
     padding: 12,
     marginBottom: 10,
-    minWidth: '45%',
+    minWidth: '48%',
     shadowColor: '#64748B',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -345,6 +340,38 @@ export const aiCheckerStyles = StyleSheet.create({
   },
   resetButtonText: {
     color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+  profileAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 25,
+    backgroundColor: '#F97316',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileAvatarText: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },

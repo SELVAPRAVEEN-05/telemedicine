@@ -98,6 +98,7 @@ export const docterDashboardstyles = StyleSheet.create({
   cardRight: { marginLeft: 8 },
 
   statusBadgeApproved: {
+    
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#e6f5ea',
@@ -120,7 +121,9 @@ export const docterDashboardstyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-    backgroundColor: '#fff',
+    backgroundColor: '#fffcfbff',
+    borderWidth: 1,
+    borderColor: '#e4e4e4ff',
     borderRadius: 12,
     marginBottom: 10,
   },
