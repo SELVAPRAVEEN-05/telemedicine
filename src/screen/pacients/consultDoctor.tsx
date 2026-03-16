@@ -339,7 +339,7 @@ const ConsultDoctor: React.FC = () => {
    const [selectedLanguage, setSelectedLanguage] = useState<string>("English");
     const t = translations[selectedLanguage];
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc4YWZiN2YyZWNlNjdkNzU3NjkzYiIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzU3OTExNTM5LCJleHAiOjE3NTk2Mzk1Mzl9.1zHdKhPPp6268ttD052wxCMS_LDpgrU7h36_jaOVOpM";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc4YWZiN2YyZWNlNjdkNzU3NjkzYiIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzczNjgzODc5LCJleHAiOjE3NzU0MTE4Nzl9.bPxUSWG2i7qjWwOjhtEJXX6iHnlwPk35jx1rL-WnlzU";
 
   useEffect(() => {
     fetchDoctors();
@@ -445,8 +445,6 @@ const ConsultDoctor: React.FC = () => {
         contentContainerStyle={styles.listContainer}
       />
       </ScrollView>
-     
-      
     </View>
   );
 };
