@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useState } from 'react';
 import {
@@ -61,12 +62,9 @@ export default function Login() {
       );
 
       if (res.status === 200) {
-        // try {
-        //   await Keychain.setGenericPassword('jwt', res?.data?.token);
-        //   console.log('✅ Token saved securely in Android Keystore');
-        // } catch (err) {
-        //   console.log('❌ Error saving token:', err);
-        // }
+        // Save the JWT token to AsyncStorage
+        await AsyncStorage.setItem('jwt_token', res.data.token);
+        console.log('Token saved successfully');
 
         navigation.replace('PatienrtLayout');
       } else {

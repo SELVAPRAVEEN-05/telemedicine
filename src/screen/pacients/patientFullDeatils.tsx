@@ -1,4 +1,6 @@
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   ScrollView,
@@ -15,7 +17,59 @@ type Props = {
 };
 
 export default function FullRecordDetailsScreen({ route, navigation }: Props) {
-  const recordData = route.params;
+  const [recordData, setRecordData] = useState<any>(route.params?.recordData || null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRecordDetails = async () => {
+      try {
+        const token = await AsyncStorage.getItem('jwt_token');
+        if (!token) {
+          // Alert.alert('Error', 'No authentication token found. Please login again.');
+          setLoading(false);
+          return;
+        }
+
+        // Assume the API endpoint is /patient/get-record-details/:id
+        const recordId = route.params?.recordData?.id;
+        if (!recordId) {
+          // Alert.alert('Error', 'Record ID not found.');
+          setLoading(false);
+          return;
+        }
+
+        const res = await axios.get(
+          `https://telemedicine-server-o5tc.onrender.com/patient/get-record-details/${recordId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (res.status === 200) {
+          setRecordData(res.data);
+        } else {
+          // Alert.alert('Error', 'Failed to fetch record details.');
+        }
+      } catch (error) {
+        console.error('Error fetching record details:', error);
+        // Alert.alert('Error', 'Failed to fetch record details.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecordDetails();
+  }, [route.params]);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   const handleDownload = () => {
     Alert.alert(
@@ -87,7 +141,7 @@ export default function FullRecordDetailsScreen({ route, navigation }: Props) {
         </TouchableOpacity>
 
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-          Available Medicines
+          My Health Record
         </Text>
       </View>
 

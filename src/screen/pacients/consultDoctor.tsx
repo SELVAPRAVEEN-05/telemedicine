@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageSourcePropType,
@@ -332,12 +333,27 @@ const ConsultDoctor: React.FC = () => {
   const navigation = useNavigation<ConsultDoctorNavigationProp>();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('English');
+  const [token, setToken] = useState<string | null>(null);
   const t = translations[selectedLanguage];
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc4YWZiN2YyZWNlNjdkNzU3NjkzYiIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzczNzI5MzAzLCJleHAiOjE3NzU0NTczMDN9.Bcthq7k3KDKR5nQBYbcjPZNalNaBtypVI_2e0BkvS5A';
 
   useEffect(() => {
-    fetchDoctors();
+    const loadTokenAndFetch = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('jwt_token');
+        if (storedToken) {
+          setToken(storedToken);
+          fetchDoctors(storedToken);
+        } else {
+          Alert.alert('Error', 'No authentication token found. Please login again.');
+          // Optionally navigate to login
+        }
+      } catch (error) {
+        console.error('Error retrieving token:', error);
+        Alert.alert('Error', 'Failed to retrieve authentication token.');
+      }
+    };
+
+    loadTokenAndFetch();
 
     const loadLanguage = async () => {
       try {
@@ -354,13 +370,13 @@ const ConsultDoctor: React.FC = () => {
     loadLanguage();
   }, []);
 
-  const fetchDoctors = async () => {
+  const fetchDoctors = async (authToken: string) => {
     try {
       const res = await axios.get(
         'https://telemedicine-server-o5tc.onrender.com/doctor/get-all-doctors',
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authToken}`,
           },
         },
       );
