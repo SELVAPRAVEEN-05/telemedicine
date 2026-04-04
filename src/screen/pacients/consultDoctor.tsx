@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // ✅ import AsyncStorage
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageSourcePropType,
@@ -11,12 +14,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ import AsyncStorage
+} from 'react-native';
 
-const LANGUAGE_KEY = "appLanguage"; // same key used in dashboard
-  
+const LANGUAGE_KEY = 'appLanguage'; // same key used in dashboard
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -29,7 +29,6 @@ type ConsultDoctorNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'ConsultDoctor'
 >;
-
 
 // Doctor interface (frontend props)
 interface Doctor {
@@ -55,122 +54,120 @@ interface DoctorCardProps extends Doctor {
 }
 const translations: Record<string, any> = {
   English: {
-  header: "Find Your Expert",
-  searchPlaceholder: "Search experts, specialities...",
-  bookAppointment: "Book Appointment",
-  availableNow: "Available Now",
-  inAnotherCall: "In another Call",
-  specializedIn: "Specialized in",
-  callsAttended: "Calls Attended",
-  creditsPerMin: "Credits /Min",
-  notSpecified: "Not Specified",
-  noExperience: "No Experience",
-  yearsExperience: "Years of Experience",
-  consultationFee: "Consultation Fee",
-  payAndConnect: "Pay & Connect",
-  English: "English",
-  Hindi: "Hindi",
-  Punjabi: "Punjabi",
-  Tamil: "Tamil",
-    Cardiology: "Cardiology",
-  Dermatology: "Dermatology",
-  Orthopedics: "Orthopedics",
-},
+    header: 'Find Your Expert',
+    searchPlaceholder: 'Search experts, specialities...',
+    bookAppointment: 'Book Appointment',
+    availableNow: 'Available Now',
+    inAnotherCall: 'In another Call',
+    specializedIn: 'Specialized in',
+    callsAttended: 'Calls Attended',
+    creditsPerMin: 'Credits /Min',
+    notSpecified: 'Not Specified',
+    noExperience: 'No Experience',
+    yearsExperience: 'Years of Experience',
+    consultationFee: 'Consultation Fee',
+    payAndConnect: 'Pay & Connect',
+    English: 'English',
+    Hindi: 'Hindi',
+    Punjabi: 'Punjabi',
+    Tamil: 'Tamil',
+    Cardiology: 'Cardiology',
+    Dermatology: 'Dermatology',
+    Orthopedics: 'Orthopedics',
+  },
 
-हिंदी: {
-  header: "अपने विशेषज्ञ को खोजें",
-  searchPlaceholder: "विशेषज्ञों, विशेषज्ञता खोजें...",
-  bookAppointment: "अपॉइंटमेंट बुक करें",
-  availableNow: "उपलब्ध",
-  inAnotherCall: "अन्य कॉल में",
-  specializedIn: "विशेषज्ञता",
-  callsAttended: "कॉल्स पूरी की",
-  creditsPerMin: "क्रेडिट्स /मिनट",
-  notSpecified: "निर्दिष्ट नहीं",
-  noExperience: "अनुभव नहीं",
-  yearsExperience: "अनुभव के वर्ष",
-  consultationFee: "परामर्श शुल्क",
-  payAndConnect: "भुगतान करें और जुड़ें",
-  English: "अंग्रेज़ी",
-  Hindi: "हिंदी",
-  Punjabi: "पंजाबी",
-  Tamil: "तमिल",
-    Cardiology: "हृदय रोग विशेषज्ञ",
-  Dermatology: "त्वचा रोग विशेषज्ञ",
-  Orthopedics: "हड्डी रोग विशेषज्ञ",
-},
+  हिंदी: {
+    header: 'अपने विशेषज्ञ को खोजें',
+    searchPlaceholder: 'विशेषज्ञों, विशेषज्ञता खोजें...',
+    bookAppointment: 'अपॉइंटमेंट बुक करें',
+    availableNow: 'उपलब्ध',
+    inAnotherCall: 'अन्य कॉल में',
+    specializedIn: 'विशेषज्ञता',
+    callsAttended: 'कॉल्स पूरी की',
+    creditsPerMin: 'क्रेडिट्स /मिनट',
+    notSpecified: 'निर्दिष्ट नहीं',
+    noExperience: 'अनुभव नहीं',
+    yearsExperience: 'अनुभव के वर्ष',
+    consultationFee: 'परामर्श शुल्क',
+    payAndConnect: 'भुगतान करें और जुड़ें',
+    English: 'अंग्रेज़ी',
+    Hindi: 'हिंदी',
+    Punjabi: 'पंजाबी',
+    Tamil: 'तमिल',
+    Cardiology: 'हृदय रोग विशेषज्ञ',
+    Dermatology: 'त्वचा रोग विशेषज्ञ',
+    Orthopedics: 'हड्डी रोग विशेषज्ञ',
+  },
 
-ਪੰਜਾਬੀ: {
-  header: "ਆਪਣਾ ਵਿਸ਼ੇਸ਼ਗਿਆ ਤਲਾਸ਼ੋ",
-  searchPlaceholder: "ਵਿਸ਼ੇਸ਼ਗਿਆ, ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਖੋਜੋ...",
-  bookAppointment: "ਬੁਕਿੰਗ ਕਰੋ",
-  availableNow: "ਹੁਣ ਉਪਲਬਧ",
-  inAnotherCall: "ਹੋਰ ਕਾਲ 'ਚ",
-  specializedIn: "ਮਾਹਿਰਤਾ",
-  callsAttended: "ਕਾਲਾਂ ਕੀਤੀਆਂ",
-  creditsPerMin: "ਕ੍ਰੈਡਿਟ /ਮਿੰਟ",
-  notSpecified: "ਨਿਰਧਾਰਿਤ ਨਹੀਂ",
-  noExperience: "ਕੋਈ ਤਜਰਬਾ ਨਹੀਂ",
-  yearsExperience: "ਅਨੁਭਵ ਦੇ ਸਾਲ",
-  consultationFee: "ਸਲਾਹ ਫੀਸ",
-  payAndConnect: "ਭੁਗਤਾਨ ਕਰੋ ਅਤੇ ਜੁੜੋ",
-  English: "ਅੰਗਰੇਜ਼ੀ",
-  Hindi: "ਹਿੰਦੀ",
-  Punjabi: "ਪੰਜਾਬੀ",
-  Tamil: "ਤਮਿਲ",
-    Cardiology: "ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
-  Dermatology: "ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ",
-  Orthopedics: "ਹੱਡੀਆਂ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",  
-},
+  ਪੰਜਾਬੀ: {
+    header: 'ਆਪਣਾ ਵਿਸ਼ੇਸ਼ਗਿਆ ਤਲਾਸ਼ੋ',
+    searchPlaceholder: 'ਵਿਸ਼ੇਸ਼ਗਿਆ, ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਖੋਜੋ...',
+    bookAppointment: 'ਬੁਕਿੰਗ ਕਰੋ',
+    availableNow: 'ਹੁਣ ਉਪਲਬਧ',
+    inAnotherCall: "ਹੋਰ ਕਾਲ 'ਚ",
+    specializedIn: 'ਮਾਹਿਰਤਾ',
+    callsAttended: 'ਕਾਲਾਂ ਕੀਤੀਆਂ',
+    creditsPerMin: 'ਕ੍ਰੈਡਿਟ /ਮਿੰਟ',
+    notSpecified: 'ਨਿਰਧਾਰਿਤ ਨਹੀਂ',
+    noExperience: 'ਕੋਈ ਤਜਰਬਾ ਨਹੀਂ',
+    yearsExperience: 'ਅਨੁਭਵ ਦੇ ਸਾਲ',
+    consultationFee: 'ਸਲਾਹ ਫੀਸ',
+    payAndConnect: 'ਭੁਗਤਾਨ ਕਰੋ ਅਤੇ ਜੁੜੋ',
+    English: 'ਅੰਗਰੇਜ਼ੀ',
+    Hindi: 'ਹਿੰਦੀ',
+    Punjabi: 'ਪੰਜਾਬੀ',
+    Tamil: 'ਤਮਿਲ',
+    Cardiology: 'ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ',
+    Dermatology: 'ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ',
+    Orthopedics: 'ਹੱਡੀਆਂ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ',
+  },
 
-தமிழ்: {
-  header: "உங்கள் நிபுணரை கண்டறியவும்",
-  searchPlaceholder: "நிபுணர்கள், நிபுணத்துவங்களை தேடவும்...",
-  bookAppointment: "நியமனத்தை பதிவு செய்க",
-  availableNow: "இப்போது கிடைக்கிறது",
-  inAnotherCall: "மற்றொரு அழைப்பில்",
-  specializedIn: "திறமை",
-  callsAttended: "அழைப்புகள்",
-  creditsPerMin: "கிரெடிட்ஸ் /நிமிடம்",
-  notSpecified: "சொல்லப்படவில்லை",
-  noExperience: "அனுபவம் இல்லை",
-  yearsExperience: "அனுபவ ஆண்டுகள்",
-  consultationFee: "கட்டணம்",
-  payAndConnect: "இணைக்கவும்",
-  English: "ஆங்கிலம்",
-  Hindi: "ஹிந்தி",
-  Punjabi: "பஞ்சாபி",
-  Tamil: "தமிழ்",
-    Cardiology: "இதய நோய் நிபுணர்",
-  Dermatology: "தோல் நோய் நிபுணர்",
-  Orthopedics: "எலும்பியல் நிபுணர்",
-},
-
+  தமிழ்: {
+    header: 'உங்கள் நிபுணரை கண்டறியவும்',
+    searchPlaceholder: 'நிபுணர்கள், நிபுணத்துவங்களை தேடவும்...',
+    bookAppointment: 'நியமனத்தை பதிவு செய்க',
+    availableNow: 'இப்போது கிடைக்கிறது',
+    inAnotherCall: 'மற்றொரு அழைப்பில்',
+    specializedIn: 'திறமை',
+    callsAttended: 'அழைப்புகள்',
+    creditsPerMin: 'கிரெடிட்ஸ் /நிமிடம்',
+    notSpecified: 'சொல்லப்படவில்லை',
+    noExperience: 'அனுபவம் இல்லை',
+    yearsExperience: 'அனுபவ ஆண்டுகள்',
+    consultationFee: 'கட்டணம்',
+    payAndConnect: 'இணைக்கவும்',
+    English: 'ஆங்கிலம்',
+    Hindi: 'ஹிந்தி',
+    Punjabi: 'பஞ்சாபி',
+    Tamil: 'தமிழ்',
+    Cardiology: 'இதய நோய் நிபுணர்',
+    Dermatology: 'தோல் நோய் நிபுணர்',
+    Orthopedics: 'எலும்பியல் நிபுணர்',
+  },
 };
 
-const specialityTranslations:any = {
+const specialityTranslations: any = {
   English: {
-    Cardiologist: "Cardiology",
-    Dermatologist: "Dermatology",
-    Orthopedics: "Orthopedics",
+    Cardiologist: 'Cardiology',
+    Dermatologist: 'Dermatology',
+    Orthopedics: 'Orthopedics',
   },
   हिंदी: {
-    Cardiologist: "हृदय रोग विशेषज्ञ",
-    Dermatologist: "त्वचा रोग विशेषज्ञ",
-    Orthopedics: "हड्डी रोग विशेषज्ञ",
+    Cardiologist: 'हृदय रोग विशेषज्ञ',
+    Dermatologist: 'त्वचा रोग विशेषज्ञ',
+    Orthopedics: 'हड्डी रोग विशेषज्ञ',
   },
   ਪੰਜਾਬੀ: {
-    Cardiologist: "ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
-    Dermatologist: "ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ",
-    Orthopedics: "ਹੱਡੀਆਂ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ",
+    Cardiologist: 'ਦਿਲ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ',
+    Dermatologist: 'ਚਮੜੀ ਵਿਸ਼ੇਸ਼ਗਿਆ',
+    Orthopedics: 'ਹੱਡੀਆਂ ਦੇ ਰੋਗ ਵਿਸ਼ੇਸ਼ਗਿਆ',
   },
   தமிழ்: {
-    Cardiologist: "இதய நோய் நிபுணர்",
-    Dermatologist: "தோல் நோய் நிபுணர்",
-    Orthopedics: "எலும்பியல் நிபுணர்",
+    Cardiologist: 'இதய நோய் நிபுணர்',
+    Dermatologist: 'தோல் நோய் நிபுணர்',
+    Orthopedics: 'எலும்பியல் நிபுணர்',
   },
 };
-
 
 // ✅ Doctor Card Component
 const DoctorCard: React.FC<DoctorCardProps> = ({
@@ -186,10 +183,10 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
   consultationFee,
 }) => {
   const navigation = useNavigation<ConsultDoctorNavigationProp>();
-   const [selectedLanguage, setSelectedLanguage] = useState("English");
+  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const t = translations[selectedLanguage];
-    const [translated, setTranslated] = useState<string | null>(null);
-    const [lang,setlang] = useState("en");
+  const [translated, setTranslated] = useState<string | null>(null);
+  const [lang, setlang] = useState('en');
 
   useEffect(() => {
     const loadLanguage = async () => {
@@ -203,47 +200,44 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
     loadLanguage();
   }, []);
 
-   
-
   const [translatedName, setTranslatedName] = useState(name);
 
-useEffect(() => {
-  const translateName = async () => {
-    if (selectedLanguage === "English") {
-      setTranslatedName(name); // ✅ Always keep original
-      return;
-    }
+  useEffect(() => {
+    const translateName = async () => {
+      if (selectedLanguage === 'English') {
+        setTranslatedName(name); // ✅ Always keep original
+        return;
+      }
 
-    try {
-      const targetLangMap: Record<string, string> = {
-        English: "en",
-        हिंदी: "hi",
-        ਪੰਜਾਬੀ: "pa",
-        தமிழ்: "ta",
-      };
-      const targetLang = targetLangMap[selectedLanguage] || "en";
+      try {
+        const targetLangMap: Record<string, string> = {
+          English: 'en',
+          हिंदी: 'hi',
+          ਪੰਜਾਬੀ: 'pa',
+          தமிழ்: 'ta',
+        };
+        const targetLang = targetLangMap[selectedLanguage] || 'en';
 
-      const res = await axios.get("https://api.mymemory.translated.net/get", {
-        params: { q: name, langpair: `en|${targetLang}` },
-      });
+        const res = await axios.get('https://api.mymemory.translated.net/get', {
+          params: { q: name, langpair: `en|${targetLang}` },
+        });
 
-      const translatedText = res.data.responseData.translatedText;
-      setTranslatedName(translatedText);
-    } catch (err) {
-      console.error("Translation error:", err);
-      setTranslatedName(name); // fallback
-    }
-  };
+        const translatedText = res.data.responseData.translatedText;
+        setTranslatedName(translatedText);
+      } catch (err) {
+        console.error('Translation error:', err);
+        setTranslatedName(name); // fallback
+      }
+    };
 
-  translateName();
-}, [name, selectedLanguage]);
-
+    translateName();
+  }, [name, selectedLanguage]);
 
   return (
     <View style={styles.doctorCard}>
       {/* Doctor Image */}
       <View style={styles.imageSection}>
-        {typeof profileImage === "string" ? (
+        {typeof profileImage === 'string' ? (
           <Image source={{ uri: profileImage }} style={styles.profileImage} />
         ) : (
           <Image source={profileImage} style={styles.profileImage} />
@@ -256,16 +250,18 @@ useEffect(() => {
         <View style={styles.specialitySection}>
           <Icon name="briefcase" size={16} color="#FF6B35" />
           <Text>
-            {t.specializedIn} :  { speciality 
-      ? specialityTranslations[selectedLanguage]?.[speciality] || speciality 
-      : t.notSpecified }
-</Text>
+            {t.specializedIn} :{' '}
+            {speciality
+              ? specialityTranslations[selectedLanguage]?.[speciality] ||
+                speciality
+              : t.notSpecified}
+          </Text>
         </View>
 
         {/* Name + Status */}
         <View style={styles.nameSection}>
           <Text style={styles.doctorName}>{translatedName}</Text>
-           {/* <Text style={styles.doctorName}>{name}</Text> */}
+          {/* <Text style={styles.doctorName}>{name}</Text> */}
           <View style={styles.statusContainer}>
             <View
               style={[
@@ -292,13 +288,13 @@ useEffect(() => {
         {/* Languages */}
         <View style={styles.infoRow}>
           <Icon name="globe" size={14} color="#666" />
-         <Text style={styles.infoText}>
-  {languages.length > 0
-    ? languages
-        .map((lang) => translations[selectedLanguage][lang] || lang)
-        .join(", ")
-    : t.notSpecified}
-</Text>
+          <Text style={styles.infoText}>
+            {languages.length > 0
+              ? languages
+                  .map(lang => translations[selectedLanguage][lang] || lang)
+                  .join(', ')
+              : t.notSpecified}
+          </Text>
         </View>
 
         {/* Payment + Book Button */}
@@ -336,53 +332,69 @@ useEffect(() => {
 const ConsultDoctor: React.FC = () => {
   const navigation = useNavigation<ConsultDoctorNavigationProp>();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
-   const [selectedLanguage, setSelectedLanguage] = useState<string>("English");
-    const t = translations[selectedLanguage];
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yzc4YWZiN2YyZWNlNjdkNzU3NjkzYiIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzczNjgzODc5LCJleHAiOjE3NzU0MTE4Nzl9.bPxUSWG2i7qjWwOjhtEJXX6iHnlwPk35jx1rL-WnlzU";
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('English');
+  const [token, setToken] = useState<string | null>(null);
+  const t = translations[selectedLanguage];
 
   useEffect(() => {
-    fetchDoctors();
+    const loadTokenAndFetch = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('jwt_token');
+        if (storedToken) {
+          setToken(storedToken);
+          fetchDoctors(storedToken);
+        } else {
+          Alert.alert('Error', 'No authentication token found. Please login again.');
+          // Optionally navigate to login
+        }
+      } catch (error) {
+        console.error('Error retrieving token:', error);
+        Alert.alert('Error', 'Failed to retrieve authentication token.');
+      }
+    };
+
+    loadTokenAndFetch();
 
     const loadLanguage = async () => {
       try {
         const lang = await AsyncStorage.getItem(LANGUAGE_KEY);
         if (lang) {
           setSelectedLanguage(lang);
-          console.log("Selected Language from storage 1:", lang); // ✅ print to console
+          console.log('Selected Language from storage 1:', lang); // ✅ print to console
         }
       } catch (err) {
-        console.error("Error loading language:", err);
+        console.error('Error loading language:', err);
       }
     };
 
     loadLanguage();
   }, []);
 
-  const fetchDoctors = async () => {
+  const fetchDoctors = async (authToken: string) => {
     try {
       const res = await axios.get(
-        "https://telemedicine-server-o5tc.onrender.com/doctor/get-all-doctors",
+        'https://telemedicine-server-o5tc.onrender.com/doctor/get-all-doctors',
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       );
       const mappedDoctors: Doctor[] = res.data.map((doc: any) => ({
         id: doc.id,
-        name: doc.name || "Unknown Doctor",
-        speciality: doc.specialization || "N/A",
-        qualifications: "", 
-        bio: "", 
-        profileImage: doc.profileImage || require("../../assets/Images/image1.png"),
-        consultationFee: 0||doc.creditsPerMinute, 
-        availableTimes: [], 
-        experience: doc.experience || "Not specified",
+        name: doc.name || 'Unknown Doctor',
+        speciality: doc.specialization || 'N/A',
+        qualifications: '',
+        bio: '',
+        profileImage:
+          doc.profileImage || require('../../assets/Images/image1.png'),
+        consultationFee: 0 || doc.creditsPerMinute,
+        availableTimes: [],
+        experience: doc.experience || 'Not specified',
         totalCalls: doc.callsAttended || 0,
-        callDuration: "", 
+        callDuration: '',
         rating: doc.rating || 0,
-        isActive: doc.status === "Available",
+        isActive: doc.status === 'Available',
         languages: doc.languages || [],
         credits: 0, // Not provided
         creditsPerMin: doc.creditsPerMinute || 0,
@@ -390,7 +402,7 @@ const ConsultDoctor: React.FC = () => {
 
       setDoctors(mappedDoctors);
     } catch (err) {
-      console.error("Error fetching doctors:", err);
+      console.error('Error fetching doctors:', err);
     }
   };
 
@@ -399,7 +411,7 @@ const ConsultDoctor: React.FC = () => {
   );
 
   return (
-     <View style={styles.container} >
+    <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerSection}>
         {/* Search Bar */}
@@ -436,14 +448,14 @@ const ConsultDoctor: React.FC = () => {
 
       {/* Doctor List */}
       <ScrollView>
-             <FlatList
-        scrollEnabled={false}
-        data={doctors}
-        renderItem={renderDoctor}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
-      />
+        <FlatList
+          scrollEnabled={false}
+          data={doctors}
+          renderItem={renderDoctor}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.listContainer}
+        />
       </ScrollView>
     </View>
   );
